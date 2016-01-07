@@ -40,10 +40,21 @@ namespace AIGames.TexasHoldEm.ACDC
 		public int BigBlind { get; set; }
 		
 		public PlayerName OnButton { get; set; }
-		public Cards Table { get; set; }
+		public Cards Table
+		{
+			get { return m_Table; }
+			set
+			{
+				m_Table = value;
+				Odds = null;
+			}
+		}
+		private Cards m_Table;
 
 		public PlayerState Player1 { get; set; }
 		public PlayerState Player2 { get; set; }
+
+		public double? Odds { get; set; }
 
 		public void SetHand(HandInstruction instruction)
 		{

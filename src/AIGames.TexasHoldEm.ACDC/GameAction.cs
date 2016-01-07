@@ -12,20 +12,20 @@ namespace AIGames.TexasHoldEm.ACDC
 	public struct GameAction : IInstruction, ISerializable, IXmlSerializable
 	{
 		/// <summary>Represents a check.</summary>
-		public static readonly GameAction Check = new GameAction() { m_Value = (int)GameActionType.check };
+		public static readonly GameAction Check = new GameAction() { m_Value = (ushort)GameActionType.check };
 		/// <summary>Represents a call.</summary>
-		public static readonly GameAction Call = new GameAction() { m_Value = (int)GameActionType.call };
+		public static readonly GameAction Call = new GameAction() { m_Value = (ushort)GameActionType.call };
 		/// <summary>Represents a fold.</summary>
-		public static readonly GameAction Fold = new GameAction() { m_Value = (int)GameActionType.fold };
+		public static readonly GameAction Fold = new GameAction() { m_Value = (ushort)GameActionType.fold };
 
 		/// <summary>Invalid game action.</summary>
-		public static readonly GameAction Invalid = new GameAction() { m_Value = int.MaxValue };
+		public static readonly GameAction Invalid = new GameAction() { m_Value = ushort.MaxValue };
 
 		/// <summary>Creates a raise.</summary>
 		public static GameAction Raise(int amount)
 		{
 			if (amount < 0) { throw new ArgumentOutOfRangeException("The amount should be at least 0.", "amount"); }
-			return new GameAction() { m_Value = (amount << 2) + (int)GameActionType.raise };
+			return new GameAction() { m_Value = (ushort)((amount << 2) | (ushort)GameActionType.raise) };
 		}
 
 		public static GameAction CheckOrCall(bool noAmountToCall) { return noAmountToCall ? Check : Call; }
@@ -38,10 +38,10 @@ namespace AIGames.TexasHoldEm.ACDC
 		private GameAction(SerializationInfo info, StreamingContext context)
 		{
 			if (info == null) { throw new ArgumentNullException("info"); }
-			m_Value = info.GetByte("Value");
+			m_Value = info.GetUInt16("Value");
 		}
 
-		/// <summary>Adds the underlying propererty of action to the serialization info.</summary>
+		/// <summary>Adds the underlying property of action to the serialization info.</summary>
 		/// <param name="info">The serialization info.</param>
 		/// <param name="context">The streaming context.</param>
 		void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
@@ -83,13 +83,21 @@ namespace AIGames.TexasHoldEm.ACDC
 		#region Properties
 
 		/// <summary>Represents the internal value.</summary>
-		private int m_Value;
+		private ushort m_Value;
 
 		/// <summary>Gets the height of the action.</summary>
 		public int Amount { get { return m_Value >> 2; } }
 
 		/// <summary>Gets the suit of the action.</summary>
 		public GameActionType ActionType { get { return (GameActionType)(m_Value & 3); } }
+
+		#endregion
+
+		#region Byte Array
+
+		public ushort ToUInt16() { return m_Value; }
+
+		public static GameAction FromUIint16(ushort val) { return new GameAction() { m_Value = val }; }
 
 		#endregion
 
@@ -127,7 +135,7 @@ namespace AIGames.TexasHoldEm.ACDC
 		#endregion
 
 		#region Factory methods
-		
+
 		/// <summary>Parses an action.</summary>
 		/// <param name="str">
 		/// The string representing an action.
@@ -165,9 +173,9 @@ namespace AIGames.TexasHoldEm.ACDC
 
 			if (splitted.Length < 3 && Enum.TryParse<GameActionType>(splitted[0], true, out tp))
 			{
-				if(tp != GameActionType.raise && (splitted.Length == 1 || splitted[1] == "0"))
+				if (tp != GameActionType.raise && (splitted.Length == 1 || splitted[1] == "0"))
 				{
-					action = new GameAction() { m_Value = (int)tp };
+					action = new GameAction() { m_Value = (ushort)tp };
 					return true;
 				}
 				int amount;
@@ -179,7 +187,7 @@ namespace AIGames.TexasHoldEm.ACDC
 			}
 			return false;
 		}
-		
+
 		#endregion
 	}
 }

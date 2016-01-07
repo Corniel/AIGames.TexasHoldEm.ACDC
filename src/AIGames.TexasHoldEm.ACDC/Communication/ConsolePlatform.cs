@@ -59,6 +59,10 @@ namespace AIGames.TexasHoldEm.ACDC.Communication
 					bot.ApplySettings(settings);
 				}
 				else if (matches.Apply(instruction)) { }
+				else if (instruction is WinsInstruction)
+				{
+					bot.Update((WinsInstruction)instruction);
+				}
 				else if (instruction is RequestMoveInstruction)
 				{
 					bot.Update(matches);

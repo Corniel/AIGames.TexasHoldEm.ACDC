@@ -1,16 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using AIGames.TexasHoldEm.ACDC.Analysis;
+using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Troschuetz.Random.Generators;
 
 namespace AIGames.TexasHoldEm.ACDC.Actors
 {
 	[DebuggerDisplay("{DebuggerDisplay}")]
 	public class ActorState
 	{
+		public int Round { get; set; }
+		public SubRoundType SubRound { get; set; }
+		public int Step { get; set; }
+
 		public double Odds { get; set; }
 		public int SmallBlind { get { return BigBlind >> 1; } }
 		public int BigBlind { get; set; }
@@ -20,6 +22,7 @@ namespace AIGames.TexasHoldEm.ACDC.Actors
 		public int OtherPot { get; set; }
 		
 		public int Pot { get { return OwnPot + OtherPot; } }
+		public int Gap { get { return OwnStack - OtherStack; } }
 
 		/// <summary>Test the maximum amount to raise.</summary>
 		public int MaximumRaise
@@ -39,7 +42,19 @@ namespace AIGames.TexasHoldEm.ACDC.Actors
 		/// <summary>Returns true if there is no amount to call, otherwise false.</summary>
 		public bool NoAmountToCall { get { return AmountToCall == 0; } }
 
-		public Troschuetz.Random.Generators.MT19937Generator Rnd { get; set; }
+		public MT19937Generator Rnd { get; set; }
+
+		public Record ToRecord()
+		{
+			return new Record()
+			{
+				Odds = Odds,
+				Round = (byte)Round,
+				SubRound = SubRound,
+				Step = (byte)Step,
+				Gap = (short)Gap,
+			};
+		}
 
 		[DebuggerBrowsable(DebuggerBrowsableState.Never), ExcludeFromCodeCoverage]
 		private string DebuggerDisplay

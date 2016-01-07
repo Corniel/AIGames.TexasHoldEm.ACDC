@@ -1,44 +1,46 @@
-﻿using System;
+﻿using AIGames.TexasHoldEm.ACDC.Analysis;
+
 namespace AIGames.TexasHoldEm.ACDC.Actors
 {
 	public class Actor
 	{
-		public virtual GameAction GetAction(ActorState state)
+		public Actor(Records records)
 		{
-			if (state.Odds >= 0.5)
-			{
-				// raise
-				if (state.Odds > state.Rnd.NextDouble())
-				{
-					var raise = state.Rnd.Next(state.BigBlind, state.MaximumRaise);
-					return GameAction.Raise(raise);
-				}
-				else
-				{
-					return GameAction.CheckOrCall(state.NoAmountToCall);
-				}
-			}
-			if (state.NoAmountToCall)
-			{
-				return GameAction.Check;
-			}
-			if (state.AmountToCall < state.BigBlind * 2 && state.Odds > state.Rnd.NextDouble())
-			{
-				return GameAction.Call;
-			}
-			return GameAction.Fold;
+			this.Records = records;
 		}
 
-		public static Actor Get(Match match)
+		public Records Records { get; private set; }
+
+		public ActionOption GetAction(ActorState state)
 		{
-			switch (match.SubRound)
+			var options = new ActionOptions();
+
+			var nOdds = 1 - state.Odds;
+
+			if (state.NoAmountToCall)
 			{
-				case SubRoundType.Pre: return new PreFlopActor();
-				case SubRoundType.Flop:
-				case SubRoundType.Turn:
-				case SubRoundType.River:
-				default: return new Actor();
+				options.Add(GameAction.Check, state.Pot * state.Odds);
 			}
+			else
+			{
+				options.Add(GameAction.Fold, 0);
+				options.Add(GameAction.Call, state.Pot * state.Odds - state.AmountToCall * nOdds);
+			}
+			if (state.AmountToCall != state.SmallBlind)
+			{
+				var step = 1 + (state.MaximumRaise - state.BigBlind) / 13;
+
+				for (var raise = state.BigBlind; raise <= state.MaximumRaise; raise += step)
+				{
+					options.Add(GameAction.Raise(raise), state.Pot * state.Odds - (state.AmountToCall - raise) * nOdds);
+				}
+			}
+
+			Record test = state.ToRecord();
+			var best = Records.Select(test, options);
+			test.Profit = (short)(-state.AmountToCall - best.Action.Amount);
+			Records.Add(test);
+			return best;
 		}
 	}
 }

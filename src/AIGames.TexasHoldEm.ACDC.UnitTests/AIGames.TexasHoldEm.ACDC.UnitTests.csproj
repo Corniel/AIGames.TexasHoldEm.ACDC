@@ -34,16 +34,13 @@
       <HintPath>..\packages\NUnit.3.0.1\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Qowaiv, Version=2.0.0.164, Culture=neutral, PublicKeyToken=0e6640b5f269a3fc, processorArchitecture=MSIL">
-      <HintPath>..\packages\Qowaiv.2.0.0.164\lib\net45\Qowaiv.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Analysis\MatcherTest.cs" />
     <Compile Include="BitsTest.cs" />
     <Compile Include="Category.cs" />
     <Compile Include="Communication\ConsolePlatformTest.cs" />

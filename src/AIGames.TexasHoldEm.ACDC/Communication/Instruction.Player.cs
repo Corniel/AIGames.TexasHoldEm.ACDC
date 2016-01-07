@@ -15,6 +15,7 @@
 				case "CALL": 
 				case "CHECK":
 				case "RAISE": return ActionInstruction.Parse(name, splitted);
+				case "WINS": return WinsInstruction.Parse(name, splitted);
 			}
 			return null;
 		}

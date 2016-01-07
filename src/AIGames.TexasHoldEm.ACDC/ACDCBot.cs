@@ -15,11 +15,13 @@ namespace AIGames.TexasHoldEm.ACDC
 		public ACDCBot()
 		{
 			Rnd = new MT19937Generator(17);
+			Actor = new Actor(new Records());
 		}
 
+		public Actor Actor { get; set; }
 		public MT19937Generator Rnd { get; set; }
 		public Settings Settings { get; set; }
-		public Matches Matches  {get; set; }
+		public Matches Matches { get; set; }
 		public Match Current { get { return Matches.Current; } }
 
 		public void ApplySettings(Settings settings)
@@ -32,6 +34,19 @@ namespace AIGames.TexasHoldEm.ACDC
 			Matches = matches;
 		}
 
+		public void Update(WinsInstruction instruction)
+		{
+			var profit = (short)instruction.Value;
+			if (Settings.OppoBot == instruction.Name) { profit = (short)-profit; }
+
+			for (var index = Actor.Records.Count - 1; index >= 0; index--)
+			{
+				var record = Actor.Records[index];
+				if (record.Round != Current.Round) { break; }
+				record.Profit += profit;
+			}
+		}
+
 		public Cards Table { get { return Current.Table; } }
 		public Cards Hand { get { return Own.Hand; } }
 
@@ -40,19 +55,26 @@ namespace AIGames.TexasHoldEm.ACDC
 
 		public BotResponse GetResponse(TimeSpan time)
 		{
+			if (!Current.Odds.HasValue)
+			{
+				Current.Odds = PokerHandEvaluator.GetOdds(Hand, Table);
+			}
+
 			var state = new ActorState()
 			{
+				Round = Current.Round,
+				SubRound = Current.SubRound,
+				Step = 1 + Own.Actions.Count,
 				BigBlind = Matches.Current.BigBlind,
-				Odds = PokerHandEvaluator.GetOdds(Hand, Table),
-				OwnStack =Own.Stack,
+				Odds = Current.Odds.Value,
+				OwnStack = Own.Stack,
 				OwnPot = Own.Pot,
 				OtherStack = Other.Stack,
 				OtherPot = Other.Pot,
 				Rnd = Rnd,
 			};
-			
-			var actor = Actor.Get(Matches.Current);
-			var action = actor.GetAction(state);
+
+			var best = Actor.GetAction(state);
 
 			var log = new StringBuilder();
 			log.AppendFormat("{0:00}.{1,-5}", Current.Round, Current.SubRound)
@@ -61,11 +83,16 @@ namespace AIGames.TexasHoldEm.ACDC
 			{
 				log.AppendFormat(", {0}", Table);
 			}
-			log.AppendFormat(", {0:0.0%}", state.Odds).Append(", ").Append(action);
+			log.AppendFormat(", {0:0.0%}", state.Odds)
+				.Append(", ")
+				.Append(best.Action)
+				.Append(" ")
+				.Append(best.Profit > 0 ? "+" : "")
+				.Append(best.Profit.ToString("#,##0.0"));
 
 			var response = new BotResponse()
 			{
-				Action = action,
+				Action = best.Action,
 				Log = log.ToString(),
 			};
 			return response;

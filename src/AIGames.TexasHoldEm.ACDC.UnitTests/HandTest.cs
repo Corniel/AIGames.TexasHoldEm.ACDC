@@ -1,15 +1,11 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Threading;
-using System.Runtime.InteropServices;
-using NUnit.Framework;
 using AIGames.TexasHoldEm.ACDC.Analysis;
+using AIGames.TexasHoldEm.ACDC.UnitTests;
+using NUnit.Framework;
+using System;
 
-namespace HandEvaluatorNUnitTest
+namespace AIGames.TexasHoldEm.ACDC.UnitTests
 {
-	[TestFixture] 
+	[TestFixture, Category(Category.External)] 
 	public class Test
 	{
 		/// <summary>

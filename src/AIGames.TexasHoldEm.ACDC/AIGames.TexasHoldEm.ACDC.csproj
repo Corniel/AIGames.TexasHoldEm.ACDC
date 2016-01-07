@@ -37,14 +37,18 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actors\ActionOption.cs" />
+    <Compile Include="Actors\ActionOptions.cs" />
     <Compile Include="Actors\ActorState.cs" />
-    <Compile Include="Actors\PreFlopActor.cs" />
     <Compile Include="Analysis\Hand.Lookups.cs" />
     <Compile Include="Analysis\Hand.Analysis.cs" />
     <Compile Include="Analysis\Hand.Evaluator.cs" />
     <Compile Include="Analysis\Hand.Iterator.cs" />
+    <Compile Include="Analysis\Matcher.cs" />
     <Compile Include="Analysis\PokerHandEvaluator.cs" />
     <Compile Include="Actors\Actor.cs" />
+    <Compile Include="Analysis\Record.cs" />
+    <Compile Include="Analysis\Records.cs" />
     <Compile Include="Bits.cs" />
     <Compile Include="Communication\BotResponse.cs" />
     <Compile Include="Communication\ConsolePlatform.cs" />
@@ -55,6 +59,7 @@
     <Compile Include="Communication\Instruction.Player.Hand.cs" />
     <Compile Include="Communication\Instruction.Player.Post.cs" />
     <Compile Include="Communication\Instruction.Player.Action.cs" />
+    <Compile Include="Communication\Instruction.Player.Wins.cs" />
     <Compile Include="Communication\Instruction.Player.Stack.cs" />
     <Compile Include="Communication\Instruction.Player.cs" />
     <Compile Include="Communication\Instruction.Match.BigBlind.cs" />

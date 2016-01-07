@@ -40,7 +40,7 @@ namespace AIGames.TexasHoldEm.ACDC.UnitTests.Deployoment
 		{
 			var bot = GetVersionedBotName(botname, version);
 
-			var target = new DirectoryInfo(Path.Combine(GetBotsDir().FullName, "bin", bot, "collect"));
+			var target = new DirectoryInfo(Path.Combine(GetDeployDir().FullName, "bin", bot, "collect"));
 			if (target.Exists)
 			{
 				target.Delete(true);
@@ -53,6 +53,10 @@ namespace AIGames.TexasHoldEm.ACDC.UnitTests.Deployoment
 			{
 				Compress(target, bot);
 				target.Delete(true);
+			}
+			else
+			{
+				throw new Exception("Compilation failed. See Output.");
 			}
 		}
 
@@ -112,20 +116,26 @@ namespace AIGames.TexasHoldEm.ACDC.UnitTests.Deployoment
 		{
 			typeof(System.Int32).Assembly,
 			typeof(System.Linq.Enumerable).Assembly,
+			typeof(System.Xml.XmlAttribute).Assembly,
 			typeof(System.Text.RegularExpressions.Regex).Assembly,
 		};
 		private static readonly Assembly[] CompileAssembliesRelease = new Assembly[]
 		{
 			typeof(System.Int32).Assembly,
 			typeof(System.Linq.Enumerable).Assembly,
+			typeof(System.Xml.XmlAttribute).Assembly,
 			typeof(System.Text.RegularExpressions.Regex).Assembly,
 		};
 
 		/// <summary>Zips the C# files to the zip directory.</summary>
 		public static void Compress(DirectoryInfo source, string bot)
 		{
-			var destination = new FileInfo(Path.Combine(GetBotsDir().FullName, "zips", bot + ".zip"));
+			var destination = new FileInfo(Path.Combine(GetDeployDir().FullName, "zips", bot + ".zip"));
 
+			if(!destination.Directory.Exists)
+			{
+				destination.Directory.Create();
+			}
 			if (destination.Exists)
 			{
 				destination.Delete();
@@ -175,14 +185,17 @@ namespace AIGames.TexasHoldEm.ACDC.UnitTests.Deployoment
 		{
 			return string.IsNullOrEmpty(version) ? name : name + '.' + version;
 		}
-	
-		/// <summary>Gets the configured bots directory.</summary>
-		/// <remarks>
-		/// The bots directory is the directory containing the bots for Arena.
-		/// </remarks>
-		public static DirectoryInfo GetBotsDir()
+
+		/// <summary>Gets the deploy directory.</summary>
+		public static DirectoryInfo GetCollectDir()
 		{
-			var dir = ConfigurationManager.AppSettings["Bots.Dir"];
+			var dir = ConfigurationManager.AppSettings["Collect.Dir"];
+			return new DirectoryInfo(dir);
+		}
+		/// <summary>Gets the deploy directory.</summary>
+		public static DirectoryInfo GetDeployDir()
+		{
+			var dir = ConfigurationManager.AppSettings["Deploy.Dir"];
 			return new DirectoryInfo(dir);
 		}
 

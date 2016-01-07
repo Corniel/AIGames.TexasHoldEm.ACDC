@@ -28,6 +28,8 @@ namespace AIGames.TexasHoldEm.ACDC
 			return new GameAction() { m_Value = (amount << 2) + (int)GameActionType.raise };
 		}
 
+		public static GameAction CheckOrCall(bool noAmountToCall) { return noAmountToCall ? Check : Call; }
+
 		#region (XML) (De)serialization
 
 		/// <summary>Initializes a new instance of action based on the serialization info.</summary>

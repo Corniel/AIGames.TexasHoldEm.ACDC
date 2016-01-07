@@ -4,6 +4,7 @@ using AIGames.TexasHoldEm.ACDC.Communication;
 using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Text;
 using Troschuetz.Random.Generators;
 
 namespace AIGames.TexasHoldEm.ACDC
@@ -19,6 +20,7 @@ namespace AIGames.TexasHoldEm.ACDC
 		public MT19937Generator Rnd { get; set; }
 		public Settings Settings { get; set; }
 		public Matches Matches  {get; set; }
+		public Match Current { get { return Matches.Current; } }
 
 		public void ApplySettings(Settings settings)
 		{
@@ -30,11 +32,11 @@ namespace AIGames.TexasHoldEm.ACDC
 			Matches = matches;
 		}
 
-		public Cards Table { get { return Matches.Current.Table; } }
+		public Cards Table { get { return Current.Table; } }
 		public Cards Hand { get { return Own.Hand; } }
 
-		public PlayerState Own { get { return Matches.Current[Settings.YourBot]; } }
-		public PlayerState Other { get { return Matches.Current[Settings.YourBot.Other()]; } }
+		public PlayerState Own { get { return Current[Settings.YourBot]; } }
+		public PlayerState Other { get { return Current[Settings.YourBot.Other()]; } }
 
 		public BotResponse GetResponse(TimeSpan time)
 		{
@@ -52,10 +54,19 @@ namespace AIGames.TexasHoldEm.ACDC
 			var actor = Actor.Get(Matches.Current);
 			var action = actor.GetAction(state);
 
+			var log = new StringBuilder();
+			log.AppendFormat("{0:00}.{1,-5}", Current.Round, Current.SubRound)
+				.Append(' ').Append(Hand);
+			if (Current.SubRound != SubRoundType.Pre)
+			{
+				log.AppendFormat(", {0}", Table);
+			}
+			log.AppendFormat(", {0:0.0%}", state.Odds).Append(", ").Append(action);
+
 			var response = new BotResponse()
 			{
 				Action = action,
-				Log = String.Format("Hand: {0:f}, Table: {1:f}, odds: {2:0.0%}, {3}", Hand, Table, state.Odds, action),
+				Log = log.ToString(),
 			};
 			return response;
 		}

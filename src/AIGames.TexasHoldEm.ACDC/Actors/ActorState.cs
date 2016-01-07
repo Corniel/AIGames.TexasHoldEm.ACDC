@@ -12,6 +12,7 @@ namespace AIGames.TexasHoldEm.ACDC.Actors
 	public class ActorState
 	{
 		public double Odds { get; set; }
+		public int SmallBlind { get { return BigBlind >> 1; } }
 		public int BigBlind { get; set; }
 		public int OwnStack { get; set; }
 		public int OwnPot { get; set; }
@@ -20,7 +21,23 @@ namespace AIGames.TexasHoldEm.ACDC.Actors
 		
 		public int Pot { get { return OwnPot + OtherPot; } }
 
+		/// <summary>Test the maximum amount to raise.</summary>
+		public int MaximumRaise
+		{
+			get
+			{
+				// Don't raise on small blind.
+				if (AmountToCall == SmallBlind) { return 0; }
+				var minStack = Math.Min(OwnStack - AmountToCall, OtherStack);
+				if (minStack < BigBlind) { return 0; };
+				return Math.Min(minStack, Pot + AmountToCall);
+			}
+		}
+
 		public int AmountToCall { get { return Math.Max(0, OtherPot - OwnPot); } }
+
+		/// <summary>Returns true if there is no amount to call, otherwise false.</summary>
+		public bool NoAmountToCall { get { return AmountToCall == 0; } }
 
 		public Troschuetz.Random.Generators.MT19937Generator Rnd { get; set; }
 
@@ -34,7 +51,7 @@ namespace AIGames.TexasHoldEm.ACDC.Actors
 					Pot,
 					OwnPot, OwnStack,
 					OtherPot, OtherStack,
-					AmountToCall == 0 ? "": "Call: "+ AmountToCall);
+					NoAmountToCall ? "": "Call: "+ AmountToCall);
 			}
 		}
 	}

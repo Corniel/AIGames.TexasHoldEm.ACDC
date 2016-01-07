@@ -5,19 +5,26 @@ namespace AIGames.TexasHoldEm.ACDC.Actors
 	{
 		public virtual GameAction GetAction(ActorState state)
 		{
-			if (state.AmountToCall > 0 && state.Odds >= 0.5) { return GameAction.Call; }
 			if (state.Odds >= 0.5)
 			{
-				if (state.OwnStack >= state.BigBlind && state.Odds > state.Rnd.NextDouble())
+				// raise
+				if (state.Odds > state.Rnd.NextDouble())
 				{
-					var max = Math.Min(state.OwnStack, state.BigBlind);
-					var raise = state.Rnd.Next(state.BigBlind, max);
+					var raise = state.Rnd.Next(state.BigBlind, state.MaximumRaise);
 					return GameAction.Raise(raise);
 				}
 				else
 				{
-					return GameAction.Check;
+					return GameAction.CheckOrCall(state.NoAmountToCall);
 				}
+			}
+			if (state.NoAmountToCall)
+			{
+				return GameAction.Check;
+			}
+			if (state.AmountToCall < state.BigBlind * 2 && state.Odds > state.Rnd.NextDouble())
+			{
+				return GameAction.Call;
 			}
 			return GameAction.Fold;
 		}
@@ -26,7 +33,7 @@ namespace AIGames.TexasHoldEm.ACDC.Actors
 		{
 			switch (match.SubRound)
 			{
-				case SubRoundType.PreFlop: return new PreFlopActor();
+				case SubRoundType.Pre: return new PreFlopActor();
 				case SubRoundType.Flop:
 				case SubRoundType.Turn:
 				case SubRoundType.River:

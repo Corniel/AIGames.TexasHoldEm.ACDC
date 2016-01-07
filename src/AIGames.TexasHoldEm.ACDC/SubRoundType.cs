@@ -3,7 +3,7 @@
 	public enum SubRoundType
 	{
 		/// <summary>No table cards revealed.</summary>
-		PreFlop = 0,
+		Pre = 0,
 		/// <summary>Three table cards revealed.</summary>
 		Flop = 3,
 		/// <summary>Four table cards revealed.</summary>

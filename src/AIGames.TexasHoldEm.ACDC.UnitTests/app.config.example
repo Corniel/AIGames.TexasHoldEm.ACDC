@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+	<appSettings>
+		<add key="Collect.Dir" value="\AIGames.TexasHoldEm.ACDC\src\AIGames.TexasHoldEm.ACDC"/>
+		<add key="Deploy.Dir" value="\AIGames.TexasHoldEm.ACDC\deploy"/>
+	</appSettings>
+</configuration>

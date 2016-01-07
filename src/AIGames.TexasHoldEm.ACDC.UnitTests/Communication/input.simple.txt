@@ -1,0 +1,1058 @@
+﻿Settings hands_per_level 10
+Settings starting_stack 2000
+Settings your_bot player1
+Settings timebank 10000
+Settings time_per_move 500
+Match round 1
+Match small_blind 10
+Match big_blind 20
+Match on_button player2
+player1 stack 2000
+player2 stack 2000
+player2 post 10
+player1 post 20
+player1 hand [9c,7h]
+player2 call 10
+Match max_win_pot 40
+Match amount_to_call 0
+Action player1 10000
+Output from your bot: "check 0"
+player1 check 0
+Match table [Kc,2c,8s]
+Match max_win_pot 40
+Match amount_to_call 0
+Action player1 10000
+Output from your bot: "check 0"
+player1 check 0
+player2 check 0
+Match table [Kc,2c,8s,8d]
+Match max_win_pot 40
+Match amount_to_call 0
+Action player1 10000
+Output from your bot: "raise 75"
+player1 raise 75
+player2 fold 0
+player1 wins 115
+Match round 2
+Match small_blind 10
+Match big_blind 20
+Match on_button player1
+player1 stack 2020
+player2 stack 1980
+player1 post 10
+player2 post 20
+player1 hand [5s,5d]
+Match max_win_pot 30
+Match amount_to_call 10
+Action player1 10000
+Output from your bot: "raise 22"
+player1 raise 22
+player2 call 22
+Match table [2d,6s,6c]
+player2 check 0
+Match max_win_pot 84
+Match amount_to_call 0
+Action player1 10000
+Output from your bot: "raise 30"
+player1 raise 30
+player2 call 30
+Match table [2d,6s,6c,2s]
+player2 check 0
+Match max_win_pot 144
+Match amount_to_call 0
+Action player1 10000
+Output from your bot: "raise 60"
+player1 raise 60
+player2 call 60
+Match table [2d,6s,6c,2s,5c]
+player2 check 0
+Match max_win_pot 264
+Match amount_to_call 0
+Action player1 10000
+Output from your bot: "raise 112"
+player1 raise 112
+player2 fold 0
+player1 wins 376
+Match round 3
+Match small_blind 10
+Match big_blind 20
+Match on_button player2
+player1 stack 2152
+player2 stack 1848
+player2 post 10
+player1 post 20
+player1 hand [Tc,Ac]
+player2 raise 40
+Match max_win_pot 80
+Match amount_to_call 40
+Action player1 10000
+Output from your bot: "call 0"
+player1 call 40
+Match table [6s,Kd,9d]
+Match max_win_pot 120
+Match amount_to_call 0
+Action player1 10000
+Output from your bot: "raise 32"
+player1 raise 32
+player2 fold 0
+player1 wins 152
+Match round 4
+Match small_blind 10
+Match big_blind 20
+Match on_button player1
+player1 stack 2212
+player2 stack 1788
+player1 post 10
+player2 post 20
+player1 hand [8c,7d]
+Match max_win_pot 30
+Match amount_to_call 10
+Action player1 10000
+Output from your bot: "call 0"
+player1 call 10
+player2 raise 40
+Match max_win_pot 80
+Match amount_to_call 40
+Action player1 10000
+Output from your bot: "call 0"
+player1 call 40
+Match table [4c,Kh,Qd]
+player2 check 0
+Match max_win_pot 120
+Match amount_to_call 0
+Action player1 10000
+Output from your bot: "raise 30"
+player1 raise 30
+player2 call 30
+Match table [4c,Kh,Qd,3s]
+player2 raise 108
+Match max_win_pot 288
+Match amount_to_call 108
+Action player1 10000
+Output from your bot: "fold 0"
+player1 fold 0
+player2 wins 288
+Match round 5
+Match small_blind 10
+Match big_blind 20
+Match on_button player2
+player1 stack 2122
+player2 stack 1878
+player2 post 10
+player1 post 20
+player1 hand [Qs,5c]
+player2 raise 40
+Match max_win_pot 80
+Match amount_to_call 40
+Action player1 10000
+Output from your bot: "call 0"
+player1 call 40
+Match table [8s,Th,6h]
+Match max_win_pot 120
+Match amount_to_call 0
+Action player1 10000
+Output from your bot: "check 0"
+player1 check 0
+player2 raise 72
+Match max_win_pot 192
+Match amount_to_call 72
+Action player1 10000
+Output from your bot: "fold 0"
+player1 fold 0
+player2 wins 192
+Match round 6
+Match small_blind 10
+Match big_blind 20
+Match on_button player1
+player1 stack 2062
+player2 stack 1938
+player1 post 10
+player2 post 20
+player1 hand [Qs,As]
+Match max_win_pot 30
+Match amount_to_call 10
+Action player1 10000
+Output from your bot: "raise 29"
+player1 raise 29
+player2 call 29
+Match table [5h,Ks,3c]
+player2 check 0
+Match max_win_pot 98
+Match amount_to_call 0
+Action player1 10000
+Output from your bot: "check 0"
+player1 check 0
+Match table [5h,Ks,3c,Ad]
+player2 check 0
+Match max_win_pot 98
+Match amount_to_call 0
+Action player1 10000
+Output from your bot: "raise 70"
+player1 raise 70
+player2 fold 0
+player1 wins 168
+Match round 7
+Match small_blind 10
+Match big_blind 20
+Match on_button player2
+player1 stack 2111
+player2 stack 1889
+player2 post 10
+player1 post 20
+player1 hand [9h,5s]
+player2 raise 40
+Match max_win_pot 80
+Match amount_to_call 40
+Action player1 10000
+Output from your bot: "call 0"
+player1 call 40
+Match table [6c,9d,7s]
+Match max_win_pot 120
+Match amount_to_call 0
+Action player1 10000
+Output from your bot: "raise 33"
+player1 raise 33
+player2 fold 0
+player1 wins 153
+Match round 8
+Match small_blind 10
+Match big_blind 20
+Match on_button player1
+player1 stack 2171
+player2 stack 1829
+player1 post 10
+player2 post 20
+player1 hand [Ac,Qs]
+Match max_win_pot 30
+Match amount_to_call 10
+Action player1 10000
+Output from your bot: "raise 38"
+player1 raise 38
+player2 raise 95
+Match max_win_pot 211
+Match amount_to_call 95
+Action player1 10000
+Output from your bot: "call 0"
+player1 call 95
+Match table [2s,6h,8c]
+player2 check 0
+Match max_win_pot 306
+Match amount_to_call 0
+Action player1 10000
+Output from your bot: "raise 37"
+player1 raise 37
+player2 call 37
+Match table [2s,6h,8c,5c]
+player2 check 0
+Match max_win_pot 380
+Match amount_to_call 0
+Action player1 10000
+Output from your bot: "raise 53"
+player1 raise 53
+player2 call 53
+Match table [2s,6h,8c,5c,Ks]
+player2 check 0
+Match max_win_pot 486
+Match amount_to_call 0
+Action player1 10000
+Output from your bot: "check 0"
+player1 check 0
+player1 hand [Ac,Qs]
+player2 hand [7d,Ad]
+player1 wins 486
+Match round 9
+Match small_blind 10
+Match big_blind 20
+Match on_button player2
+player1 stack 2414
+player2 stack 1586
+player2 post 10
+player1 post 20
+player1 hand [5c,3s]
+player2 raise 40
+Match max_win_pot 80
+Match amount_to_call 40
+Action player1 10000
+Output from your bot: "fold 0"
+player1 fold 0
+player2 wins 80
+Match round 10
+Match small_blind 10
+Match big_blind 20
+Match on_button player1
+player1 stack 2394
+player2 stack 1606
+player1 post 10
+player2 post 20
+player1 hand [4h,8h]
+Match max_win_pot 30
+Match amount_to_call 10
+Action player1 10000
+Output from your bot: "raise 26"
+player1 raise 26
+player2 call 26
+Match table [5s,2c,Ks]
+player2 check 0
+Match max_win_pot 92
+Match amount_to_call 0
+Action player1 10000
+Output from your bot: "check 0"
+player1 check 0
+Match table [5s,2c,Ks,8d]
+player2 raise 64
+Match max_win_pot 156
+Match amount_to_call 64
+Action player1 10000
+Output from your bot: "fold 0"
+player1 fold 0
+player2 wins 156
+Match round 11
+Match small_blind 15
+Match big_blind 30
+Match on_button player2
+player1 stack 2348
+player2 stack 1652
+player2 post 15
+player1 post 30
+player1 hand [2d,3c]
+player2 call 15
+Match max_win_pot 60
+Match amount_to_call 0
+Action player1 10000
+Output from your bot: "check 0"
+player1 check 0
+Match table [7c,Ac,4s]
+Match max_win_pot 60
+Match amount_to_call 0
+Action player1 10000
+Output from your bot: "check 0"
+player1 check 0
+player2 check 0
+Match table [7c,Ac,4s,Qh]
+Match max_win_pot 60
+Match amount_to_call 0
+Action player1 10000
+Output from your bot: "check 0"
+player1 check 0
+player2 raise 42
+Match max_win_pot 102
+Match amount_to_call 42
+Action player1 10000
+Output from your bot: "fold 0"
+player1 fold 0
+player2 wins 102
+Match round 12
+Match small_blind 15
+Match big_blind 30
+Match on_button player1
+player1 stack 2318
+player2 stack 1682
+player1 post 15
+player2 post 30
+player1 hand [Tc,Jc]
+Match max_win_pot 45
+Match amount_to_call 15
+Action player1 10000
+Output from your bot: "raise 41"
+player1 raise 41
+player2 call 41
+Match table [7h,Qd,Ad]
+player2 check 0
+Match max_win_pot 142
+Match amount_to_call 0
+Action player1 10000
+Output from your bot: "check 0"
+player1 check 0
+Match table [7h,Qd,Ad,Jd]
+player2 raise 99
+Match max_win_pot 241
+Match amount_to_call 99
+Action player1 10000
+Output from your bot: "call 0"
+player1 call 99
+Match table [7h,Qd,Ad,Jd,6c]
+player2 check 0
+Match max_win_pot 340
+Match amount_to_call 0
+Action player1 10000
+Output from your bot: "raise 136"
+player1 raise 136
+player2 fold 0
+player1 wins 476
+Match round 13
+Match small_blind 15
+Match big_blind 30
+Match on_button player2
+player1 stack 2488
+player2 stack 1512
+player2 post 15
+player1 post 30
+player1 hand [4s,7h]
+player2 raise 60
+Match max_win_pot 120
+Match amount_to_call 60
+Action player1 10000
+Output from your bot: "fold 0"
+player1 fold 0
+player2 wins 120
+Match round 14
+Match small_blind 15
+Match big_blind 30
+Match on_button player1
+player1 stack 2458
+player2 stack 1542
+player1 post 15
+player2 post 30
+player1 hand [7d,2c]
+Match max_win_pot 45
+Match amount_to_call 15
+Action player1 10000
+Output from your bot: "fold 0"
+player1 fold 0
+player2 wins 45
+Match round 15
+Match small_blind 15
+Match big_blind 30
+Match on_button player2
+player1 stack 2443
+player2 stack 1557
+player2 post 15
+player1 post 30
+player1 hand [5s,2c]
+player2 raise 60
+Match max_win_pot 120
+Match amount_to_call 60
+Action player1 10000
+Output from your bot: "fold 0"
+player1 fold 0
+player2 wins 120
+Match round 16
+Match small_blind 15
+Match big_blind 30
+Match on_button player1
+player1 stack 2413
+player2 stack 1587
+player1 post 15
+player2 post 30
+player1 hand [4h,Jd]
+Match max_win_pot 45
+Match amount_to_call 15
+Action player1 10000
+Output from your bot: "call 0"
+player1 call 15
+player2 raise 60
+Match max_win_pot 120
+Match amount_to_call 60
+Action player1 10000
+Output from your bot: "call 0"
+player1 call 60
+Match table [Qd,7s,Jh]
+player2 check 0
+Match max_win_pot 180
+Match amount_to_call 0
+Action player1 10000
+Output from your bot: "raise 56"
+player1 raise 56
+player2 call 56
+Match table [Qd,7s,Jh,7d]
+player2 raise 175
+Match max_win_pot 467
+Match amount_to_call 175
+Action player1 10000
+Output from your bot: "call 0"
+player1 call 175
+Match table [Qd,7s,Jh,7d,Ac]
+player2 raise 385
+Match max_win_pot 1027
+Match amount_to_call 385
+Action player1 10000
+Output from your bot: "fold 0"
+player1 fold 0
+player2 wins 1027
+Match round 17
+Match small_blind 15
+Match big_blind 30
+Match on_button player2
+player1 stack 2092
+player2 stack 1908
+player2 post 15
+player1 post 30
+player1 hand [8s,7s]
+player2 raise 60
+Match max_win_pot 120
+Match amount_to_call 60
+Action player1 10000
+Output from your bot: "call 0"
+player1 call 60
+Match table [4s,5s,4c]
+Match max_win_pot 180
+Match amount_to_call 0
+Action player1 10000
+Output from your bot: "check 0"
+player1 check 0
+player2 raise 108
+Match max_win_pot 288
+Match amount_to_call 108
+Action player1 10000
+Output from your bot: "fold 0"
+player1 fold 0
+player2 wins 288
+Match round 18
+Match small_blind 15
+Match big_blind 30
+Match on_button player1
+player1 stack 2002
+player2 stack 1998
+player1 post 15
+player2 post 30
+player1 hand [5s,Jd]
+Match max_win_pot 45
+Match amount_to_call 15
+Action player1 10000
+Output from your bot: "call 0"
+player1 call 15
+player2 raise 60
+Match max_win_pot 120
+Match amount_to_call 60
+Action player1 10000
+Output from your bot: "call 0"
+player1 call 60
+Match table [Qc,7h,Ah]
+player2 check 0
+Match max_win_pot 180
+Match amount_to_call 0
+Action player1 10000
+Output from your bot: "check 0"
+player1 check 0
+Match table [Qc,7h,Ah,8d]
+player2 raise 126
+Match max_win_pot 306
+Match amount_to_call 126
+Action player1 10000
+Output from your bot: "fold 0"
+player1 fold 0
+player2 wins 306
+Match round 19
+Match small_blind 15
+Match big_blind 30
+Match on_button player2
+player1 stack 1912
+player2 stack 2088
+player2 post 15
+player1 post 30
+player1 hand [Kd,9d]
+player2 raise 60
+Match max_win_pot 120
+Match amount_to_call 60
+Action player1 10000
+Output from your bot: "call 0"
+player1 call 60
+Match table [Ac,Qs,4s]
+Match max_win_pot 180
+Match amount_to_call 0
+Action player1 10000
+Output from your bot: "check 0"
+player1 check 0
+player2 check 0
+Match table [Ac,Qs,4s,Td]
+Match max_win_pot 180
+Match amount_to_call 0
+Action player1 10000
+Output from your bot: "check 0"
+player1 check 0
+player2 raise 126
+Match max_win_pot 306
+Match amount_to_call 126
+Action player1 10000
+Output from your bot: "call 0"
+player1 call 126
+Match table [Ac,Qs,4s,Td,Ks]
+Match max_win_pot 432
+Match amount_to_call 0
+Action player1 10000
+Output from your bot: "raise 178"
+player1 raise 178
+player2 raise 356
+Match max_win_pot 1144
+Match amount_to_call 356
+Action player1 10000
+Output from your bot: "fold 0"
+player1 fold 0
+player2 wins 1144
+Match round 20
+Match small_blind 15
+Match big_blind 30
+Match on_button player1
+player1 stack 1518
+player2 stack 2482
+player1 post 15
+player2 post 30
+player1 hand [Qs,9s]
+Match max_win_pot 45
+Match amount_to_call 15
+Action player1 10000
+Output from your bot: "call 0"
+player1 call 15
+player2 raise 60
+Match max_win_pot 120
+Match amount_to_call 60
+Action player1 10000
+Output from your bot: "call 0"
+player1 call 60
+Match table [2d,Qd,3h]
+player2 raise 108
+Match max_win_pot 288
+Match amount_to_call 108
+Action player1 10000
+Output from your bot: "fold 0"
+player1 fold 0
+player2 wins 288
+Match round 21
+Match small_blind 20
+Match big_blind 40
+Match on_button player2
+player1 stack 1428
+player2 stack 2572
+player2 post 20
+player1 post 40
+player1 hand [4c,Tc]
+player2 raise 80
+Match max_win_pot 160
+Match amount_to_call 80
+Action player1 10000
+Output from your bot: "call 0"
+player1 call 80
+Match table [7d,Th,Qc]
+Match max_win_pot 240
+Match amount_to_call 0
+Action player1 10000
+Output from your bot: "raise 79"
+player1 raise 79
+player2 fold 0
+player1 wins 319
+Match round 22
+Match small_blind 20
+Match big_blind 40
+Match on_button player1
+player1 stack 1548
+player2 stack 2452
+player1 post 20
+player2 post 40
+player1 hand [9d,Qc]
+Match max_win_pot 60
+Match amount_to_call 20
+Action player1 10000
+Output from your bot: "raise 77"
+player1 raise 77
+player2 call 77
+Match table [7s,Th,7h]
+player2 check 0
+Match max_win_pot 234
+Match amount_to_call 0
+Action player1 10000
+Output from your bot: "check 0"
+player1 check 0
+Match table [7s,Th,7h,3d]
+player2 raise 163
+Match max_win_pot 397
+Match amount_to_call 163
+Action player1 10000
+Output from your bot: "call 0"
+player1 call 163
+Match table [7s,Th,7h,3d,Kc]
+player2 raise 336
+Match max_win_pot 896
+Match amount_to_call 336
+Action player1 10000
+Output from your bot: "fold 0"
+player1 fold 0
+player2 wins 896
+Match round 23
+Match small_blind 20
+Match big_blind 40
+Match on_button player2
+player1 stack 1268
+player2 stack 2732
+player2 post 20
+player1 post 40
+player1 hand [5h,Kh]
+player2 raise 80
+Match max_win_pot 160
+Match amount_to_call 80
+Action player1 10000
+Output from your bot: "call 0"
+player1 call 80
+Match table [3s,5s,Qc]
+Match max_win_pot 240
+Match amount_to_call 0
+Action player1 10000
+Output from your bot: "raise 55"
+player1 raise 55
+player2 fold 0
+player1 wins 295
+Match round 24
+Match small_blind 20
+Match big_blind 40
+Match on_button player1
+player1 stack 1388
+player2 stack 2612
+player1 post 20
+player2 post 40
+player1 hand [7d,9d]
+Match max_win_pot 60
+Match amount_to_call 20
+Action player1 10000
+Output from your bot: "call 0"
+player1 call 20
+player2 raise 80
+Match max_win_pot 160
+Match amount_to_call 80
+Action player1 10000
+Output from your bot: "call 0"
+player1 call 80
+Match table [2h,Ah,2s]
+player2 raise 144
+Match max_win_pot 384
+Match amount_to_call 144
+Action player1 10000
+Output from your bot: "fold 0"
+player1 fold 0
+player2 wins 384
+Match round 25
+Match small_blind 20
+Match big_blind 40
+Match on_button player2
+player1 stack 1268
+player2 stack 2732
+player2 post 20
+player1 post 40
+player1 hand [2s,Th]
+player2 raise 80
+Match max_win_pot 160
+Match amount_to_call 80
+Action player1 10000
+Output from your bot: "call 0"
+player1 call 80
+Match table [5c,8s,3h]
+Match max_win_pot 240
+Match amount_to_call 0
+Action player1 10000
+Output from your bot: "check 0"
+player1 check 0
+player2 raise 144
+Match max_win_pot 384
+Match amount_to_call 144
+Action player1 10000
+Output from your bot: "fold 0"
+player1 fold 0
+player2 wins 384
+Match round 26
+Match small_blind 20
+Match big_blind 40
+Match on_button player1
+player1 stack 1148
+player2 stack 2852
+player1 post 20
+player2 post 40
+player1 hand [9h,2c]
+Match max_win_pot 60
+Match amount_to_call 20
+Action player1 10000
+Output from your bot: "fold 0"
+player1 fold 0
+player2 wins 60
+Match round 27
+Match small_blind 20
+Match big_blind 40
+Match on_button player2
+player1 stack 1128
+player2 stack 2872
+player2 post 20
+player1 post 40
+player1 hand [As,Jd]
+player2 raise 80
+Match max_win_pot 160
+Match amount_to_call 80
+Action player1 10000
+Output from your bot: "call 0"
+player1 call 80
+Match table [3s,7d,3d]
+Match max_win_pot 240
+Match amount_to_call 0
+Action player1 10000
+Output from your bot: "raise 61"
+player1 raise 61
+player2 call 61
+Match table [3s,7d,3d,5c]
+Match max_win_pot 362
+Match amount_to_call 0
+Action player1 10000
+Output from your bot: "raise 115"
+player1 raise 115
+player2 call 115
+Match table [3s,7d,3d,5c,Tc]
+Match max_win_pot 592
+Match amount_to_call 0
+Action player1 10000
+Output from your bot: "raise 213"
+player1 raise 213
+player2 call 213
+player1 hand [As,Jd]
+player2 hand [6h,6c]
+player2 wins 1018
+Match round 28
+Match small_blind 20
+Match big_blind 40
+Match on_button player1
+player1 stack 619
+player2 stack 3381
+player1 post 20
+player2 post 40
+player1 hand [Ks,4d]
+Match max_win_pot 60
+Match amount_to_call 20
+Action player1 10000
+Output from your bot: "call 0"
+player1 call 20
+player2 raise 80
+Match max_win_pot 160
+Match amount_to_call 80
+Action player1 10000
+Output from your bot: "call 0"
+player1 call 80
+Match table [Jc,Ad,Ac]
+player2 raise 144
+Match max_win_pot 384
+Match amount_to_call 144
+Action player1 10000
+Output from your bot: "fold 0"
+player1 fold 0
+player2 wins 384
+Match round 29
+Match small_blind 20
+Match big_blind 40
+Match on_button player2
+player1 stack 499
+player2 stack 3501
+player2 post 20
+player1 post 40
+player1 hand [6s,Th]
+player2 raise 2000
+Match max_win_pot 539
+Match amount_to_call 459
+Action player1 10000
+Output from your bot: "fold 0"
+player1 fold 0
+player2 wins 2080
+Match round 30
+Match small_blind 20
+Match big_blind 40
+Match on_button player1
+player1 stack 459
+player2 stack 3541
+player1 post 20
+player2 post 40
+player1 hand [As,Ah]
+Match max_win_pot 60
+Match amount_to_call 20
+Action player1 10000
+Output from your bot: "raise 133"
+player1 raise 133
+player2 fold 0
+player1 wins 213
+Match round 31
+Match small_blind 25
+Match big_blind 50
+Match on_button player2
+player1 stack 499
+player2 stack 3501
+player2 post 25
+player1 post 50
+player1 hand [8d,Qs]
+player2 raise 2000
+Match max_win_pot 549
+Match amount_to_call 449
+Action player1 10000
+Output from your bot: "fold 0"
+player1 fold 0
+player2 wins 2100
+Match round 32
+Match small_blind 25
+Match big_blind 50
+Match on_button player1
+player1 stack 449
+player2 stack 3551
+player1 post 25
+player2 post 50
+player1 hand [Ah,3c]
+Match max_win_pot 75
+Match amount_to_call 25
+Action player1 10000
+Output from your bot: "raise 26"
+Engine says: "Raise is below minimum amount, automatically changed to minimum"
+player1 raise 50
+player2 raise 2000
+Match max_win_pot 549
+Match amount_to_call 349
+Action player1 10000
+Output from your bot: "call 0"
+player1 call 349
+Match table [9h,4c,3h]
+Match table [9h,4c,3h,4s]
+Match table [9h,4c,3h,4s,4d]
+player1 hand [Ah,3c]
+player2 hand [5h,Qh]
+player1 wins 898
+player2 wins 1651
+Match round 33
+Match small_blind 25
+Match big_blind 50
+Match on_button player2
+player1 stack 898
+player2 stack 3102
+player2 post 25
+player1 post 50
+player1 hand [7h,Td]
+player2 call 25
+Match max_win_pot 100
+Match amount_to_call 0
+Action player1 10000
+Output from your bot: "check 0"
+player1 check 0
+Match table [Jd,6h,6d]
+Match max_win_pot 100
+Match amount_to_call 0
+Action player1 10000
+Output from your bot: "raise 73"
+player1 raise 73
+player2 fold 0
+player1 wins 173
+Match round 34
+Match small_blind 25
+Match big_blind 50
+Match on_button player1
+player1 stack 948
+player2 stack 3052
+player1 post 25
+player2 post 50
+player1 hand [4h,4d]
+Match max_win_pot 75
+Match amount_to_call 25
+Action player1 10000
+Output from your bot: "call 0"
+player1 call 25
+player2 check 0
+Match table [7c,2c,Ah]
+player2 raise 60
+Match max_win_pot 160
+Match amount_to_call 60
+Action player1 10000
+Output from your bot: "fold 0"
+player1 fold 0
+player2 wins 160
+Match round 35
+Match small_blind 25
+Match big_blind 50
+Match on_button player2
+player1 stack 898
+player2 stack 3102
+player2 post 25
+player1 post 50
+player1 hand [5d,3d]
+player2 raise 100
+Match max_win_pot 200
+Match amount_to_call 100
+Action player1 10000
+Output from your bot: "call 0"
+player1 call 100
+Match table [2h,Tc,6h]
+Match max_win_pot 300
+Match amount_to_call 0
+Action player1 10000
+Output from your bot: "check 0"
+player1 check 0
+player2 raise 180
+Match max_win_pot 480
+Match amount_to_call 180
+Action player1 10000
+Output from your bot: "fold 0"
+player1 fold 0
+player2 wins 480
+Match round 36
+Match small_blind 25
+Match big_blind 50
+Match on_button player1
+player1 stack 748
+player2 stack 3252
+player1 post 25
+player2 post 50
+player1 hand [Qs,7c]
+Match max_win_pot 75
+Match amount_to_call 25
+Action player1 10000
+Output from your bot: "raise 58"
+player1 raise 58
+player2 fold 0
+player1 wins 158
+Match round 37
+Match small_blind 25
+Match big_blind 50
+Match on_button player2
+player1 stack 798
+player2 stack 3202
+player2 post 25
+player1 post 50
+player1 hand [7d,2c]
+player2 raise 100
+Match max_win_pot 200
+Match amount_to_call 100
+Action player1 10000
+Output from your bot: "fold 0"
+player1 fold 0
+player2 wins 200
+Match round 38
+Match small_blind 25
+Match big_blind 50
+Match on_button player1
+player1 stack 748
+player2 stack 3252
+player1 post 25
+player2 post 50
+player1 hand [5s,6d]
+Match max_win_pot 75
+Match amount_to_call 25
+Action player1 10000
+Output from your bot: "call 0"
+player1 call 25
+player2 raise 100
+Match max_win_pot 200
+Match amount_to_call 100
+Action player1 10000
+Output from your bot: "call 0"
+player1 call 100
+Match table [8s,5h,4c]
+player2 raise 180
+Match max_win_pot 480
+Match amount_to_call 180
+Action player1 10000
+Output from your bot: "call 0"
+player1 call 180
+Match table [8s,5h,4c,9d]
+player2 raise 396
+Match max_win_pot 1056
+Match amount_to_call 396
+Action player1 10000
+Output from your bot: "call 0"
+player1 call 396
+Match table [8s,5h,4c,9d,9c]
+player2 raise 2000
+Match max_win_pot 1474
+Match amount_to_call 22
+Action player1 10000
+Output from your bot: "raise 229"
+Engine says: "Raise is below minimum amount, automatically put all-in because remaining stack is lower than minimum amount"
+Engine says: "Raise is below amount to call, action automatically changed to 'call'"
+player1 call 22
+player1 hand [5s,6d]
+player2 hand [Jc,Js]
+player2 wins 3474

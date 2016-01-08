@@ -39,7 +39,7 @@ namespace AIGames.TexasHoldEm.ACDC.Simulator
 					};
 					if (last.Action.ActionType == GameActionType.raise)
 					{
-						merged.Action = GameAction.Raise((last.Action.Amount + last.Action.Amount) >> 1);
+						merged.Action = GameAction.Raise((last.Action.Amount + current.Action.Amount) >> 1);
 					}
 					buffer.Add(merged);
 

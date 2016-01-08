@@ -40,8 +40,7 @@ namespace AIGames.TexasHoldEm.ACDC.Simulator
 			{
 				runs++;
 
-				// We don't want this feature for the simulator.
-				foreach (var record in records) { record.IsNew = false; }
+				ClearNewStatus(records);
 
 				simulator.Simulate(records, rnd);
 				Write(records, sw, runs, shrinks);
@@ -57,6 +56,12 @@ namespace AIGames.TexasHoldEm.ACDC.Simulator
 					Write(records, sw, runs, shrinks, true);
 				}
 			}
+		}
+
+		private static void ClearNewStatus(List<Record> records)
+		{
+			// We don't want this feature for the simulator.
+			foreach (var record in records) { record.IsNew = false; }
 		}
 
 		private static void Write(List<Record> records, Stopwatch sw, long runs, int shrinks, bool writeLine = false)

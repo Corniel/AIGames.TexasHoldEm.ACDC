@@ -13,7 +13,7 @@ namespace AIGames.TexasHoldEm.ACDC
 	[DebuggerDisplay("{DebuggerDisplay}")]
 	public class ACDCBot : IBot
 	{
-		public ACDCBot() : this(new List<Record>()) { }
+		public ACDCBot() : this(Records.Get()) { }
 		public ACDCBot(IList<Record> records)
 		{
 			Rnd = new MT19937Generator(17);

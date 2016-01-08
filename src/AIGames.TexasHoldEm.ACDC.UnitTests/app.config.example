@@ -3,5 +3,6 @@
 	<appSettings>
 		<add key="Collect.Dir" value="\AIGames.TexasHoldEm.ACDC\src\AIGames.TexasHoldEm.ACDC"/>
 		<add key="Deploy.Dir" value="\AIGames.TexasHoldEm.ACDC\deploy"/>
+		<add key="Data.File" value="\AIGames.TexasHoldEm.ACDC\simulation\data.bin"/>
 	</appSettings>
 </configuration>

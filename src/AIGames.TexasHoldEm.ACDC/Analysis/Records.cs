@@ -1,11 +1,12 @@
 ﻿using AIGames.TexasHoldEm.ACDC.Actors;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
 namespace AIGames.TexasHoldEm.ACDC.Analysis
 {
-	public static class Records
+	public static partial class Records
 	{
 		public static ActionOption Select(this IEnumerable<Record> items,  Record test, ActionOptions options)
 		{
@@ -27,7 +28,7 @@ namespace AIGames.TexasHoldEm.ACDC.Analysis
 							{
 								match *= 10;
 							}
-							option.Update(test.Profit, match);
+							option.Update(item.Profit, match);
 						}
 					}
 				}
@@ -38,6 +39,14 @@ namespace AIGames.TexasHoldEm.ACDC.Analysis
 			return best;
 		}
 
+		public static IList<Record> Get()
+		{
+			var bytes = Convert.FromBase64String(GetData());
+			using (var stream = new MemoryStream(bytes))
+			{
+				return Load(stream);
+			}
+		}
 		public static IList<Record> Load(FileInfo file)
 		{
 			using (var stream = new FileStream(file.FullName, FileMode.Open, FileAccess.Read))

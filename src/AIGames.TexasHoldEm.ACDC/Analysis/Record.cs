@@ -20,6 +20,43 @@ namespace AIGames.TexasHoldEm.ACDC.Analysis
 		/// </remarks>
 		public bool IsNew { get; set; }
 
+		public int CompareTo(object obj) { return CompareTo(obj as Record); }
+
+		public int CompareTo(Record other)
+		{
+			var compare = other.Odds.CompareTo(this.Odds);
+
+			if (compare == 0)
+			{
+				compare = other.Action.Amount.CompareTo(this.Action.Amount);
+			}
+			if (compare == 0)
+			{
+				compare = other.Action.ActionType.CompareTo(this.Action.ActionType);
+			}
+			if (compare == 0)
+			{
+				compare = other.SubRound.CompareTo(this.SubRound);
+			}
+			if (compare == 0)
+			{
+				compare = this.Gap.CompareTo(other.Gap);
+			}
+			if (compare == 0)
+			{
+				compare = this.Round.CompareTo(other.Round);
+			}
+			if (compare == 0)
+			{
+				compare = this.Step.CompareTo(other.Step);
+			}
+			if (compare == 0)
+			{
+				compare = other.Profit.CompareTo(this.Profit);
+			}
+			return compare;
+		}
+
 		public byte[] ToByteArray()
 		{
 			var act = BitConverter.GetBytes(Action.ToUInt16());
@@ -77,23 +114,6 @@ namespace AIGames.TexasHoldEm.ACDC.Analysis
 					Profit,
 					Action);
 			}
-		}
-
-		public int CompareTo(object obj) { return CompareTo(obj as Record); }
-
-		public int CompareTo(Record other)
-		{
-			var compare = other.Odds.CompareTo(this.Odds);
-
-			if (compare == 0)
-			{
-				compare = other.Action.Amount.CompareTo(this.Action.Amount);
-			}
-			if (compare == 0)
-			{
-				compare = other.Action.ActionType.CompareTo(this.Action.ActionType);
-			}
-			return compare;
 		}
 	}
 }

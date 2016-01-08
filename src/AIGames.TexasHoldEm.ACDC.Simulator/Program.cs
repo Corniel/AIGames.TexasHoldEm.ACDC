@@ -26,8 +26,14 @@ namespace AIGames.TexasHoldEm.ACDC.Simulator
 
 			var sw = Stopwatch.StartNew();
 			long runs = 0;
+			var shrinks = 0;
 			while (true)
 			{
+				if (records.Count > 50000)
+				{
+					simulator.Shrink(records);
+					shrinks++;
+				}
 				runs++;
 
 				// We don't want this feature for the simulator.
@@ -35,11 +41,12 @@ namespace AIGames.TexasHoldEm.ACDC.Simulator
 
 				simulator.Simulate(records, rnd);
 
-				Console.Write("\r{0} {1:#,##0} ({2:#,##0.00}/s), {3}",
+				Console.Write("\r{0} {1:#,##0} ({2:#,##0.00}/s), {3} (shrinked: {4})",
 					sw.Elapsed,
 					runs,
 					runs / sw.Elapsed.TotalSeconds,
-					records.Count);
+					records.Count,
+					shrinks);
 
 				if ((runs & 15) == 15)
 				{

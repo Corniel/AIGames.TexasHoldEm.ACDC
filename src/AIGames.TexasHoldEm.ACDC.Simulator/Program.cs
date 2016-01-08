@@ -13,6 +13,15 @@ namespace AIGames.TexasHoldEm.ACDC.Simulator
 		{
 			var file = new FileInfo("data.bin");
 
+			int recordSize = 0;
+
+			if (args.Length == 0 || !Int32.TryParse(args[0], out recordSize))
+			{
+				recordSize = 50000;
+			}
+			Console.Clear();
+			Console.WriteLine("Record size: {0:#,##0.0}k", recordSize / 1000.0);
+
 			var simulator = new Simulator();
 			var rnd = new MT19937Generator();
 
@@ -29,29 +38,40 @@ namespace AIGames.TexasHoldEm.ACDC.Simulator
 			var shrinks = 0;
 			while (true)
 			{
-				if (records.Count > 50000)
-				{
-					simulator.Shrink(records);
-					shrinks++;
-				}
 				runs++;
 
 				// We don't want this feature for the simulator.
 				foreach (var record in records) { record.IsNew = false; }
 
 				simulator.Simulate(records, rnd);
-
-				Console.Write("\r{0} {1:#,##0} ({2:#,##0.00}/s), {3} (shrinked: {4})",
-					sw.Elapsed,
-					runs,
-					runs / sw.Elapsed.TotalSeconds,
-					records.Count,
-					shrinks);
+				Write(records, sw, runs, shrinks);
 
 				if ((runs & 15) == 15)
 				{
 					records.Save(file);
 				}
+				if (records.Count > recordSize)
+				{
+					simulator.Shrink(records);
+					shrinks++;
+					Write(records, sw, runs, shrinks, true);
+				}
+			}
+		}
+
+		private static void Write(List<Record> records, Stopwatch sw, long runs, int shrinks, bool writeLine = false)
+		{
+
+			Console.Write("\r{0} {1:#,##0} ({2:#,##0.00}/s), {3} ({4})",
+				sw.Elapsed,
+				runs,
+				runs / sw.Elapsed.TotalSeconds,
+				records.Count,
+				shrinks);
+
+			if (writeLine)
+			{
+				Console.WriteLine();
 			}
 		}
 	}

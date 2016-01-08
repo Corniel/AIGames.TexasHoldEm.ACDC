@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace AIGames.TexasHoldEm.ACDC
 {
+	[DebuggerDisplay("{DebuggerDisplay}")]
 	public class PlayerState
 	{
 		public PlayerState(PlayerName name)
@@ -12,13 +15,15 @@ namespace AIGames.TexasHoldEm.ACDC
 		}
 		public PlayerName Name { get; private set; }
 
+		public double? Odds { get; set; }
+
 		public int Stack { get; set; }
 		public int Pot { get; set; }
 
 		public Cards Hand { get; set; }
 
 		public List<GameAction> Actions { get; private set; }
-		
+
 		public int GetAmountToCall(PlayerState other)
 		{
 			if (other.Pot > Pot)
@@ -54,6 +59,18 @@ namespace AIGames.TexasHoldEm.ACDC
 			Pot += amountToCall;
 		}
 
-		
+		private string DebuggerDisplay
+		{
+			get
+			{
+				return String.Format("{0} {1:f} {2:0.0%} {3} ({4}), Actions: {5}", 
+					Name, 
+					Hand,
+					Odds,
+					Stack, 
+					Pot,
+					Actions.Count);
+			}
+		}
 	}
 }

@@ -1,10 +1,8 @@
 ﻿using AIGames.TexasHoldEm.ACDC.Communication;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace AIGames.TexasHoldEm.ACDC
 {
@@ -38,23 +36,17 @@ namespace AIGames.TexasHoldEm.ACDC
 
 		public int SmallBlind { get; set; }
 		public int BigBlind { get; set; }
-		
+
 		public PlayerName OnButton { get; set; }
-		public Cards Table
-		{
-			get { return m_Table; }
-			set
-			{
-				m_Table = value;
-				Odds = null;
-			}
-		}
-		private Cards m_Table;
+		public Cards Table { get; set; }
 
 		public PlayerState Player1 { get; set; }
 		public PlayerState Player2 { get; set; }
 
-		public double? Odds { get; set; }
+		public PlayerState On { get { return this[OnButton]; } }
+		public PlayerState Off { get { return this[OnButton.Other()]; } }
+
+		public int Pot { get { return Player1.Pot + Player2.Pot; } }
 
 		public void SetHand(HandInstruction instruction)
 		{
@@ -86,6 +78,24 @@ namespace AIGames.TexasHoldEm.ACDC
 			this[instruction.Name].Act(action);
 		}
 
-		private string DebuggerDisplay { get { return String.Format("{0} Table: {1:f}", Round, Table); } }
+		[DebuggerBrowsable(DebuggerBrowsableState.Never), ExcludeFromCodeCoverage]
+		internal string DebuggerDisplay
+		{
+			get
+			{
+				var sb = new StringBuilder();
+				sb.AppendFormat("{0}.{1,-5} ({2})", Round, SubRound, 1+ Player1.Actions.Count + Player2.Actions.Count);
+				if (Table.Any())
+				{
+					sb.AppendFormat(" {0:f}", Table);
+				}
+				sb.AppendFormat(" {0:0.0%}-{1:0.0%}", Player1.Odds, Player2.Odds);
+				sb.AppendFormat(" {0:0}-{1:0}", Player1.Stack, Player2.Stack);
+				sb.AppendFormat(" ({0:0}-{1:0})", Player1.Pot, Player2.Pot);
+				sb.AppendFormat(" {0:f}-{1:f})", Player1.Hand, Player2.Hand);
+
+				return sb.ToString();
+			}
+		}
 	}
 }

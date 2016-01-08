@@ -1,4 +1,5 @@
-﻿using Troschuetz.Random.Generators;
+﻿using System;
+using Troschuetz.Random.Generators;
 
 namespace AIGames.TexasHoldEm.ACDC.Analysis
 {
@@ -24,6 +25,19 @@ namespace AIGames.TexasHoldEm.ACDC.Analysis
 				score += p;
 			}
 			return score;
+		}
+
+		public static PlayerName GetOutcome(Cards player1, Cards player2, Cards table)
+		{
+			var p1 = String.Join(" ", player1);
+			var p2 = String.Join(" ", player2);
+			var tb = String.Join(" ", table);
+
+			var h1 = new Hand(p1, tb);
+			var h2 = new Hand(p2, tb);
+
+			if (h1 == h2) { return PlayerName.None; }
+			return h1 > h2 ? PlayerName.player1 : PlayerName.player2;
 		}
 	}
 }

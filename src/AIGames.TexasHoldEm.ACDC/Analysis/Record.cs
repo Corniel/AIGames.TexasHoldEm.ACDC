@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 
 namespace AIGames.TexasHoldEm.ACDC.Analysis
 {
 	[DebuggerDisplay("{DebuggerDisplay}")]
-	public class Record
+	public class Record : IComparable, IComparable<Record>
 	{
 		public double Odds { get; set; }
 		public byte Round { get; set; }
@@ -13,6 +14,11 @@ namespace AIGames.TexasHoldEm.ACDC.Analysis
 		public short Gap { get; set; }
 		public GameAction Action { get;  set; }
 		public short Profit { get;  set; }
+		/// <summary>Returns true is the record is new.</summary>
+		/// <remarks>
+		/// Is not serialized.
+		/// </remarks>
+		public bool IsNew { get; set; }
 
 		public byte[] ToByteArray()
 		{
@@ -32,20 +38,36 @@ namespace AIGames.TexasHoldEm.ACDC.Analysis
 			return bytes;
 		}
 
+		public static Record FromByteArray(byte[] bytes)
+		{
+			var record = new Record()
+			{
+				Round = bytes[0],
+				SubRound = (SubRoundType)(bytes[1] >> 5),
+				Step = (byte)(bytes[1] & 0x1F),
+				Odds = ToOdds(bytes[2]),
+				Gap = BitConverter.ToInt16(bytes, 3),
+				Action = GameAction.FromUIint16(BitConverter.ToUInt16(bytes, 5)),
+				Profit = BitConverter.ToInt16(bytes, 7),
+			};
+			return record;
+		}
+
 		private static byte ToByte(double odds)
 		{
 			return (byte)Math.Round(odds * 255);
 		}
 		public static double ToOdds(byte b)
 		{
-			return b / 255;
+			return b / 255.0;
 		}
 
+		[DebuggerBrowsable(DebuggerBrowsableState.Never), ExcludeFromCodeCoverage]
 		private string DebuggerDisplay
 		{
 			get
 			{
-				return String.Format("{0:00.0%} {1:00}.{2,-5}({3}), Gap: {4}, Prof: {5}{6}, {7}",
+				return String.Format("{0:00.0%} {7} {1:00}.{2,-5}({3}), Gap: {4}, Prof: {5}{6}",
 					Odds,
 					Round,
 					SubRound,
@@ -55,6 +77,23 @@ namespace AIGames.TexasHoldEm.ACDC.Analysis
 					Profit,
 					Action);
 			}
+		}
+
+		public int CompareTo(object obj) { return CompareTo(obj as Record); }
+
+		public int CompareTo(Record other)
+		{
+			var compare = other.Odds.CompareTo(this.Odds);
+
+			if (compare == 0)
+			{
+				compare = other.Action.Amount.CompareTo(this.Action.Amount);
+			}
+			if (compare == 0)
+			{
+				compare = other.Action.ActionType.CompareTo(this.Action.ActionType);
+			}
+			return compare;
 		}
 	}
 }

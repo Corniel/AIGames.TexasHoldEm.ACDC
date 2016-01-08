@@ -1,12 +1,13 @@
 ﻿using AIGames.TexasHoldEm.ACDC.Communication;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AIGames.TexasHoldEm.ACDC
 {
+	[DebuggerDisplay("{DebuggerDisplay}")]
 	public class Matches
 	{
 		private Dictionary<int, Match> dict = new Dictionary<int, Match>();
@@ -60,5 +61,14 @@ namespace AIGames.TexasHoldEm.ACDC
 			{ typeof(PostInstruction), (instruction, matches) =>{ matches.Current.Post((PostInstruction)instruction); }},
 			{ typeof(ActionInstruction), (instruction, matches) =>{ matches.Current.Act((ActionInstruction)instruction); }},
 		};
+
+		[DebuggerBrowsable(DebuggerBrowsableState.Never), ExcludeFromCodeCoverage]
+		private string DebuggerDisplay
+		{
+			get
+			{
+				return Current.DebuggerDisplay;
+			}
+		}
 	}
 }

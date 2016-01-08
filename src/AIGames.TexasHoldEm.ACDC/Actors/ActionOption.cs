@@ -7,7 +7,8 @@ namespace AIGames.TexasHoldEm.ACDC.Actors
 	[DebuggerDisplay("{DebuggerDisplay}")]
 	public class ActionOption : IComparable, IComparable<ActionOption>
 	{
-		public ActionOption(GameAction action, double profit, double weight = 0.5)
+		public ActionOption(GameAction action) : this(action, 0, 0) { }
+		public ActionOption(GameAction action, double profit, double weight = 0.01)
 		{
 			Action = action;
 			m_Profit = profit;

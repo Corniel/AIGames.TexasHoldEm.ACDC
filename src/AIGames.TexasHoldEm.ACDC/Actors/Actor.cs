@@ -1,15 +1,32 @@
 ﻿using AIGames.TexasHoldEm.ACDC.Analysis;
+using System;
+using System.Collections.Generic;
 
 namespace AIGames.TexasHoldEm.ACDC.Actors
 {
 	public class Actor
 	{
-		public Actor(Records records)
+		public Actor(IList<Record> records)
 		{
-			this.Records = records;
+			Records = records;
+			Buffer = new List<Record>();
 		}
 
-		public Records Records { get; private set; }
+		public IList<Record> Records { get; private set; }
+
+		private List<Record> Buffer { get; set; }
+
+		public void ApplyProfit(int profit)
+		{
+			var win = profit > 0;
+			foreach (var record in Buffer)
+			{
+				var costs = win ? record.Profit : -record.Profit;
+				record.Profit = (short)(profit - costs);
+				Records.Add(record);
+			}
+			Buffer.Clear();
+		}
 
 		public ActionOption GetAction(ActorState state)
 		{
@@ -19,27 +36,30 @@ namespace AIGames.TexasHoldEm.ACDC.Actors
 
 			if (state.NoAmountToCall)
 			{
-				options.Add(GameAction.Check, state.Pot * state.Odds);
+				options.Add(GameAction.Check);
 			}
 			else
 			{
-				options.Add(GameAction.Fold, 0);
-				options.Add(GameAction.Call, state.Pot * state.Odds - state.AmountToCall * nOdds);
+				options.Add(GameAction.Fold);
+				options.Add(GameAction.Call);
 			}
 			if (state.AmountToCall != state.SmallBlind)
 			{
-				var step = 1 + (state.MaximumRaise - state.BigBlind) / 13;
+				var step = 1 + ((state.MaximumRaise - state.BigBlind) >> 4);
 
 				for (var raise = state.BigBlind; raise <= state.MaximumRaise; raise += step)
 				{
-					options.Add(GameAction.Raise(raise), state.Pot * state.Odds - (state.AmountToCall - raise) * nOdds);
+					options.Add(GameAction.Raise(raise));
 				}
 			}
-
 			Record test = state.ToRecord();
 			var best = Records.Select(test, options);
-			test.Profit = (short)(-state.AmountToCall - best.Action.Amount);
-			Records.Add(test);
+			if (test.Action != GameAction.Fold)
+			{
+				test.Profit = (short)state.OwnPot;
+				test.IsNew = true;
+				Buffer.Add(test);
+			}
 			return best;
 		}
 	}

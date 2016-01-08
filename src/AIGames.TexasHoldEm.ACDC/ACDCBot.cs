@@ -2,6 +2,7 @@
 using AIGames.TexasHoldEm.ACDC.Analysis;
 using AIGames.TexasHoldEm.ACDC.Communication;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
@@ -12,10 +13,11 @@ namespace AIGames.TexasHoldEm.ACDC
 	[DebuggerDisplay("{DebuggerDisplay}")]
 	public class ACDCBot : IBot
 	{
-		public ACDCBot()
+		public ACDCBot() : this(new List<Record>()) { }
+		public ACDCBot(IList<Record> records)
 		{
 			Rnd = new MT19937Generator(17);
-			Actor = new Actor(new Records());
+			Actor = new Actor(records);
 		}
 
 		public Actor Actor { get; set; }
@@ -36,28 +38,28 @@ namespace AIGames.TexasHoldEm.ACDC
 
 		public void Update(WinsInstruction instruction)
 		{
-			var profit = (short)instruction.Value;
-			if (Settings.OppoBot == instruction.Name) { profit = (short)-profit; }
-
-			for (var index = Actor.Records.Count - 1; index >= 0; index--)
-			{
-				var record = Actor.Records[index];
-				if (record.Round != Current.Round) { break; }
-				record.Profit += profit;
-			}
+			var profit = instruction.Value;
+			if (Settings.YourBot != instruction.Name) { profit = -profit; }
+			Actor.ApplyProfit(profit);
 		}
 
 		public Cards Table { get { return Current.Table; } }
 		public Cards Hand { get { return Own.Hand; } }
+		private int TableCount;
 
 		public PlayerState Own { get { return Current[Settings.YourBot]; } }
 		public PlayerState Other { get { return Current[Settings.YourBot.Other()]; } }
 
 		public BotResponse GetResponse(TimeSpan time)
 		{
-			if (!Current.Odds.HasValue)
+			if (TableCount != Table.Count)
 			{
-				Current.Odds = PokerHandEvaluator.GetOdds(Hand, Table);
+				Own.Odds = null;
+				TableCount = Table.Count;
+			}
+			if (!Own.Odds.HasValue)
+			{
+				Own.Odds = PokerHandEvaluator.GetOdds(Hand, Table);
 			}
 
 			var state = new ActorState()
@@ -66,7 +68,7 @@ namespace AIGames.TexasHoldEm.ACDC
 				SubRound = Current.SubRound,
 				Step = 1 + Own.Actions.Count,
 				BigBlind = Matches.Current.BigBlind,
-				Odds = Current.Odds.Value,
+				Odds = Own.Odds.Value,
 				OwnStack = Own.Stack,
 				OwnPot = Own.Pot,
 				OtherStack = Other.Stack,
@@ -76,6 +78,16 @@ namespace AIGames.TexasHoldEm.ACDC
 
 			var best = Actor.GetAction(state);
 
+			var response = new BotResponse()
+			{
+				Action = best.Action,
+				Log = GetLog(state, best),
+			};
+			return response;
+		}
+
+		private string GetLog(ActorState state, ActionOption best)
+		{
 			var log = new StringBuilder();
 			log.AppendFormat("{0:00}.{1,-5}", Current.Round, Current.SubRound)
 				.Append(' ').Append(Hand);
@@ -89,22 +101,10 @@ namespace AIGames.TexasHoldEm.ACDC
 				.Append(" ")
 				.Append(best.Profit > 0 ? "+" : "")
 				.Append(best.Profit.ToString("#,##0.0"));
-
-			var response = new BotResponse()
-			{
-				Action = best.Action,
-				Log = log.ToString(),
-			};
-			return response;
+			return log.ToString();
 		}
 
 		[DebuggerBrowsable(DebuggerBrowsableState.Never), ExcludeFromCodeCoverage]
-		private string DebuggerDisplay
-		{
-			get
-			{
-				return string.Format("Round {0}", Matches.Round);
-			}
-		}
+		private string DebuggerDisplay { get { return "Bot: " + Settings.YourBot.ToString(); } }
 	}
 }

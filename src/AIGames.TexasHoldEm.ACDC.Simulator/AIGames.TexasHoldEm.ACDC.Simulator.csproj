@@ -4,15 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{78D8C22E-50B5-46AE-9211-276286D7BB4B}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{1C3202FF-225D-4D22-8AFA-538A885D6E78}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AIGames.TexasHoldEm.ACDC.UnitTests</RootNamespace>
-    <AssemblyName>AIGames.TexasHoldEm.ACDC.UnitTests</AssemblyName>
+    <RootNamespace>AIGames.TexasHoldEm.ACDC.Simulator</RootNamespace>
+    <AssemblyName>TexasHoldEmSimulator</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +23,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -30,40 +32,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="nunit.framework, Version=3.0.5813.39031, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
-      <HintPath>..\packages\NUnit.3.0.1\lib\net45\nunit.framework.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.IO.Compression.FileSystem" />
-    <Reference Include="System.XML" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Analysis\MatcherTest.cs" />
-    <Compile Include="Analysis\RecordTest.cs" />
-    <Compile Include="BitsTest.cs" />
-    <Compile Include="Category.cs" />
-    <Compile Include="Communication\ConsolePlatformTest.cs" />
-    <Compile Include="Communication\ConsolePlatformTester.cs" />
-    <Compile Include="Communication\InstructionTest.cs" />
-    <Compile Include="Communication\ActionInstructionTest.cs" />
-    <Compile Include="Deployoment\Deployer.cs" />
-    <Compile Include="Deployoment\DeployerTest.cs" />
-    <Compile Include="FieldConnect4Generator.cs" />
-    <Compile Include="HandTest.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config.example" />
-    <None Include="app.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Communication\input.simple.txt" />
+    <Compile Include="Simulator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AIGames.TexasHoldEm.ACDC\AIGames.TexasHoldEm.ACDC.csproj">
@@ -72,4 +52,11 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
 </Project>

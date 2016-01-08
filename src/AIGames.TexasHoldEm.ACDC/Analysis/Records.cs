@@ -60,8 +60,8 @@ namespace AIGames.TexasHoldEm.ACDC.Analysis
 			var reader = new BinaryReader(stream);
 			while(true)
 			{
-				var bytes = reader.ReadBytes(9);
-				if (bytes.Length != 9) { break; }
+				var bytes = reader.ReadBytes(Record.ByteSize);
+				if (bytes.Length != Record.ByteSize) { break; }
 				list.Add(Record.FromByteArray(bytes));
 			}
 			return list;

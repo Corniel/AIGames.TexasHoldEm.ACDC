@@ -7,10 +7,13 @@ namespace AIGames.TexasHoldEm.ACDC.Analysis
 	[DebuggerDisplay("{DebuggerDisplay}")]
 	public class Record : IComparable, IComparable<Record>
 	{
+		public const int ByteSize = 11;
+
 		public double Odds { get; set; }
 		public byte Round { get; set; }
 		public SubRoundType SubRound { get; set; }
 		public byte Step { get; set; }
+		public short Pot { get; set; }
 		public short Gap { get; set; }
 		public GameAction Action { get;  set; }
 		public short Profit { get;  set; }
@@ -40,6 +43,10 @@ namespace AIGames.TexasHoldEm.ACDC.Analysis
 			}
 			if (compare == 0)
 			{
+				compare = this.Pot.CompareTo(other.Pot);
+			}
+			if (compare == 0)
+			{
 				compare = this.Gap.CompareTo(other.Gap);
 			}
 			if (compare == 0)
@@ -62,8 +69,9 @@ namespace AIGames.TexasHoldEm.ACDC.Analysis
 			var act = BitConverter.GetBytes(Action.ToUInt16());
 			var gap = BitConverter.GetBytes(Gap);
 			var profit = BitConverter.GetBytes(Profit);
+			var pot = BitConverter.GetBytes(Pot);
 
-			var bytes = new byte[9];
+			var bytes = new byte[11];
 			bytes[0] = Round;
 			bytes[1] = (byte)((int)SubRound << 5 | Step);
 			bytes[2] = ToByte(Odds);
@@ -71,6 +79,7 @@ namespace AIGames.TexasHoldEm.ACDC.Analysis
 			Array.Copy(gap, 0, bytes, 3, 2);
 			Array.Copy(act, 0, bytes, 5, 2);
 			Array.Copy(profit, 0, bytes, 7, 2);
+			Array.Copy(pot, 0, bytes, 9, 2);
 
 			return bytes;
 		}
@@ -86,6 +95,7 @@ namespace AIGames.TexasHoldEm.ACDC.Analysis
 				Gap = BitConverter.ToInt16(bytes, 3),
 				Action = GameAction.FromUIint16(BitConverter.ToUInt16(bytes, 5)),
 				Profit = BitConverter.ToInt16(bytes, 7),
+				Pot = BitConverter.ToInt16(bytes, 9),
 			};
 			return record;
 		}
@@ -104,7 +114,7 @@ namespace AIGames.TexasHoldEm.ACDC.Analysis
 		{
 			get
 			{
-				return String.Format("{0:00.0%} {7} {1:00}.{2,-5}({3}), Gap: {4}, Prof: {5}{6}",
+				return String.Format("{0:00.0%} {7} {1:00}.{2,-5}({3}), {7} Pot: {8}, Gap: {4}, Profit: {5}{6}",
 					Odds,
 					Round,
 					SubRound,
@@ -112,7 +122,8 @@ namespace AIGames.TexasHoldEm.ACDC.Analysis
 					Gap,
 					Profit > 0 ? "+": "",
 					Profit,
-					Action);
+					Action,
+					Pot);
 			}
 		}
 	}

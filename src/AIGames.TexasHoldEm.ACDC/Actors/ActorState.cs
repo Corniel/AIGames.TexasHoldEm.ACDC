@@ -2,7 +2,6 @@
 using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using Troschuetz.Random.Generators;
 
 namespace AIGames.TexasHoldEm.ACDC.Actors
 {
@@ -20,7 +19,7 @@ namespace AIGames.TexasHoldEm.ACDC.Actors
 		public int OwnPot { get; set; }
 		public int OtherStack { get; set; }
 		public int OtherPot { get; set; }
-		
+
 		public int Pot { get { return OwnPot + OtherPot; } }
 		public int Gap { get { return OwnStack - OtherStack; } }
 
@@ -51,6 +50,7 @@ namespace AIGames.TexasHoldEm.ACDC.Actors
 				SubRound = SubRound,
 				Step = (byte)Step,
 				Gap = (short)Gap,
+				Pot = (short)OwnPot,
 			};
 		}
 
@@ -64,7 +64,7 @@ namespace AIGames.TexasHoldEm.ACDC.Actors
 					Pot,
 					OwnPot, OwnStack,
 					OtherPot, OtherStack,
-					NoAmountToCall ? "": "Call: "+ AmountToCall);
+					NoAmountToCall ? "" : "Call: " + AmountToCall);
 			}
 		}
 	}

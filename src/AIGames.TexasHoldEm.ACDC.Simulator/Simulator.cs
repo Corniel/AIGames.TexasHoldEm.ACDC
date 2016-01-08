@@ -33,6 +33,7 @@ namespace AIGames.TexasHoldEm.ACDC.Simulator
 						SubRound = last.SubRound,
 						Action = last.Action,
 						Gap = (short)((last.Gap + current.Gap) >> 1),
+						Pot = (short)((last.Pot + current.Pot) >> 1),
 						Profit = (short)((last.Profit + current.Profit) >> 1),
 						Round = (byte)((last.Round + current.Round) >> 1),
 						Step = (byte)((last.Step + current.Step) >> 1),

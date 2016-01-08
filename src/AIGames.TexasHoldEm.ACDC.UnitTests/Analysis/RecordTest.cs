@@ -18,6 +18,7 @@ namespace AIGames.TexasHoldEm.ACDC.UnitTests.Analysis
 				Round = 4,
 				SubRound = SubRoundType.River,
 				Step = 2,
+				Pot = 17,
 			};
 
 			var bytes = exp.ToByteArray();
@@ -30,6 +31,7 @@ namespace AIGames.TexasHoldEm.ACDC.UnitTests.Analysis
 			Assert.AreEqual(exp.Round, act.Round, "Round");
 			Assert.AreEqual(exp.SubRound, act.SubRound, "Round");
 			Assert.AreEqual(exp.Step, act.Step, "Round");
+			Assert.AreEqual(exp.Pot, act.Pot, "Round");
 		}
 	}
 }

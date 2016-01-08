@@ -11,6 +11,7 @@ namespace AIGames.TexasHoldEm.ACDC.Analysis
 			match *= Step(l.Step, r.Step);
 			match *= Odds(l.Odds, r.Odds);
 			match *= Gap(l.Gap, r.Gap);
+			match *= Pot(l.Pot, r.Pot);
 			match *= Amount(l.Action.Amount, r.Action.Amount);
 			return match;
 		}
@@ -45,6 +46,11 @@ namespace AIGames.TexasHoldEm.ACDC.Analysis
 		public static double Gap(int l, int r)
 		{
 			var delta = 1.0 - (l - r) * (l - r) / (10000.0);
+			return Math.Max(0, delta);
+		}
+		public static double Pot(int l, int r)
+		{
+			var delta = 1.0 - (l - r) * (l - r) / (5000.0);
 			return Math.Max(0, delta);
 		}
 

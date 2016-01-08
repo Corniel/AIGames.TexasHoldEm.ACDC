@@ -38,7 +38,7 @@ namespace AIGames.TexasHoldEm.ACDC.UnitTests.Deployoment
 				writer.Write('"');
 				writer.Write(Convert.ToBase64String(bytes));
 				writer.Write('"');
-				writer.WriteLine("};");
+				writer.WriteLine(";}");
 				writer.WriteLine("\t}");
 				writer.WriteLine("}");
 			}

@@ -16,12 +16,10 @@ namespace AIGames.TexasHoldEm.ACDC
 		public ACDCBot() : this(Records.Get()) { }
 		public ACDCBot(IList<Record> records)
 		{
-			Rnd = new MT19937Generator(17);
 			Actor = new Actor(records);
 		}
 
 		public Actor Actor { get; set; }
-		public MT19937Generator Rnd { get; set; }
 		public Settings Settings { get; set; }
 		public Matches Matches { get; set; }
 		public Match Current { get { return Matches.Current; } }
@@ -73,7 +71,6 @@ namespace AIGames.TexasHoldEm.ACDC
 				OwnPot = Own.Pot,
 				OtherStack = Other.Stack,
 				OtherPot = Other.Pot,
-				Rnd = Rnd,
 			};
 
 			var best = Actor.GetAction(state);

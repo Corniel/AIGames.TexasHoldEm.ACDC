@@ -42,8 +42,6 @@ namespace AIGames.TexasHoldEm.ACDC.Actors
 		/// <summary>Returns true if there is no amount to call, otherwise false.</summary>
 		public bool NoAmountToCall { get { return AmountToCall == 0; } }
 
-		public MT19937Generator Rnd { get; set; }
-
 		public Record ToRecord()
 		{
 			return new Record()

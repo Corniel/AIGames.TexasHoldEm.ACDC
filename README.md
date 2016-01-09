@@ -3,6 +3,10 @@ ACDC
 
 ACDC is an AI trying to play Texas Hold'em.
 
+Version 4
+---------
+Added AmountToCall to the learning mechanism.
+
 Version 3
 ---------
 Fix for DateTime.Now call (not supported on life) and added Pot to matching.

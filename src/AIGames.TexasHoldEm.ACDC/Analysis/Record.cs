@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 
 namespace AIGames.TexasHoldEm.ACDC.Analysis
 {
-	[DebuggerDisplay("{DebuggerDisplay}")]
 	public class Record : IComparable, IComparable<Record>
 	{
 		public const int ByteSize = 11;
@@ -109,22 +109,20 @@ namespace AIGames.TexasHoldEm.ACDC.Analysis
 			return b / 255.0;
 		}
 
-		[DebuggerBrowsable(DebuggerBrowsableState.Never), ExcludeFromCodeCoverage]
-		private string DebuggerDisplay
+		public override string ToString()
 		{
-			get
-			{
-				return String.Format("{0:00.0%} {7} {1:00}.{2,-5}({3}), {7} Pot: {8}, Gap: {4}, Profit: {5}{6}",
-					Odds,
-					Round,
-					SubRound,
-					Step,
-					Gap,
-					Profit > 0 ? "+": "",
-					Profit,
-					Action,
-					Pot);
-			}
+			return String.Format(
+				CultureInfo.InvariantCulture,
+				"{0:00.0%} {7} {1:00}.{2,-5}({3}), {7} Pot: {8}, Gap: {4}, Profit: {5}{6}",
+				Odds,
+				Round,
+				SubRound,
+				Step,
+				Gap,
+				Profit > 0 ? "+": "",
+				Profit,
+				Action,
+				Pot);
 		}
 	}
 }

@@ -15,6 +15,10 @@ namespace AIGames.TexasHoldEm.ACDC.Simulator
 
 			int recordSize = 0;
 
+			var records = LoadRecords(file);
+
+			if (Log(args, records)) { return; }
+					
 			if (args.Length == 0 || !Int32.TryParse(args[0], out recordSize))
 			{
 				recordSize = 50000;
@@ -24,14 +28,6 @@ namespace AIGames.TexasHoldEm.ACDC.Simulator
 
 			var simulator = new Simulator();
 			var rnd = new MT19937Generator();
-
-			var records = new List<Record>();
-			if(file.Exists)
-			{ 
-				records.AddRange(Records.Load(file));
-			}
-
-			records.Sort();
 
 			var sw = Stopwatch.StartNew();
 			long runs = 0;
@@ -56,6 +52,33 @@ namespace AIGames.TexasHoldEm.ACDC.Simulator
 					Write(records, sw, runs, shrinks, true);
 				}
 			}
+		}
+
+		private static List<Record> LoadRecords(FileInfo file)
+		{
+			var records = new List<Record>();
+			if (file.Exists)
+			{
+				records.AddRange(Records.Load(file));
+			}
+			records.Sort();
+			return records;
+		}
+
+		private static bool Log(string[] args, List<Record> records)
+		{
+			if (args.Length == 1 && args[0].ToUpperInvariant() == "LOG")
+			{
+				using (var writer = new StreamWriter("data.log"))
+				{
+					foreach (var record in records)
+					{
+						writer.WriteLine(record);
+					}
+				}
+				return true;
+			}
+			return false;
 		}
 
 		private static void ClearNewStatus(List<Record> records)

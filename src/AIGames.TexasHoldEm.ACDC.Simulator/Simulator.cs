@@ -54,6 +54,7 @@ namespace AIGames.TexasHoldEm.ACDC.Simulator
 				Odds = left.Odds,
 				SubRound = left.SubRound,
 				Action = left.Action,
+				AmountToCall = (short)((left.AmountToCall + right.AmountToCall) >> 1),
 				Gap = (short)((left.Gap + right.Gap) >> 1),
 				Pot = (short)((left.Pot + right.Pot) >> 1),
 				Profit = (short)((left.Profit + right.Profit) >> 1),

@@ -50,6 +50,7 @@ namespace AIGames.TexasHoldEm.ACDC.Actors
 				SubRound = SubRound,
 				Step = (byte)Step,
 				Gap = (short)Gap,
+				AmountToCall = (short)AmountToCall,
 				Pot = (short)OwnPot,
 			};
 		}

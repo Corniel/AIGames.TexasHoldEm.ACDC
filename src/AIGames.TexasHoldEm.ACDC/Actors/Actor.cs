@@ -28,7 +28,7 @@ namespace AIGames.TexasHoldEm.ACDC.Actors
 			Buffer.Clear();
 		}
 
-		public ActionOption GetAction(ActorState state)
+		public ActionOptions GetAction(ActorState state)
 		{
 			var options = new ActionOptions();
 
@@ -40,7 +40,6 @@ namespace AIGames.TexasHoldEm.ACDC.Actors
 			}
 			else
 			{
-				options.Add(GameAction.Fold);
 				options.Add(GameAction.Call);
 			}
 			if (state.AmountToCall != state.SmallBlind)
@@ -52,6 +51,13 @@ namespace AIGames.TexasHoldEm.ACDC.Actors
 					options.Add(GameAction.Raise(raise));
 				}
 			}
+			// Only add a fold if we have to call, and there is a change that we 
+			// can play a next round.
+			if (!state.NoAmountToCall && state.OtherPot >= state.BigBlind)
+			{
+				options.Add(GameAction.Fold);
+			}
+
 			Record test = state.ToRecord();
 			options.Sort(test, Records);
 			var best = options[0];
@@ -61,7 +67,7 @@ namespace AIGames.TexasHoldEm.ACDC.Actors
 				test.IsNew = true;
 				Buffer.Add(test);
 			}
-			return best;
+			return options;
 		}
 	}
 }

@@ -73,31 +73,37 @@ namespace AIGames.TexasHoldEm.ACDC
 				OtherPot = Other.Pot,
 			};
 
-			var best = Actor.GetAction(state);
+			var options = Actor.GetAction(state);
 
 			var response = new BotResponse()
 			{
-				Action = best.Action,
-				Log = GetLog(state, best),
+				Action = options.Action,
+				Log = GetLog(state, options),
 			};
 			return response;
 		}
 
-		private string GetLog(ActorState state, ActionOption best)
+		private string GetLog(ActorState state, ActionOptions options)
 		{
+			var best = options.Action == GameAction.Fold ? options[1] : options[0];
+
 			var log = new StringBuilder();
+			
 			log.AppendFormat("{0:00}.{1,-5}", Current.Round, Current.SubRound)
 				.Append(' ').Append(Hand);
+			
 			if (Current.SubRound != SubRoundType.Pre)
 			{
 				log.AppendFormat(", {0}", Table);
 			}
+			
 			log.AppendFormat(", {0:0.0%}", state.Odds)
 				.Append(", ")
-				.Append(best.Action)
+				.Append(options.Action)
 				.Append(" ")
 				.Append(best.Profit > 0 ? "+" : "")
 				.Append(best.Profit.ToString("#,##0.0"));
+
 			return log.ToString();
 		}
 

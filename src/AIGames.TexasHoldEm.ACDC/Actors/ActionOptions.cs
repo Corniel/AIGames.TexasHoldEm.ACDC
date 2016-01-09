@@ -8,19 +8,26 @@ namespace AIGames.TexasHoldEm.ACDC.Actors
 	{
 		private static readonly MT19937Generator rnd = new MT19937Generator(17);
 
-		public void Add(GameAction action, double profit)
-		{
-			Add(new ActionOption(action, profit));
-		}
 		public void Add(GameAction action)
 		{
-			var index = rnd.Next(Count + 1);
-			if (action != GameAction.Fold && rnd.NextDouble() > 0.995)
+			if (action == GameAction.Fold)
 			{
-				// Once in a while promote a random action.
-				Insert(index, new ActionOption(action, 100, 1));
+				Add(new ActionOption(action));
 			}
-			Insert(index, new ActionOption(action));
+			else
+			{
+				var index = rnd.Next(Count + 1);
+
+				if (rnd.NextDouble() > 0.995)
+				{
+					// Once in a while promote a random action.
+					Insert(index, new ActionOption(action, 100, 1));
+				}
+				else
+				{
+					Insert(index, new ActionOption(action));
+				}
+			}
 		}
 
 		public void Sort(Record test, IEnumerable<Record> items)
@@ -49,6 +56,15 @@ namespace AIGames.TexasHoldEm.ACDC.Actors
 				}
 			}
 			Sort();
+		}
+
+		public GameAction Action
+		{
+			get
+			{
+				if (Count == 0) { return GameAction.Check; }
+				return this[0].Action;
+			}
 		}
 	}
 }

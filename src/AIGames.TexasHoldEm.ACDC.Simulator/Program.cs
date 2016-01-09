@@ -16,9 +16,10 @@ namespace AIGames.TexasHoldEm.ACDC.Simulator
 			int recordSize = 0;
 
 			var records = LoadRecords(file);
+			Merge(records);
 
 			if (Log(args, records)) { return; }
-					
+
 			if (args.Length == 0 || !Int32.TryParse(args[0], out recordSize))
 			{
 				recordSize = 50000;
@@ -44,12 +45,28 @@ namespace AIGames.TexasHoldEm.ACDC.Simulator
 				if ((runs & 15) == 15)
 				{
 					records.Save(file);
+					Merge(records);
 				}
 				if (records.Count > recordSize)
 				{
 					simulator.Shrink(records);
 					shrinks++;
 					Write(records, sw, runs, shrinks, true);
+				}
+			}
+		}
+
+		private static void Merge(List<Record> records)
+		{
+			var dir = new DirectoryInfo(".");
+			foreach (var file in dir.GetFiles("*.bin"))
+			{
+				if (file.Name != "data.bin")
+				{
+					Console.WriteLine();
+					records.AddRange(Records.Load(file));
+					Console.WriteLine("Merged {0}", file);
+					file.Delete();
 				}
 			}
 		}

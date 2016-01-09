@@ -21,7 +21,7 @@ namespace AIGames.TexasHoldEm.ACDC.Simulator
 			for (var index = 1; index < records.Count; index++)
 			{
 				var current = records[index];
-				if (last.Odds == current.Odds && 
+				if (Record.ToByte(last.Odds) == Record.ToByte(current.Odds) && 
 					last.SubRound == current.SubRound &&
 					last.Action.ActionType == current.Action.ActionType)
 				{

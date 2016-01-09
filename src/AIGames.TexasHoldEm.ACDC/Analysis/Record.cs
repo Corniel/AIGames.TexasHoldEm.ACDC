@@ -100,7 +100,7 @@ namespace AIGames.TexasHoldEm.ACDC.Analysis
 			return record;
 		}
 
-		private static byte ToByte(double odds)
+		public static byte ToByte(double odds)
 		{
 			return (byte)Math.Round(odds * 255);
 		}

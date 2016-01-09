@@ -7,6 +7,9 @@ namespace AIGames.TexasHoldEm.ACDC.UnitTests.Communication
 {
 	public class ConsolePlatformTester : ConsolePlatform
 	{
+		public ConsolePlatformTester(FileInfo file)
+			: base(file.OpenText(), Console.Out, new StringWriter()) { }
+
 		public ConsolePlatformTester(string path)
 			: base(LoadInput(path), Console.Out, new StringWriter()) {}
 

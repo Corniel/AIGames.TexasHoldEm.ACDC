@@ -40,6 +40,7 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Analysis\HistoryLoading.cs" />
     <Compile Include="Analysis\MatcherTest.cs" />
     <Compile Include="Analysis\RecordTest.cs" />
     <Compile Include="BitsTest.cs" />

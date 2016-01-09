@@ -49,7 +49,7 @@ namespace AIGames.TexasHoldEm.ACDC.Simulator
 				}
 				if (records.Count > recordSize)
 				{
-					simulator.Shrink(records);
+					records.Shrink();
 					shrinks++;
 					Write(records, sw, runs, shrinks, true);
 				}

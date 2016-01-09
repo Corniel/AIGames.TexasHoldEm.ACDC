@@ -83,7 +83,7 @@ namespace AIGames.TexasHoldEm.ACDC.Analysis
 			Array.Copy(act, 0, bytes, 5, 2);
 			Array.Copy(profit, 0, bytes, 7, 2);
 			Array.Copy(pot, 0, bytes, 9, 2);
-			Array.Copy(pot, 0, bytes, 11, 2);
+			Array.Copy(call, 0, bytes, 11, 2);
 
 			return bytes;
 		}
@@ -103,6 +103,27 @@ namespace AIGames.TexasHoldEm.ACDC.Analysis
 				AmountToCall = BitConverter.ToInt16(bytes, 11),
 			};
 			return record;
+		}
+
+		public static Record Merge(Record left, Record right)
+		{
+			var merged = new Record()
+			{
+				Odds = left.Odds,
+				SubRound = left.SubRound,
+				Action = left.Action,
+				AmountToCall = (short)((left.AmountToCall + right.AmountToCall) >> 1),
+				Gap = (short)((left.Gap + right.Gap) >> 1),
+				Pot = (short)((left.Pot + right.Pot) >> 1),
+				Profit = (short)((left.Profit + right.Profit) >> 1),
+				Round = (byte)((left.Round + right.Round) >> 1),
+				Step = (byte)((left.Step + right.Step) >> 1),
+			};
+			if (left.Action.ActionType == GameActionType.raise)
+			{
+				merged.Action = GameAction.Raise((left.Action.Amount + right.Action.Amount) >> 1);
+			}
+			return merged;
 		}
 
 		public static byte ToByte(double odds)

@@ -4,6 +4,8 @@ using NUnit.Framework;
 using NUnit.Framework.Compatibility;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
 using System.Linq;
 
 namespace AIGames.TexasHoldEm.ACDC.UnitTests.Analysis
@@ -12,7 +14,7 @@ namespace AIGames.TexasHoldEm.ACDC.UnitTests.Analysis
 	public class SelectTest
 	{
 		public static readonly double[] Odds = GetOdds();
-		private static double[] GetOdds()
+		public static double[] GetOdds()
 		{
 			var odds = new List<double>();
 			for (int b = byte.MaxValue; b >= byte.MinValue; b--)

@@ -9,65 +9,6 @@ namespace AIGames.TexasHoldEm.ACDC.Simulator
 {
 	public class Simulator
 	{
-		public void Shrink(List<Record> records)
-		{
-			records.Sort();
-
-			var old = records
-				.OrderBy(r => Math.Abs(0.5 - r.Odds))
-				.ToList();
-
-			var buffer = new List<Record>(records.Capacity);
-
-			while (old.Count > 0)
-			{
-				var candidate = old[0];
-				old.RemoveAt(0);
-
-				var match = old
-					.Where(item =>
-						candidate.ByteOdds == item.ByteOdds &&
-						candidate.SubRound == item.SubRound &&
-						candidate.Action.ActionType == item.Action.ActionType)
-					.OrderByDescending(item => Matcher.Record(candidate, item)).FirstOrDefault();
-
-				if (match != null)
-				{
-					var merged = this.Merge(candidate, match);
-					buffer.Add(merged);
-					old.Remove(match);
-				}
-				else
-				{
-					buffer.Add(candidate);
-				}
-			}
-			records.Clear();
-			records.AddRange(buffer);
-			records.Sort();
-		}
-
-		private Record Merge(Record left, Record right)
-		{
-			var merged = new Record()
-			{
-				Odds = left.Odds,
-				SubRound = left.SubRound,
-				Action = left.Action,
-				AmountToCall = (short)((left.AmountToCall + right.AmountToCall) >> 1),
-				Gap = (short)((left.Gap + right.Gap) >> 1),
-				Pot = (short)((left.Pot + right.Pot) >> 1),
-				Profit = (short)((left.Profit + right.Profit) >> 1),
-				Round = (byte)((left.Round + right.Round) >> 1),
-				Step = (byte)((left.Step + right.Step) >> 1),
-			};
-			if (left.Action.ActionType == GameActionType.raise)
-			{
-				merged.Action = GameAction.Raise((left.Action.Amount + right.Action.Amount) >> 1);
-			}
-			return merged;
-		}
-
 		public void Simulate(IList<Record> records, MT19937Generator rnd)
 		{
 			var bots = new Dictionary<PlayerName, ACDCBot>()

@@ -1,8 +1,11 @@
-﻿using NUnit.Framework;
+﻿using AIGames.TexasHoldEm.ACDC.Analysis;
+using NUnit.Framework;
 using System;
 using System.Configuration;
 using System.IO;
 using System.Reflection;
+using System.Linq;
+using AIGames.TexasHoldEm.ACDC.UnitTests.Analysis;
 
 namespace AIGames.TexasHoldEm.ACDC.UnitTests.Deployoment
 {
@@ -20,6 +23,7 @@ namespace AIGames.TexasHoldEm.ACDC.UnitTests.Deployoment
 		public void WriteBase64Data()
 		{
 			var file = new FileInfo(ConfigurationManager.AppSettings["Data.File"]);
+
 			byte[] bytes = null;
 			using (var stream = new MemoryStream())
 			{
@@ -42,6 +46,51 @@ namespace AIGames.TexasHoldEm.ACDC.UnitTests.Deployoment
 				writer.WriteLine("\t}");
 				writer.WriteLine("}");
 			}
+		}
+
+		[Test]
+		public void AddPreFlopCallsAndChecks()
+		{
+			var file = new FileInfo(ConfigurationManager.AppSettings["Data.File"]);
+			var records = Records.Load(file);
+
+			records = records.Where(r => r.ByteOdds > 0).ToList();
+
+			foreach (var odds in SelectTest.GetPreFlopOdds())
+			{
+				for (short call = 10; call < 100; call += 10)
+				{
+					var round = (byte)(call / 10 + 1);
+					var pot = (short)(3 * call);
+					var profitCall = odds * pot - (1 - odds) * call;
+					var profitCheck = odds * pot;
+
+					var recordCall = new Record()
+					{
+						Odds = odds,
+						Action = GameAction.Call,
+						AmountToCall = call,
+						SubRound = SubRoundType.Pre,
+						Step = 1,
+						Round = round,
+						Pot = pot,
+						Profit = (short)profitCall,
+					};
+					var recordCheck = new Record()
+					{
+						Odds = odds,
+						Action = GameAction.Check,
+						SubRound = SubRoundType.Pre,
+						Step = 1,
+						Round = round,
+						Pot = (short)(call * 4),
+						Profit = (short)profitCall,
+					};
+					records.Add(recordCall);
+					records.Add(recordCheck);
+				}
+			}
+			records.Save(file);
 		}
 	}
 }

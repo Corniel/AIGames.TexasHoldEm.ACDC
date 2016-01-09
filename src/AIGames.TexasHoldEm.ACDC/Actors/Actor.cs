@@ -53,7 +53,8 @@ namespace AIGames.TexasHoldEm.ACDC.Actors
 				}
 			}
 			Record test = state.ToRecord();
-			var best = Records.Select(test, options);
+			options.Sort(test, Records);
+			var best = options[0];
 			if (test.Action != GameAction.Fold)
 			{
 				test.Profit = (short)state.OwnPot;

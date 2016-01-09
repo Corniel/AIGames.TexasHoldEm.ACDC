@@ -7,7 +7,7 @@ namespace AIGames.TexasHoldEm.ACDC.Analysis
 {
 	public class Record : IComparable, IComparable<Record>
 	{
-		public const int ByteSize = 11;
+		public const int ByteSize = 13;
 
 		public double Odds { get; set; }
 		public byte ByteOdds { get { return ToByte(Odds); } }
@@ -16,6 +16,7 @@ namespace AIGames.TexasHoldEm.ACDC.Analysis
 		public byte Step { get; set; }
 		public short Pot { get; set; }
 		public short Gap { get; set; }
+		public short AmountToCall { get; set; }
 		public GameAction Action { get;  set; }
 		public short Profit { get;  set; }
 		/// <summary>Returns true is the record is new.</summary>
@@ -71,8 +72,9 @@ namespace AIGames.TexasHoldEm.ACDC.Analysis
 			var gap = BitConverter.GetBytes(Gap);
 			var profit = BitConverter.GetBytes(Profit);
 			var pot = BitConverter.GetBytes(Pot);
+			var call = BitConverter.GetBytes(AmountToCall);
 
-			var bytes = new byte[11];
+			var bytes = new byte[ByteSize];
 			bytes[0] = Round;
 			bytes[1] = (byte)((int)SubRound << 5 | Step);
 			bytes[2] = ToByte(Odds);
@@ -81,6 +83,7 @@ namespace AIGames.TexasHoldEm.ACDC.Analysis
 			Array.Copy(act, 0, bytes, 5, 2);
 			Array.Copy(profit, 0, bytes, 7, 2);
 			Array.Copy(pot, 0, bytes, 9, 2);
+			Array.Copy(pot, 0, bytes, 11, 2);
 
 			return bytes;
 		}
@@ -97,6 +100,7 @@ namespace AIGames.TexasHoldEm.ACDC.Analysis
 				Action = GameAction.FromUIint16(BitConverter.ToUInt16(bytes, 5)),
 				Profit = BitConverter.ToInt16(bytes, 7),
 				Pot = BitConverter.ToInt16(bytes, 9),
+				AmountToCall = BitConverter.ToInt16(bytes, 11),
 			};
 			return record;
 		}
@@ -114,7 +118,7 @@ namespace AIGames.TexasHoldEm.ACDC.Analysis
 		{
 			return String.Format(
 				CultureInfo.InvariantCulture,
-				"{0:00.0%} {7} {1:00}.{2,-5}({3}), {7} Pot: {8}, Gap: {4}, Profit: {5}{6}",
+				"{0:00.0%} {7} {1:00}.{2,-5}({3}), {7} Pot: {8}, Call: {9}, Gap: {4}, Profit: {5}{6}",
 				Odds,
 				Round,
 				SubRound,
@@ -123,7 +127,8 @@ namespace AIGames.TexasHoldEm.ACDC.Analysis
 				Profit > 0 ? "+": "",
 				Profit,
 				Action,
-				Pot);
+				Pot,
+				AmountToCall);
 		}
 	}
 }

@@ -15,8 +15,8 @@ namespace AIGames.TexasHoldEm.ACDC.UnitTests.Analysis
 		[Test]
 		public void Match_NonePreFlopVsNonPreFlop_0do8()
 		{
-			Assert.AreEqual(0.8, Matcher.SubRound(SubRoundType.Turn, SubRoundType.River), "Turn vs River.");
-			Assert.AreEqual(0.8, Matcher.SubRound(SubRoundType.Turn, SubRoundType.Flop), "Turn vs Flop.");
+			Assert.AreEqual(0.7, Matcher.SubRound(SubRoundType.Turn, SubRoundType.River), "Turn vs River.");
+			Assert.AreEqual(0.7, Matcher.SubRound(SubRoundType.Turn, SubRoundType.Flop), "Turn vs Flop.");
 		}
 
 		[Test]
@@ -64,6 +64,36 @@ namespace AIGames.TexasHoldEm.ACDC.UnitTests.Analysis
 		{
 			var act = Matcher.Odds(0.8, 0.70);
 			var exp = 0.25;
+			Assert.AreEqual(exp, act, 0.01);
+		}
+
+		[Test]
+		public void AmountToCall_0vs0_1()
+		{
+			var act = Matcher.AmountToCall(0, 0);
+			var exp = 1;
+			Assert.AreEqual(exp, act, 0.01);
+		}
+
+		[Test]
+		public void AmountToCall_1vs0_0()
+		{
+			var act = Matcher.AmountToCall(1, 0);
+			var exp = 0;
+			Assert.AreEqual(exp, act, 0.01);
+		}
+		[Test]
+		public void AmountToCall_0vs1_0()
+		{
+			var act = Matcher.AmountToCall(0, 1);
+			var exp = 0;
+			Assert.AreEqual(exp, act, 0.01);
+		}
+		[Test]
+		public void AmountToCall_50vs30_0Dot92()
+		{
+			var act = Matcher.AmountToCall(50, 30);
+			var exp = 0.92;
 			Assert.AreEqual(exp, act, 0.01);
 		}
 	}

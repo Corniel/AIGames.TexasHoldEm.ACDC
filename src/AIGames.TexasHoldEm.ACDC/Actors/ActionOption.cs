@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 
 namespace AIGames.TexasHoldEm.ACDC.Actors
 {
-	[DebuggerDisplay("{DebuggerDisplay}")]
 	public class ActionOption : IComparable, IComparable<ActionOption>
 	{
 		public ActionOption(GameAction action) : this(action, 0, 0) { }
@@ -28,17 +26,16 @@ namespace AIGames.TexasHoldEm.ACDC.Actors
 			m_Weight+= weight;
 		}
 
-		[DebuggerBrowsable(DebuggerBrowsableState.Never), ExcludeFromCodeCoverage]
-		private string DebuggerDisplay
+		public override string ToString()
 		{
-			get
-			{
-				return String.Format("{0} {1}{2:#,##0.0} ({3:0.0})",
-					Action,
-					Profit > 0 ? "+" : "",
-					Profit,
-					m_Weight);
-			}
+			return String.Format(
+				CultureInfo.InvariantCulture,
+				"{0} {1}{2:#,##0.0} ({3:0.0})",
+				Action,
+				Profit > 0 ? "+" : "",
+				Profit,
+				m_Weight);
+			
 		}
 
 		public int CompareTo(object obj) { return CompareTo(obj as ActionOption); }

@@ -28,7 +28,7 @@ namespace AIGames.TexasHoldEm.ACDC.UnitTests.Deployoment
 			}
 
 			var csFile = new FileInfo(Path.Combine(Deployer.GetCollectDir().FullName, "Analysis/Records.Data.cs"));
-			using (var writer = new StreamWriter(csFile.OpenWrite()))
+			using (var writer = new StreamWriter(csFile.FullName))
 			{
 				writer.WriteLine("namespace AIGames.TexasHoldEm.ACDC.Analysis");
 				writer.WriteLine("{");

@@ -1,6 +1,7 @@
 ﻿using AIGames.TexasHoldEm.ACDC.Analysis;
 using System.Collections.Generic;
 using Troschuetz.Random.Generators;
+using System.Linq;
 
 namespace AIGames.TexasHoldEm.ACDC.Actors
 {
@@ -12,13 +13,13 @@ namespace AIGames.TexasHoldEm.ACDC.Actors
 		{
 			if (action == GameAction.Fold)
 			{
-				Add(new ActionOption(action));
+				Add(new ActionOption(action, 0, 1));
 			}
 			else
 			{
 				var index = rnd.Next(Count + 1);
 
-				if (rnd.NextDouble() > 0.995)
+				if (rnd.Next(10000) == 0)
 				{
 					// Once in a while promote a random action.
 					Insert(index, new ActionOption(action, 100, 1));
@@ -58,12 +59,14 @@ namespace AIGames.TexasHoldEm.ACDC.Actors
 			Sort();
 		}
 
-		public GameAction Action
+		public GameAction Action { get { return Best.Action; } }
+
+		public ActionOption Best
 		{
 			get
 			{
-				if (Count == 0) { return GameAction.Check; }
-				return this[0].Action;
+				if (Count == 0) { return new ActionOption(GameAction.Check); }
+				return this[0];
 			}
 		}
 	}

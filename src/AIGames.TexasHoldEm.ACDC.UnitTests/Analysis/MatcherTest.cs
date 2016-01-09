@@ -13,41 +13,41 @@ namespace AIGames.TexasHoldEm.ACDC.UnitTests.Analysis
 			Assert.AreEqual(0.0, Matcher.SubRound(SubRoundType.Turn, SubRoundType.Pre), "Pre flop right");
 		}
 		[Test]
-		public void Match_NonePreFlopVsNonPreFlop_0do8()
+		public void Match_NonePreFlopVsNonPreFlop_0dot3()
 		{
-			Assert.AreEqual(0.7, Matcher.SubRound(SubRoundType.Turn, SubRoundType.River), "Turn vs River.");
-			Assert.AreEqual(0.7, Matcher.SubRound(SubRoundType.Turn, SubRoundType.Flop), "Turn vs Flop.");
+			Assert.AreEqual(0.3, Matcher.SubRound(SubRoundType.Turn, SubRoundType.River), 0.001, "Turn vs River.");
+			Assert.AreEqual(0.3, Matcher.SubRound(SubRoundType.Turn, SubRoundType.Flop),0.001, "Turn vs Flop.");
 		}
 
 		[Test]
-		public void Round_8vs12_0dot667()
+		public void Round_8vs12_0dot5()
 		{
 			var act = Matcher.Round(8, 12);
-			var exp = 0.667;
+			var exp = 0.5;
 			Assert.AreEqual(exp, act, 0.01);
 		}
 
 		[Test]
-		public void Round_28vs2_0dot5()
+		public void Round_28vs2_0dot333()
 		{
 			var act = Matcher.Round(28, 2);
-			var exp = 0.5;
+			var exp = 0.333;
 			Assert.AreEqual(exp, act, 0.01);
 		}
 
 		[Test]
-		public void Step_1vs3_0dot75()
+		public void Step_1vs3_0dot333()
 		{
 			var act = Matcher.Step(1, 3);
-			var exp = 0.5;
+			var exp = 0.333;
 			Assert.AreEqual(exp, act, 0.01);
 		}
 
 		[Test]
-		public void Step_3vs2_0dot8()
+		public void Step_3vs2_0dot5()
 		{
 			var act = Matcher.Step(3, 2);
-			var exp = 0.8;
+			var exp = 0.5;
 			Assert.AreEqual(exp, act, 0.01);
 		}
 
@@ -90,10 +90,10 @@ namespace AIGames.TexasHoldEm.ACDC.UnitTests.Analysis
 			Assert.AreEqual(exp, act, 0.01);
 		}
 		[Test]
-		public void AmountToCall_50vs30_0Dot92()
+		public void AmountToCall_50vs30_0Dot833()
 		{
 			var act = Matcher.AmountToCall(50, 30);
-			var exp = 0.92;
+			var exp = 0.833;
 			Assert.AreEqual(exp, act, 0.01);
 		}
 	}

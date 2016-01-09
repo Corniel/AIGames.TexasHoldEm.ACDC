@@ -32,8 +32,6 @@ namespace AIGames.TexasHoldEm.ACDC.Actors
 		{
 			var options = new ActionOptions();
 
-			var nOdds = 1 - state.Odds;
-
 			if (state.NoAmountToCall)
 			{
 				options.Add(GameAction.Check);

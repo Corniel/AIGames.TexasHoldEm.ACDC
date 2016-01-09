@@ -35,91 +35,153 @@ namespace AIGames.TexasHoldEm.ACDC.UnitTests.Analysis
 		[Test]
 		public void PreFlop_NoCallFirstResponse_PreFlopOdds()
 		{
-			foreach (var odd in GetPreFlopOdds())
+			TestSelect(GetPreFlopOdds(), new ActorState()
 			{
-				var state = new ActorState()
-				{
-					BigBlind = 20,
-					Odds = odd,
-					OwnPot = 20,
-					OtherPot = 20,
-					OwnStack = 1980,
-					OtherStack = 1980,
-					Round = 1,
-					Step = 1,
-					SubRound = SubRoundType.Pre,
-				};
-
-				var option = Act.GetAction(state);
-				Console.WriteLine("{0:00.0%} {1}",odd, option);
-			}
+				BigBlind = 20,
+				OwnPot = 20,
+				OtherPot = 20,
+				OwnStack = 1980,
+				OtherStack = 1980,
+				Round = 1,
+				Step = 1,
+				SubRound = SubRoundType.Pre,
+			});
 		}
+
 		[Test]
 		public void PreFlop_Call10_PreFlopOdds()
 		{
-			foreach (var odd in GetPreFlopOdds())
+			TestSelect(GetPreFlopOdds(), new ActorState()
 			{
-				var state = new ActorState()
-				{
-					BigBlind = 20,
-					Odds = odd,
-					OwnPot = 10,
-					OtherPot = 20,
-					OwnStack = 1980,
-					OtherStack = 1980,
-					Round = 1,
-					Step = 1,
-					SubRound = SubRoundType.Pre,
-				};
-
-				var option = Act.GetAction(state);
-				Console.WriteLine("{0:00.0%} {1}", odd, option);
-			}
+				BigBlind = 20,
+				OwnPot = 10,
+				OtherPot = 20,
+				OwnStack = 1980,
+				OtherStack = 1980,
+				Round = 1,
+				Step = 1,
+				SubRound = SubRoundType.Pre,
+			});
 		}
 		[Test]
 		public void PreFlop_Call20Round11_PreFlopOdds()
 		{
-			foreach (var odd in GetPreFlopOdds())
+			TestSelect(GetPreFlopOdds(), new ActorState()
 			{
-				var state = new ActorState()
-				{
-					BigBlind = 40,
-					Odds = odd,
-					OwnPot = 20,
-					OtherPot = 40,
-					OwnStack = 1960,
-					OtherStack = 1960,
-					Round = 11,
-					Step = 1,
-					SubRound = SubRoundType.Pre,
-				};
-
-				var option = Act.GetAction(state);
-				Console.WriteLine("{0:00.0%} {1}", odd, option);
-			}
+				BigBlind = 40,
+				OwnPot = 20,
+				OtherPot = 40,
+				OwnStack = 1960,
+				OtherStack = 1960,
+				Round = 11,
+				Step = 1,
+				SubRound = SubRoundType.Pre,
+			});
 		}
 
 		[Test]
 		public void PreFlop_NoCallPot1000Response_PreFlopOdds()
 		{
-			var sw = Stopwatch.StartNew();
-			foreach (var odd in GetPreFlopOdds())
+			TestSelect(GetPreFlopOdds(), new ActorState()
 			{
-				var state = new ActorState()
+				BigBlind = 20,
+				OwnPot = 500,
+				OtherPot = 500,
+				OwnStack = 1500,
+				OtherStack = 1500,
+				Round = 1,
+				Step = 4,
+				SubRound = SubRoundType.Pre,
+			});
+		}
+
+		[Test]
+		public void River_NoCallPot1200Response_AllOdds()
+		{
+			TestSelect(Odds, new ActorState()
+			{
+				BigBlind = 80,
+				OwnPot = 600,
+				OtherPot = 600,
+				OwnStack = 1300,
+				OtherStack = 1500,
+				Round = 83,
+				Step = 4,
+				SubRound = SubRoundType.River,
+			});
+		}
+
+		[Test]
+		public void Flop_NoCallPot160Response_AllOdds()
+		{
+			TestSelect(Odds, new ActorState()
+			{
+				BigBlind = 80,
+				OwnPot = 80,
+				OtherPot = 80,
+				OwnStack = 1320,
+				OtherStack = 2520,
+				Round = 83,
+				Step = 1,
+				SubRound = SubRoundType.Flop,
+			});
+		}
+
+		[Test]
+		public void Turn_NoCallPot160Response_AllOdds()
+		{
+			TestSelect(Odds, new ActorState()
+			{
+				BigBlind = 80,
+				OwnPot = 80,
+				OtherPot = 80,
+				OwnStack = 1320,
+				OtherStack = 2520,
+				Round = 83,
+				Step = 1,
+				SubRound = SubRoundType.Turn,
+			});
+		}
+
+		[Test]
+		public void River_NoCallPot160Response_AllOdds()
+		{
+			TestSelect(Odds, new ActorState()
+			{
+				BigBlind = 80,
+				OwnPot = 80,
+				OtherPot = 80,
+				OwnStack = 1320,
+				OtherStack = 2520,
+				Round = 83,
+				Step = 1,
+				SubRound = SubRoundType.River,
+			});
+		}
+
+		
+
+		private static void TestSelect(IEnumerable<double> odds, ActorState state)
+		{
+			var sw = Stopwatch.StartNew();
+
+			foreach (var odd in odds)
+			{
+				var st = new ActorState()
 				{
-					BigBlind = 20,
+					BigBlind = state.BigBlind,
 					Odds = odd,
-					OwnPot = 500,
-					OtherPot = 500,
-					OwnStack = 1500,
-					OtherStack = 1500,
-					Round = 1,
-					Step = 4,
-					SubRound = SubRoundType.Pre,
+					OwnPot = state.OwnPot,
+					OtherPot = state.OtherPot,
+					OwnStack = state.OwnStack,
+					OtherStack = state.OtherStack,
+					Round = state.Round,
+					Step = state.Step,
+					SubRound = state.SubRound,
 				};
 
-				var option = Act.GetAction(state);
-				Console.WriteLine("{0:00.0%} {1}", odd, option);
+				var options = Act.GetAction(st);
+				Console.WriteLine("{0:00.0%} {1}", odd, options.Best);
 			}
 			Console.WriteLine(sw.Elapsed);
 		}

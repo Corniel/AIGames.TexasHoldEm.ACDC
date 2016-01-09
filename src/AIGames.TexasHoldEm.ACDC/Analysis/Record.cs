@@ -10,6 +10,7 @@ namespace AIGames.TexasHoldEm.ACDC.Analysis
 		public const int ByteSize = 11;
 
 		public double Odds { get; set; }
+		public byte ByteOdds { get { return ToByte(Odds); } }
 		public byte Round { get; set; }
 		public SubRoundType SubRound { get; set; }
 		public byte Step { get; set; }

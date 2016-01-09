@@ -3,8 +3,6 @@ using AIGames.TexasHoldEm.ACDC.Communication;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Troschuetz.Random.Generators;
 
 namespace AIGames.TexasHoldEm.ACDC.Simulator
@@ -15,48 +13,58 @@ namespace AIGames.TexasHoldEm.ACDC.Simulator
 		{
 			records.Sort();
 
+			var old = records
+				.OrderBy(r => Math.Abs(0.5 - r.Odds))
+				.ToList();
+
 			var buffer = new List<Record>(records.Capacity);
 
-			var last = records[0];
-			for (var index = 1; index < records.Count; index++)
+			while (old.Count > 0)
 			{
-				var current = records[index];
-				if (Record.ToByte(last.Odds) == Record.ToByte(current.Odds) && 
-					last.SubRound == current.SubRound &&
-					last.Action.ActionType == current.Action.ActionType)
+				var candidate = old[0];
+				old.RemoveAt(0);
+
+				var match = old
+					.Where(item =>
+						candidate.ByteOdds == item.ByteOdds &&
+						candidate.SubRound == item.SubRound &&
+						candidate.Action.ActionType == item.Action.ActionType)
+					.OrderByDescending(item => Matcher.Record(candidate, item)).FirstOrDefault();
+
+				if (match != null)
 				{
-					var odds = last.Odds;
-
-					var merged = new Record()
-					{
-						Odds = last.Odds,
-						SubRound = last.SubRound,
-						Action = last.Action,
-						Gap = (short)((last.Gap + current.Gap) >> 1),
-						Pot = (short)((last.Pot + current.Pot) >> 1),
-						Profit = (short)((last.Profit + current.Profit) >> 1),
-						Round = (byte)((last.Round + current.Round) >> 1),
-						Step = (byte)((last.Step + current.Step) >> 1),
-					};
-					if (last.Action.ActionType == GameActionType.raise)
-					{
-						merged.Action = GameAction.Raise((last.Action.Amount + current.Action.Amount) >> 1);
-					}
+					var merged = this.Merge(candidate, match);
 					buffer.Add(merged);
-
-					if (index < records.Count - 2)
-					{
-						last = records[++index];
-					}
+					old.Remove(match);
 				}
 				else
 				{
-					buffer.Add(last);
-					last = current;
+					buffer.Add(candidate);
 				}
 			}
 			records.Clear();
 			records.AddRange(buffer);
+			records.Sort();
+		}
+
+		private Record Merge(Record left, Record right)
+		{
+			var merged = new Record()
+			{
+				Odds = left.Odds,
+				SubRound = left.SubRound,
+				Action = left.Action,
+				Gap = (short)((left.Gap + right.Gap) >> 1),
+				Pot = (short)((left.Pot + right.Pot) >> 1),
+				Profit = (short)((left.Profit + right.Profit) >> 1),
+				Round = (byte)((left.Round + right.Round) >> 1),
+				Step = (byte)((left.Step + right.Step) >> 1),
+			};
+			if (left.Action.ActionType == GameActionType.raise)
+			{
+				merged.Action = GameAction.Raise((left.Action.Amount + right.Action.Amount) >> 1);
+			}
+			return merged;
 		}
 
 		public void Simulate(IList<Record> records, MT19937Generator rnd)

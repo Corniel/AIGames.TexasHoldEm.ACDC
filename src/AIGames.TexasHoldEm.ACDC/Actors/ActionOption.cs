@@ -16,10 +16,10 @@ namespace AIGames.TexasHoldEm.ACDC.Actors
 		public GameAction Action { get; private set; }
 		public double Profit { get { return Weight == 0 ? 0 : m_Profit / Weight; } }
 
-		public double WeightedProfit { get { return Action == GameAction.Check ? 16 * (150 + Profit) : 100 + Profit; } }
+		public double WeightedProfit { get { return Action == GameAction.Check ? 2 * (150 + Profit) : 100 + Profit; } }
 
 		/// <summary>Returns true if there is expected profit.</summary>
-		public bool IsProfitable { get { return ActionType != GameActionType.fold && Profit >= 0; } }
+		public bool IsProfitable { get { return ActionType != GameActionType.fold && WeightedProfit >= 0; } }
 
 		private double m_Profit;
 		public double Weight { get; private set; }

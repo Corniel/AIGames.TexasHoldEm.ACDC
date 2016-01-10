@@ -3,6 +3,10 @@ ACDC
 
 ACDC is an AI trying to play Texas Hold'em.
 
+Version 8
+---------
+Made ACDC way more aggressive.
+
 Version 7
 ---------
 Quick fix for calling in first pre-flop.

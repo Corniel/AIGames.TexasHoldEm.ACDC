@@ -41,7 +41,7 @@ namespace AIGames.TexasHoldEm.ACDC.Analysis
 		}
 		public static double Step(int l, int r)
 		{
-			var half = 1.0;
+			var half = 4.0;
 			return half / (half + Math.Abs(r - l));
 		}
 		public static double Odds(double l, double r)

@@ -59,7 +59,9 @@ namespace AIGames.TexasHoldEm.ACDC.Analysis
 						candidate.Action.ActionType == item.Action.ActionType)
 					.OrderByDescending(item => Matcher.Record(candidate, item)).FirstOrDefault();
 
-				if (match != null)
+				var m = match == null ? -1 : Matcher.Record(candidate, match);
+
+				if (m > 0.2)
 				{
 					var merged = Record.Merge(candidate, match);
 					buffer.Add(merged);

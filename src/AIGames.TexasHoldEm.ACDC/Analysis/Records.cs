@@ -51,6 +51,9 @@ namespace AIGames.TexasHoldEm.ACDC.Analysis
 				var candidate = old[0];
 				old.RemoveAt(0);
 
+				// get these out.
+				if (candidate.Round == 0) { continue; }
+
 				var match = old
 					.Where(item =>
 						candidate.ByteOdds == item.ByteOdds &&

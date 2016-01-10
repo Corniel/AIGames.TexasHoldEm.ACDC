@@ -40,7 +40,8 @@ namespace AIGames.TexasHoldEm.ACDC.Actors
 				foreach (var option in this)
 				{
 					var type = option.ActionType;
-					if (type == item.Action.ActionType)
+					if (type == item.Action.ActionType &&
+						item.HasAmountToCall == test.HasAmountToCall)
 					{
 						// To match amounts.
 						test.Action = option.Action;

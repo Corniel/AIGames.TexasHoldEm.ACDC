@@ -55,6 +55,7 @@ namespace AIGames.TexasHoldEm.ACDC.Analysis
 					.Where(item =>
 						candidate.ByteOdds == item.ByteOdds &&
 						candidate.SubRound == item.SubRound &&
+						candidate.HasAmountToCall == item.HasAmountToCall &&
 						candidate.Action.ActionType == item.Action.ActionType)
 					.OrderByDescending(item => Matcher.Record(candidate, item)).FirstOrDefault();
 

@@ -17,6 +17,7 @@ namespace AIGames.TexasHoldEm.ACDC.Analysis
 		public short Pot { get; set; }
 		public short Gap { get; set; }
 		public short AmountToCall { get; set; }
+		public bool HasAmountToCall { get { return AmountToCall != 0; } }
 		public GameAction Action { get;  set; }
 		public short Profit { get;  set; }
 		/// <summary>Returns true is the record is new.</summary>

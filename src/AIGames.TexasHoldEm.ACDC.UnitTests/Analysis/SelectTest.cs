@@ -220,8 +220,8 @@ namespace AIGames.TexasHoldEm.ACDC.UnitTests.Analysis
 					SubRound = state.SubRound,
 				};
 
-				var options = Act.GetAction(st);
-				Console.WriteLine("{0:00.0%} {1}", odd, options.Best);
+				var option = Act.GetOption(st);
+				Console.WriteLine("{0:00.0%} {1}", odd, option);
 			}
 			Console.WriteLine(sw.Elapsed);
 		}

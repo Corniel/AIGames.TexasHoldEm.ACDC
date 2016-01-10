@@ -1,19 +1,25 @@
 ﻿using AIGames.TexasHoldEm.ACDC.Analysis;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Troschuetz.Random.Generators;
 
 namespace AIGames.TexasHoldEm.ACDC.Actors
 {
 	public class Actor
 	{
-		public Actor(IList<Node> nodes)
+		public Actor(IList<Node> nodes) 
+			: this(nodes, new MT19937Generator(17)) { }
+
+		public Actor(IList<Node> nodes, MT19937Generator rnd)
 		{
 			Nodes = nodes;
 			Buffer = new List<Node>();
+			Rnd = rnd;
 		}
 
 		public IList<Node> Nodes { get; private set; }
-
+		public MT19937Generator Rnd { get; private set; }
 		private List<Node> Buffer { get; set; }
 
 		public void ApplyProfit(int profit)
@@ -28,7 +34,7 @@ namespace AIGames.TexasHoldEm.ACDC.Actors
 			Buffer.Clear();
 		}
 
-		public ActionOptions GetAction(ActorState state)
+		public ActionOption GetOption(ActorState state)
 		{
 			var options = new ActionOptions();
 
@@ -58,14 +64,54 @@ namespace AIGames.TexasHoldEm.ACDC.Actors
 
 			Node test = state.ToNode();
 			options.Sort(test, Nodes);
-			var best = options[0];
-			if (test.Action != GameAction.Fold)
+
+			var best = SelectOption(options);
+
+			if (best.Action != GameAction.Fold)
 			{
 				test.Profit = (short)state.OwnPot;
+				test.Action = best.Action;
 				test.IsNew = true;
 				Buffer.Add(test);
 			}
-			return options;
+			else if(options.Count > 1)
+			{
+				best = new ActionOption(GameAction.Fold, options[1].Profit, options[1].Weight);
+			}
+			return best;
+		}
+
+		/// <summary>Select the option to play.</summary>
+		/// <remarks>
+		/// Returns a random profitable if any, otherwise the best case.
+		/// </remarks>
+		private ActionOption SelectOption(ActionOptions options)
+		{
+			var best = options[0];
+
+			var profitable = options
+				.Where(option => option.IsProfitable)
+				.ToArray();
+
+			if (profitable.Length > 1)
+			{
+				var weights = new double[profitable.Length];
+				var sum = 0.0;
+				for (var index = 0; index < weights.Length; index++)
+				{
+					sum += profitable[index].Profit2;
+					weights[index] = sum;
+				}
+
+				var pick = Rnd.NextDouble(sum);
+
+				for (var index = 0; index < weights.Length; index++)
+				{
+					if (pick < weights[index]) { break; }
+					best = profitable[index];
+				}
+			}
+			return best;
 		}
 	}
 }

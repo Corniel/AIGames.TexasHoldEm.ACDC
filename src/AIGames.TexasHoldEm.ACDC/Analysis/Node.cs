@@ -20,6 +20,7 @@ namespace AIGames.TexasHoldEm.ACDC.Analysis
 		public bool HasAmountToCall { get { return AmountToCall != 0; } }
 		public GameAction Action { get;  set; }
 		public short Profit { get;  set; }
+
 		/// <summary>Returns true is the node is new.</summary>
 		/// <remarks>
 		/// Is not serialized.

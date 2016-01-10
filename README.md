@@ -3,6 +3,10 @@ ACDC
 
 ACDC is an AI trying to play Texas Hold'em.
 
+Version 10
+----------
+Hopefully improve node data.
+
 Version 9
 ---------
 Nodes with more aggressive play.

@@ -13,29 +13,12 @@ namespace AIGames.TexasHoldEm.ACDC.UnitTests.Analysis
 	[TestFixture, Category(Category.Evaluation)]
 	public class SelectTest
 	{
-		public static readonly double[] Odds = GetOdds();
-		public static double[] GetOdds()
-		{
-			var odds = new List<double>();
-			for (int b = byte.MaxValue; b >= byte.MinValue; b--)
-			{
-				odds.Add(Record.ToOdds((byte)b));
-			}
-			return odds.ToArray();
-		}
-
-		/// <summary>Gets the range of possible pre-flop odds (AA: 85.3%, 32o: 31.2%).</summary>
-		public static IEnumerable<double> GetPreFlopOdds()
-		{
-			return GetOdds().Where(odd => odd >= 0.305 && odd <= 0.86);
-		}
-
 		public static readonly Actor Act = new Actor(Records.Get());
 
 		[Test]
 		public void PreFlop_NoCallFirstResponse_PreFlopOdds()
 		{
-			TestSelect(GetPreFlopOdds(), new ActorState()
+			TestSelect(NodeStats.GetPreFlopOdds(), new ActorState()
 			{
 				BigBlind = 20,
 				OwnPot = 20,
@@ -51,7 +34,7 @@ namespace AIGames.TexasHoldEm.ACDC.UnitTests.Analysis
 		[Test]
 		public void PreFlop_Call10_PreFlopOdds()
 		{
-			TestSelect(GetPreFlopOdds(), new ActorState()
+			TestSelect(NodeStats.GetPreFlopOdds(), new ActorState()
 			{
 				BigBlind = 20,
 				OwnPot = 10,
@@ -66,7 +49,7 @@ namespace AIGames.TexasHoldEm.ACDC.UnitTests.Analysis
 		[Test]
 		public void PreFlop_Call20Round11_PreFlopOdds()
 		{
-			TestSelect(GetPreFlopOdds(), new ActorState()
+			TestSelect(NodeStats.GetPreFlopOdds(), new ActorState()
 			{
 				BigBlind = 40,
 				OwnPot = 20,
@@ -82,7 +65,7 @@ namespace AIGames.TexasHoldEm.ACDC.UnitTests.Analysis
 		[Test]
 		public void PreFlop_NoCallPot1000Response_PreFlopOdds()
 		{
-			TestSelect(GetPreFlopOdds(), new ActorState()
+			TestSelect(NodeStats.GetPreFlopOdds(), new ActorState()
 			{
 				BigBlind = 20,
 				OwnPot = 500,
@@ -98,7 +81,7 @@ namespace AIGames.TexasHoldEm.ACDC.UnitTests.Analysis
 		[Test]
 		public void River_NoCallPot1200Response_AllOdds()
 		{
-			TestSelect(Odds, new ActorState()
+			TestSelect(NodeStats.Odds, new ActorState()
 			{
 				BigBlind = 80,
 				OwnPot = 600,
@@ -114,7 +97,7 @@ namespace AIGames.TexasHoldEm.ACDC.UnitTests.Analysis
 		[Test]
 		public void Flop_NoCallPot160Response_AllOdds()
 		{
-			TestSelect(Odds, new ActorState()
+			TestSelect(NodeStats.Odds, new ActorState()
 			{
 				BigBlind = 80,
 				OwnPot = 80,
@@ -130,7 +113,7 @@ namespace AIGames.TexasHoldEm.ACDC.UnitTests.Analysis
 		[Test]
 		public void Turn_NoCallPot160Response_AllOdds()
 		{
-			TestSelect(Odds, new ActorState()
+			TestSelect(NodeStats.Odds, new ActorState()
 			{
 				BigBlind = 80,
 				OwnPot = 80,
@@ -146,7 +129,7 @@ namespace AIGames.TexasHoldEm.ACDC.UnitTests.Analysis
 		[Test]
 		public void River_NoCallPot160Response_AllOdds()
 		{
-			TestSelect(Odds, new ActorState()
+			TestSelect(NodeStats.Odds, new ActorState()
 			{
 				BigBlind = 80,
 				OwnPot = 80,
@@ -159,7 +142,64 @@ namespace AIGames.TexasHoldEm.ACDC.UnitTests.Analysis
 			});
 		}
 
-		
+		[Test]
+		public void DataEvaluation()
+		{
+			var rounds = new int[1000];
+			
+			var pre = 0;
+			var flop = 0;
+			var turn = 0;
+			var river = 0;
+
+			var call = 0;
+			var nocall = 0;
+
+			var odds = NodeStats.Odds.ToDictionary(o => o, o => 0);
+
+			foreach (var rec in Act.Records.Where(r => r.Round != 0 /*&& r.SubRound == SubRoundType.Pre*/))
+			{
+				odds[rec.Odds]++;
+				rounds[rec.Round]++;
+				switch (rec.SubRound)
+				{
+					case SubRoundType.Pre: pre++; break;
+					case SubRoundType.Flop: flop++;break;
+					case SubRoundType.Turn: turn++;break;
+					case SubRoundType.River: river++;break;
+				}
+				if (rec.HasAmountToCall)
+				{
+					call++;
+				}
+				else
+				{
+					nocall++;
+				}
+			}
+
+			Console.WriteLine("ToCall vs NotToCall: {0:#,##0} - {1:#,##0}", call, nocall);
+			Console.WriteLine("Pre-flop: {0:#,##0}", pre);
+			Console.WriteLine("Flop:     {0:#,##0}", flop);
+			Console.WriteLine("Turn:     {0:#,##0}", turn);
+			Console.WriteLine("River:    {0:#,##0}", river);
+			Console.WriteLine();
+			Console.WriteLine("Rounds");
+			for (var round = 0; round < rounds.Length; round++)
+			{
+				if (rounds[round] != 0)
+				{
+					Console.WriteLine("Round {0,-3}: {1:#,##0}", round, rounds[round]);
+				}
+			}
+			Console.WriteLine();
+			Console.WriteLine("Odds");
+			foreach(var kvp in odds)
+			{
+				Console.WriteLine("{0:00.0%} {1:#,##0}", kvp.Key, kvp.Value);
+			}
+		}
+
 
 		private static void TestSelect(IEnumerable<double> odds, ActorState state)
 		{

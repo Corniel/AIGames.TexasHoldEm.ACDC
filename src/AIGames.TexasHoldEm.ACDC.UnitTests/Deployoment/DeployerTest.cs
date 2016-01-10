@@ -56,7 +56,7 @@ namespace AIGames.TexasHoldEm.ACDC.UnitTests.Deployoment
 
 			records = records.Where(r => r.ByteOdds > 0).ToList();
 
-			foreach (var odds in SelectTest.GetPreFlopOdds())
+			foreach (var odds in NodeStats.GetPreFlopOdds())
 			{
 				for (short call = 10; call < 100; call += 10)
 				{

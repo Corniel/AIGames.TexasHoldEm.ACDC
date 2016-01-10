@@ -3,6 +3,10 @@ ACDC
 
 ACDC is an AI trying to play Texas Hold'em.
 
+Version 7
+---------
+Quick fix for calling in first pre-flop.
+
 Version 6
 ---------
 Handles Checks as certain outcomes (profit wise). Random selection of profitable options.

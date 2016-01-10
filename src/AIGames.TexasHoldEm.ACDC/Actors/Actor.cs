@@ -36,6 +36,11 @@ namespace AIGames.TexasHoldEm.ACDC.Actors
 
 		public ActionOption GetOption(ActorState state)
 		{
+			if (state.AmountToCall == state.SmallBlind && state.Odds > 0.52)
+			{
+				return new ActionOption(GameAction.Call, state.AmountToCall * (state.Odds - 0.5));
+			}
+
 			var options = new ActionOptions();
 
 			if (state.NoAmountToCall)

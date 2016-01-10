@@ -13,12 +13,12 @@ namespace AIGames.TexasHoldEm.ACDC.Actors
 
 		public Actor(IList<Node> nodes, MT19937Generator rnd)
 		{
-			Nodes = nodes;
+			Nodes = new NodeCollection(nodes);
 			Buffer = new List<Node>();
 			Rnd = rnd;
 		}
 
-		public IList<Node> Nodes { get; private set; }
+		public NodeCollection Nodes { get; private set; }
 		public MT19937Generator Rnd { get; private set; }
 		private List<Node> Buffer { get; set; }
 

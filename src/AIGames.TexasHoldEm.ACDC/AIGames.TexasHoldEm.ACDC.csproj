@@ -40,6 +40,7 @@
     <Compile Include="Actors\ActionOption.cs" />
     <Compile Include="Actors\ActionOptions.cs" />
     <Compile Include="Actors\ActorState.cs" />
+    <Compile Include="Analysis\NodeCollection.cs" />
     <Compile Include="Analysis\Nodes.Data.cs" />
     <Compile Include="Analysis\Hand.Lookups.cs" />
     <Compile Include="Analysis\Hand.Analysis.cs" />

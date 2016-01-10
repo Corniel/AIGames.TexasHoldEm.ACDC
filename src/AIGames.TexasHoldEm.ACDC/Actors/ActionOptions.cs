@@ -23,7 +23,7 @@ namespace AIGames.TexasHoldEm.ACDC.Actors
 			return this.Where(node => node.ActionType == GameActionType.raise);
 		}
 
-		public void Sort(Node test, IEnumerable<Node> nodes)
+		public void Sort(Node test, NodeCollection nodes)
 		{
 			if (Count == 1) { return; }
 
@@ -31,26 +31,23 @@ namespace AIGames.TexasHoldEm.ACDC.Actors
 			UpdateCheckOptions(test, nodes);
 			Sort();
 		}
-		private void UpdateCallOption(Node test, IEnumerable<Node> nodes)
+		private void UpdateCallOption(Node test, NodeCollection nodes)
 		{
 			var option = this.FirstOrDefault(o => o.Action == GameAction.Call);
 			if (option != null)
 			{
-				foreach (var node in nodes.Where(n => n.SubRound == test.SubRound && n.Action == GameAction.Call))
+				foreach (var node in nodes.GetCallNodes(test.SubRound))
 				{
 					Update(test, node, option);
 				}
 			}
 		}
 
-		private void UpdateCheckOptions(Node test, IEnumerable<Node> nodes)
+		private void UpdateCheckOptions(Node test, NodeCollection nodes)
 		{
 			var options = GetRaises().ToList();
 
-			foreach (var node in nodes.Where(n =>
-				n.SubRound == test.SubRound &&
-				n.HasAmountToCall == test.HasAmountToCall &&
-				n.Action.ActionType == GameActionType.raise))
+			foreach (var node in nodes.GetRaiseNodes(test.SubRound, test.HasAmountToCall))
 			{
 				foreach (var option in options)
 				{

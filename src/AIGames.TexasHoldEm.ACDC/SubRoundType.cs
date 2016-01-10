@@ -11,4 +11,9 @@
 		/// <summary>River: All five table cards revealed.</summary>
 		River = 5,
 	}
+
+	public static class SubRoundTypes
+	{
+		public static readonly SubRoundType[] All = new SubRoundType[] { SubRoundType.Pre, SubRoundType.Flop, SubRoundType.Turn, SubRoundType.River };
+	}
 }

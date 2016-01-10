@@ -5,7 +5,7 @@ using System.Globalization;
 
 namespace AIGames.TexasHoldEm.ACDC.Analysis
 {
-	public class Record : IComparable, IComparable<Record>
+	public class Node : IComparable, IComparable<Node>
 	{
 		public const int ByteSize = 13;
 
@@ -20,15 +20,15 @@ namespace AIGames.TexasHoldEm.ACDC.Analysis
 		public bool HasAmountToCall { get { return AmountToCall != 0; } }
 		public GameAction Action { get;  set; }
 		public short Profit { get;  set; }
-		/// <summary>Returns true is the record is new.</summary>
+		/// <summary>Returns true is the node is new.</summary>
 		/// <remarks>
 		/// Is not serialized.
 		/// </remarks>
 		public bool IsNew { get; set; }
 
-		public int CompareTo(object obj) { return CompareTo(obj as Record); }
+		public int CompareTo(object obj) { return CompareTo(obj as Node); }
 
-		public int CompareTo(Record other)
+		public int CompareTo(Node other)
 		{
 			var compare = other.Odds.CompareTo(this.Odds);
 
@@ -89,9 +89,9 @@ namespace AIGames.TexasHoldEm.ACDC.Analysis
 			return bytes;
 		}
 
-		public static Record FromByteArray(byte[] bytes)
+		public static Node FromByteArray(byte[] bytes)
 		{
-			var record = new Record()
+			var node = new Node()
 			{
 				Round = bytes[0],
 				SubRound = (SubRoundType)(bytes[1] >> 5),
@@ -103,12 +103,12 @@ namespace AIGames.TexasHoldEm.ACDC.Analysis
 				Pot = BitConverter.ToInt16(bytes, 9),
 				AmountToCall = BitConverter.ToInt16(bytes, 11),
 			};
-			return record;
+			return node;
 		}
 
-		public static Record Merge(Record left, Record right)
+		public static Node Merge(Node left, Node right)
 		{
-			var merged = new Record()
+			var merged = new Node()
 			{
 				Odds = left.Odds,
 				SubRound = left.SubRound,

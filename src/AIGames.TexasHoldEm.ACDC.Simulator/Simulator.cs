@@ -9,12 +9,12 @@ namespace AIGames.TexasHoldEm.ACDC.Simulator
 {
 	public class Simulator
 	{
-		public void Simulate(IList<Record> records, MT19937Generator rnd)
+		public void Simulate(IList<Node> nodes, MT19937Generator rnd)
 		{
 			var bots = new Dictionary<PlayerName, ACDCBot>()
 			{
-				{ PlayerName.player1, GetBot(records, PlayerName.player1) },
-				{ PlayerName.player2, GetBot(records, PlayerName.player2) },
+				{ PlayerName.player1, GetBot(nodes, PlayerName.player1) },
+				{ PlayerName.player2, GetBot(nodes, PlayerName.player2) },
 			};
 
 			var matches = new Matches();
@@ -108,9 +108,9 @@ namespace AIGames.TexasHoldEm.ACDC.Simulator
 			p1.Stack -= match.BigBlind;
 		}
 
-		private static ACDCBot GetBot(IList<Record> records, PlayerName name)
+		private static ACDCBot GetBot(IList<Node> nodes, PlayerName name)
 		{
-			var bot = new ACDCBot(records)
+			var bot = new ACDCBot(nodes)
 			{
 				Settings = new Settings()
 				{

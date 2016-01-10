@@ -6,24 +6,24 @@ namespace AIGames.TexasHoldEm.ACDC.Actors
 {
 	public class Actor
 	{
-		public Actor(IList<Record> records)
+		public Actor(IList<Node> nodes)
 		{
-			Records = records;
-			Buffer = new List<Record>();
+			Nodes = nodes;
+			Buffer = new List<Node>();
 		}
 
-		public IList<Record> Records { get; private set; }
+		public IList<Node> Nodes { get; private set; }
 
-		private List<Record> Buffer { get; set; }
+		private List<Node> Buffer { get; set; }
 
 		public void ApplyProfit(int profit)
 		{
 			var win = profit > 0;
-			foreach (var record in Buffer)
+			foreach (var node in Buffer)
 			{
-				var costs = win ? record.Profit : -record.Profit;
-				record.Profit = (short)(profit - costs);
-				Records.Add(record);
+				var costs = win ? node.Profit : -node.Profit;
+				node.Profit = (short)(profit - costs);
+				Nodes.Add(node);
 			}
 			Buffer.Clear();
 		}
@@ -56,8 +56,8 @@ namespace AIGames.TexasHoldEm.ACDC.Actors
 				options.Add(GameAction.Fold);
 			}
 
-			Record test = state.ToRecord();
-			options.Sort(test, Records);
+			Node test = state.ToNode();
+			options.Sort(test, Nodes);
 			var best = options[0];
 			if (test.Action != GameAction.Fold)
 			{

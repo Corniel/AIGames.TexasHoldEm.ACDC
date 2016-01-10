@@ -4,12 +4,12 @@ using NUnit.Framework;
 namespace AIGames.TexasHoldEm.ACDC.UnitTests.Analysis
 {
 	[TestFixture]
-	public class RecordTest
+	public class NodeTest
 	{
 		[Test]
 		public void RoundTripByteArray_()
 		{
-			var exp = new Record()
+			var exp = new Node()
 			{
 				Odds = 0.83,
 				Gap = 345,
@@ -23,7 +23,7 @@ namespace AIGames.TexasHoldEm.ACDC.UnitTests.Analysis
 			};
 
 			var bytes = exp.ToByteArray();
-			var act = Record.FromByteArray(bytes);
+			var act = Node.FromByteArray(bytes);
 
 			Assert.AreEqual(exp.Odds, act.Odds, 0.2, "Odds");
 			Assert.AreEqual(exp.Gap, act.Gap, "Gap");

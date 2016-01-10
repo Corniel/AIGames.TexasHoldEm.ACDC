@@ -13,10 +13,10 @@ namespace AIGames.TexasHoldEm.ACDC
 	[DebuggerDisplay("{DebuggerDisplay}")]
 	public class ACDCBot : IBot
 	{
-		public ACDCBot() : this(Records.Get()) { }
-		public ACDCBot(IList<Record> records)
+		public ACDCBot() : this(Nodes.Get()) { }
+		public ACDCBot(IList<Node> nodes)
 		{
-			Actor = new Actor(records);
+			Actor = new Actor(nodes);
 		}
 
 		public Actor Actor { get; set; }

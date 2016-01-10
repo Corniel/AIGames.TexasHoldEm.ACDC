@@ -41,9 +41,9 @@ namespace AIGames.TexasHoldEm.ACDC.Actors
 		/// <summary>Returns true if there is no amount to call, otherwise false.</summary>
 		public bool NoAmountToCall { get { return AmountToCall == 0; } }
 
-		public Record ToRecord()
+		public Node ToNode()
 		{
-			return new Record()
+			return new Node()
 			{
 				Odds = Odds,
 				Round = (byte)Round,

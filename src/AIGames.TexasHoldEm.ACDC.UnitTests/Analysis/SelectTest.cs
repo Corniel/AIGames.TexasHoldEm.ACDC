@@ -13,7 +13,7 @@ namespace AIGames.TexasHoldEm.ACDC.UnitTests.Analysis
 	[TestFixture, Category(Category.Evaluation)]
 	public class SelectTest
 	{
-		public static readonly Actor Act = new Actor(Records.Get());
+		public static readonly Actor Act = new Actor(Nodes.Get());
 
 		[Test]
 		public void PreFlop_NoCallFirstResponse_PreFlopOdds()
@@ -157,7 +157,7 @@ namespace AIGames.TexasHoldEm.ACDC.UnitTests.Analysis
 
 			var odds = NodeStats.Odds.ToDictionary(o => o, o => 0);
 
-			foreach (var rec in Act.Records.Where(r => r.Round != 0 /*&& r.SubRound == SubRoundType.Pre*/))
+			foreach (var rec in Act.Nodes.Where(r => r.Round != 0 /*&& r.SubRound == SubRoundType.Pre*/))
 			{
 				odds[rec.Odds]++;
 				rounds[rec.Round]++;

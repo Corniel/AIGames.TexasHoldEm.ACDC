@@ -15,7 +15,7 @@ namespace AIGames.TexasHoldEm.ACDC.UnitTests.Analysis
 			var odds = new List<double>();
 			for (int b = byte.MaxValue; b >= byte.MinValue; b--)
 			{
-				odds.Add(Record.ToOdds((byte)b));
+				odds.Add(Node.ToOdds((byte)b));
 			}
 			return odds.ToArray();
 		}

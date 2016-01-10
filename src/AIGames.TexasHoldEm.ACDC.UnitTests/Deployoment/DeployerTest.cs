@@ -31,12 +31,12 @@ namespace AIGames.TexasHoldEm.ACDC.UnitTests.Deployoment
 				bytes = stream.GetBuffer();
 			}
 
-			var csFile = new FileInfo(Path.Combine(Deployer.GetCollectDir().FullName, "Analysis/Records.Data.cs"));
+			var csFile = new FileInfo(Path.Combine(Deployer.GetCollectDir().FullName, "Analysis/Nodes.Data.cs"));
 			using (var writer = new StreamWriter(csFile.FullName))
 			{
 				writer.WriteLine("namespace AIGames.TexasHoldEm.ACDC.Analysis");
 				writer.WriteLine("{");
-				writer.WriteLine("\tpublic static partial class Records");
+				writer.WriteLine("\tpublic static partial class Nodes");
 				writer.WriteLine("\t{");
 				writer.Write("\t\tpublic static string GetData() { return ");
 				writer.Write('"');
@@ -52,9 +52,9 @@ namespace AIGames.TexasHoldEm.ACDC.UnitTests.Deployoment
 		public void AddPreFlopCallsAndChecks()
 		{
 			var file = new FileInfo(ConfigurationManager.AppSettings["Data.File"]);
-			var records = Records.Load(file);
+			var nodes = Nodes.Load(file);
 
-			records = records.Where(r => r.ByteOdds > 0).ToList();
+			nodes = nodes.Where(r => r.ByteOdds > 0).ToList();
 
 			foreach (var odds in NodeStats.GetPreFlopOdds())
 			{
@@ -65,7 +65,7 @@ namespace AIGames.TexasHoldEm.ACDC.UnitTests.Deployoment
 					var profitCall = odds * pot - (1 - odds) * call;
 					var profitCheck = odds * pot;
 
-					var recordCall = new Record()
+					var nodeCall = new Node()
 					{
 						Odds = odds,
 						Action = GameAction.Call,
@@ -76,7 +76,7 @@ namespace AIGames.TexasHoldEm.ACDC.UnitTests.Deployoment
 						Pot = pot,
 						Profit = (short)profitCall,
 					};
-					var recordCheck = new Record()
+					var nodeCheck = new Node()
 					{
 						Odds = odds,
 						Action = GameAction.Check,
@@ -86,11 +86,11 @@ namespace AIGames.TexasHoldEm.ACDC.UnitTests.Deployoment
 						Pot = (short)(call * 4),
 						Profit = (short)profitCall,
 					};
-					records.Add(recordCall);
-					records.Add(recordCheck);
+					nodes.Add(nodeCall);
+					nodes.Add(nodeCheck);
 				}
 			}
-			records.Save(file);
+			nodes.Save(file);
 		}
 	}
 }

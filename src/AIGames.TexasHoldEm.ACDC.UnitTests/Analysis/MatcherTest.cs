@@ -36,18 +36,18 @@ namespace AIGames.TexasHoldEm.ACDC.UnitTests.Analysis
 		}
 
 		[Test]
-		public void Step_1vs3_0dot333()
+		public void Step_1vs3_0dot666()
 		{
 			var act = Matcher.Step(1, 3);
-			var exp = 0.333;
+			var exp = 0.666;
 			Assert.AreEqual(exp, act, 0.01);
 		}
 
 		[Test]
-		public void Step_3vs2_0dot5()
+		public void Step_3vs2_0dot8()
 		{
 			var act = Matcher.Step(3, 2);
-			var exp = 0.5;
+			var exp = 0.8;
 			Assert.AreEqual(exp, act, 0.01);
 		}
 

@@ -6,9 +6,9 @@ using System.Linq;
 
 namespace AIGames.TexasHoldEm.ACDC.Analysis
 {
-	public static partial class Records
+	public static partial class Nodes
 	{
-		public static IList<Record> Get()
+		public static IList<Node> Get()
 		{
 			var bytes = Convert.FromBase64String(GetData());
 			using (var stream = new MemoryStream(bytes))
@@ -16,35 +16,35 @@ namespace AIGames.TexasHoldEm.ACDC.Analysis
 				return Load(stream);
 			}
 		}
-		public static IList<Record> Load(FileInfo file)
+		public static IList<Node> Load(FileInfo file)
 		{
 			using (var stream = new FileStream(file.FullName, FileMode.Open, FileAccess.Read))
 			{
 				return Load(stream);
 			}
 		}
-		public static  IList<Record> Load(Stream stream)
+		public static  IList<Node> Load(Stream stream)
 		{
-			var list = new List<Record>();
+			var list = new List<Node>();
 			var reader = new BinaryReader(stream);
 			while(true)
 			{
-				var bytes = reader.ReadBytes(Record.ByteSize);
-				if (bytes.Length != Record.ByteSize) { break; }
-				list.Add(Record.FromByteArray(bytes));
+				var bytes = reader.ReadBytes(Node.ByteSize);
+				if (bytes.Length != Node.ByteSize) { break; }
+				list.Add(Node.FromByteArray(bytes));
 			}
 			return list;
 		}
 
-		public static void Shrink(this List<Record> records)
+		public static void Shrink(this List<Node> nodes)
 		{
-			records.Sort();
+			nodes.Sort();
 
-			var old = records
+			var old = nodes
 				.OrderBy(r => Math.Abs(0.5 - r.Odds))
 				.ToList();
 
-			var buffer = new List<Record>(records.Capacity);
+			var buffer = new List<Node>(nodes.Capacity);
 
 			while (old.Count > 0)
 			{
@@ -60,13 +60,13 @@ namespace AIGames.TexasHoldEm.ACDC.Analysis
 						candidate.SubRound == item.SubRound &&
 						candidate.HasAmountToCall == item.HasAmountToCall &&
 						candidate.Action.ActionType == item.Action.ActionType)
-					.OrderByDescending(item => Matcher.Record(candidate, item)).FirstOrDefault();
+					.OrderByDescending(item => Matcher.Node(candidate, item)).FirstOrDefault();
 
-				var m = match == null ? -1 : Matcher.Record(candidate, match);
+				var m = match == null ? -1 : Matcher.Node(candidate, match);
 
 				if (m > 0.2)
 				{
-					var merged = Record.Merge(candidate, match);
+					var merged = Node.Merge(candidate, match);
 					buffer.Add(merged);
 					old.Remove(match);
 				}
@@ -75,19 +75,19 @@ namespace AIGames.TexasHoldEm.ACDC.Analysis
 					buffer.Add(candidate);
 				}
 			}
-			records.Clear();
-			records.AddRange(buffer);
-			records.Sort();
+			nodes.Clear();
+			nodes.AddRange(buffer);
+			nodes.Sort();
 		}
 
-		public static void Save(this IEnumerable<Record> items, FileInfo file)
+		public static void Save(this IEnumerable<Node> items, FileInfo file)
 		{
 			using (var stream = new FileStream(file.FullName, FileMode.Create, FileAccess.Write))
 			{
 				Save(items, stream);
 			}
 		}
-		public static void Save(this IEnumerable<Record> items, Stream stream)
+		public static void Save(this IEnumerable<Node> items, Stream stream)
 		{
 			var writer = new BinaryWriter(stream);
 			foreach (var item in items)

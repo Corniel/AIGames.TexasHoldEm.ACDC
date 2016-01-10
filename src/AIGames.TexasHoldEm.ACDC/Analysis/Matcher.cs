@@ -4,7 +4,7 @@ namespace AIGames.TexasHoldEm.ACDC.Analysis
 {
 	public static class Matcher
 	{
-		public static double Record(Record l, Record r)
+		public static double Node(Node l, Node r)
 		{
 			var match = SubRound(l.SubRound, r.SubRound);
 			if (match == 0) { return 0; }

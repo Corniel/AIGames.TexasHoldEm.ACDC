@@ -13,19 +13,19 @@ namespace AIGames.TexasHoldEm.ACDC.Simulator
 		{
 			var file = new FileInfo("data.bin");
 
-			int recordSize = 0;
+			int nodeSize = 0;
 
-			var records = LoadRecords(file);
-			Merge(records);
+			var nodes = LoadNodes(file);
+			Merge(nodes);
 
-			if (Log(args, records)) { return; }
+			if (Log(args, nodes)) { return; }
 
-			if (args.Length == 0 || !Int32.TryParse(args[0], out recordSize))
+			if (args.Length == 0 || !Int32.TryParse(args[0], out nodeSize))
 			{
-				recordSize = 50000;
+				nodeSize = 50000;
 			}
 			Console.Clear();
-			Console.WriteLine("Record size: {0:#,##0.0}k", recordSize / 1000.0);
+			Console.WriteLine("Node size: {0:#,##0.0}k", nodeSize / 1000.0);
 
 			var simulator = new Simulator();
 			var rnd = new MT19937Generator();
@@ -37,26 +37,26 @@ namespace AIGames.TexasHoldEm.ACDC.Simulator
 			{
 				runs++;
 
-				ClearNewStatus(records);
+				ClearNewStatus(nodes);
 
-				simulator.Simulate(records, rnd);
-				Write(records, sw, runs, shrinks);
+				simulator.Simulate(nodes, rnd);
+				Write(nodes, sw, runs, shrinks);
 
 				if ((runs & 15) == 15)
 				{
-					records.Save(file);
-					Merge(records);
+					nodes.Save(file);
+					Merge(nodes);
 				}
-				if (records.Count > recordSize)
+				if (nodes.Count > nodeSize)
 				{
-					records.Shrink();
+					nodes.Shrink();
 					shrinks++;
-					Write(records, sw, runs, shrinks, true);
+					Write(nodes, sw, runs, shrinks, true);
 				}
 			}
 		}
 
-		private static void Merge(List<Record> records)
+		private static void Merge(List<Node> nodes)
 		{
 			var dir = new DirectoryInfo(".");
 			foreach (var file in dir.GetFiles("*.bin"))
@@ -64,33 +64,33 @@ namespace AIGames.TexasHoldEm.ACDC.Simulator
 				if (file.Name != "data.bin")
 				{
 					Console.WriteLine();
-					records.AddRange(Records.Load(file));
+					nodes.AddRange(Nodes.Load(file));
 					Console.WriteLine("Merged {0}", file);
 					file.Delete();
 				}
 			}
 		}
 
-		private static List<Record> LoadRecords(FileInfo file)
+		private static List<Node> LoadNodes(FileInfo file)
 		{
-			var records = new List<Record>();
+			var nodes = new List<Node>();
 			if (file.Exists)
 			{
-				records.AddRange(Records.Load(file));
+				nodes.AddRange(Nodes.Load(file));
 			}
-			records.Sort();
-			return records;
+			nodes.Sort();
+			return nodes;
 		}
 
-		private static bool Log(string[] args, List<Record> records)
+		private static bool Log(string[] args, List<Node> nodes)
 		{
 			if (args.Length == 1 && args[0].ToUpperInvariant() == "LOG")
 			{
 				using (var writer = new StreamWriter("data.log"))
 				{
-					foreach (var record in records)
+					foreach (var node in nodes)
 					{
-						writer.WriteLine(record);
+						writer.WriteLine(node);
 					}
 				}
 				return true;
@@ -98,20 +98,20 @@ namespace AIGames.TexasHoldEm.ACDC.Simulator
 			return false;
 		}
 
-		private static void ClearNewStatus(List<Record> records)
+		private static void ClearNewStatus(List<Node> nodes)
 		{
 			// We don't want this feature for the simulator.
-			foreach (var record in records) { record.IsNew = false; }
+			foreach (var node in nodes) { node.IsNew = false; }
 		}
 
-		private static void Write(List<Record> records, Stopwatch sw, long runs, int shrinks, bool writeLine = false)
+		private static void Write(List<Node> nodes, Stopwatch sw, long runs, int shrinks, bool writeLine = false)
 		{
 
 			Console.Write("\r{0} {1:#,##0} ({2:#,##0.00}/s), {3} ({4})",
 				sw.Elapsed,
 				runs,
 				runs / sw.Elapsed.TotalSeconds,
-				records.Count,
+				nodes.Count,
 				shrinks);
 
 			if (writeLine)

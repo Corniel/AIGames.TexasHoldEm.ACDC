@@ -31,7 +31,7 @@ namespace AIGames.TexasHoldEm.ACDC.Actors
 			}
 		}
 
-		public void Sort(Record test, IEnumerable<Record> items)
+		public void Sort(Node test, IEnumerable<Node> items)
 		{
 			if (Count == 1) { return; }
 
@@ -45,7 +45,7 @@ namespace AIGames.TexasHoldEm.ACDC.Actors
 					{
 						// To match amounts.
 						test.Action = option.Action;
-						var match = Matcher.Record(test, item);
+						var match = Matcher.Node(test, item);
 						if (match > 0)
 						{
 							if (item.IsNew)

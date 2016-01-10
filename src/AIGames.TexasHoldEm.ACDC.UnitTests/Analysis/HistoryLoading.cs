@@ -16,7 +16,7 @@ namespace AIGames.TexasHoldEm.ACDC.UnitTests.Analysis
 			var dir = new DirectoryInfo(@"C:\Code\AIGames.Challenger\games\texas-hold-em");
 
 			var bot = new ACDCBot();
-			bot.Actor.Records.Clear();
+			bot.Actor.Nodes.Clear();
 
 			foreach (var file in dir.GetFiles("*.log"))
 			{
@@ -25,14 +25,14 @@ namespace AIGames.TexasHoldEm.ACDC.UnitTests.Analysis
 					platform.DoRun(bot);
 				}
 			}
-			var records = new List<Record>(bot.Actor.Records);
-			records.Sort();
-			records.Save(new FileInfo(@"C:\temp\data.bin"));
+			var nodes = new List<Node>(bot.Actor.Nodes);
+			nodes.Sort();
+			nodes.Save(new FileInfo(@"C:\temp\data.bin"));
 			using (var writer = new StreamWriter(@"C:\temp\data.log"))
 			{
-				foreach (var record in records)
+				foreach (var node in nodes)
 				{
-					writer.WriteLine(record);
+					writer.WriteLine(node);
 				}
 			}
 		}

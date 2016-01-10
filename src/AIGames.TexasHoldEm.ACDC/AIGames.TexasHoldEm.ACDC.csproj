@@ -40,7 +40,7 @@
     <Compile Include="Actors\ActionOption.cs" />
     <Compile Include="Actors\ActionOptions.cs" />
     <Compile Include="Actors\ActorState.cs" />
-    <Compile Include="Analysis\Records.Data.cs" />
+    <Compile Include="Analysis\Nodes.Data.cs" />
     <Compile Include="Analysis\Hand.Lookups.cs" />
     <Compile Include="Analysis\Hand.Analysis.cs" />
     <Compile Include="Analysis\Hand.Evaluator.cs" />
@@ -48,8 +48,8 @@
     <Compile Include="Analysis\Matcher.cs" />
     <Compile Include="Analysis\PokerHandEvaluator.cs" />
     <Compile Include="Actors\Actor.cs" />
-    <Compile Include="Analysis\Record.cs" />
-    <Compile Include="Analysis\Records.cs" />
+    <Compile Include="Analysis\Node.cs" />
+    <Compile Include="Analysis\Nodes.cs" />
     <Compile Include="Bits.cs" />
     <Compile Include="Communication\BotResponse.cs" />
     <Compile Include="Communication\ConsolePlatform.cs" />

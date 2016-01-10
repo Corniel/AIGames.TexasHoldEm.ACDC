@@ -43,7 +43,7 @@
     <Compile Include="Analysis\HistoryLoading.cs" />
     <Compile Include="Analysis\MatcherTest.cs" />
     <Compile Include="Analysis\NodeStats.cs" />
-    <Compile Include="Analysis\RecordTest.cs" />
+    <Compile Include="Analysis\NodeTest.cs" />
     <Compile Include="Analysis\SelectTest.cs" />
     <Compile Include="BitsTest.cs" />
     <Compile Include="Category.cs" />

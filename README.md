@@ -3,6 +3,10 @@ ACDC
 
 ACDC is an AI trying to play Texas Hold'em.
 
+Version 9
+---------
+Nodes with more aggressive play.
+
 Version 8
 ---------
 Made ACDC way more aggressive.

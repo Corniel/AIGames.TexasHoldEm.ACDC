@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using Troschuetz.Random.Generators;
 
 namespace AIGames.TexasHoldEm.ACDC.Simulator
@@ -15,10 +16,9 @@ namespace AIGames.TexasHoldEm.ACDC.Simulator
 
 			int nodeSize = 0;
 
-			var nodes = LoadNodes(file);
-			Merge(nodes);
+			var collection = new NodeCollection(LoadNodes(file));
 
-			if (Log(args, nodes)) { return; }
+			if (Log(args, collection)) { return; }
 
 			if (args.Length == 0 || !Int32.TryParse(args[0], out nodeSize))
 			{
@@ -30,6 +30,9 @@ namespace AIGames.TexasHoldEm.ACDC.Simulator
 			var simulator = new Simulator();
 			var rnd = new MT19937Generator();
 
+			
+			Merge(collection);
+
 			var sw = Stopwatch.StartNew();
 			long runs = 0;
 			var shrinks = 0;
@@ -37,26 +40,30 @@ namespace AIGames.TexasHoldEm.ACDC.Simulator
 			{
 				runs++;
 
-				ClearNewStatus(nodes);
+				ClearNewStatus(collection);
 
-				simulator.Simulate(nodes, rnd);
-				Write(nodes, sw, runs, shrinks);
+				simulator.Simulate(collection, rnd);
+				Write(collection, sw, runs, shrinks);
 
 				if ((runs & 15) == 15)
 				{
-					nodes.Save(file);
-					Merge(nodes);
+					collection.Save(file);
+					Merge(collection);
 				}
-				if (nodes.Count > nodeSize)
+				if (collection.Count > nodeSize)
 				{
+					var nodes = collection.ToList();
 					nodes.Shrink();
+					collection.Clear();
+					collection.AddRange(nodes);
+					collection.Save(file);
 					shrinks++;
-					Write(nodes, sw, runs, shrinks, true);
+					Write(collection, sw, runs, shrinks, true);
 				}
 			}
 		}
 
-		private static void Merge(List<Node> nodes)
+		private static void Merge(NodeCollection nodes)
 		{
 			var dir = new DirectoryInfo(".");
 			foreach (var file in dir.GetFiles("*.bin"))
@@ -82,7 +89,7 @@ namespace AIGames.TexasHoldEm.ACDC.Simulator
 			return nodes;
 		}
 
-		private static bool Log(string[] args, List<Node> nodes)
+		private static bool Log(string[] args, IEnumerable<Node> nodes)
 		{
 			if (args.Length == 1 && args[0].ToUpperInvariant() == "LOG")
 			{
@@ -98,13 +105,13 @@ namespace AIGames.TexasHoldEm.ACDC.Simulator
 			return false;
 		}
 
-		private static void ClearNewStatus(List<Node> nodes)
+		private static void ClearNewStatus(IEnumerable<Node> nodes)
 		{
 			// We don't want this feature for the simulator.
 			foreach (var node in nodes) { node.IsNew = false; }
 		}
 
-		private static void Write(List<Node> nodes, Stopwatch sw, long runs, int shrinks, bool writeLine = false)
+		private static void Write(NodeCollection nodes, Stopwatch sw, long runs, int shrinks, bool writeLine = false)
 		{
 
 			Console.Write("\r{0} {1:#,##0} ({2:#,##0.00}/s), {3} ({4})",

@@ -17,6 +17,12 @@ namespace AIGames.TexasHoldEm.ACDC.Actors
 			Buffer = new List<Node>();
 			Rnd = rnd;
 		}
+		public Actor(NodeCollection nodes, MT19937Generator rnd)
+		{
+			Nodes = nodes;
+			Buffer = new List<Node>();
+			Rnd = rnd;
+		}
 
 		public NodeCollection Nodes { get; private set; }
 		public MT19937Generator Rnd { get; private set; }

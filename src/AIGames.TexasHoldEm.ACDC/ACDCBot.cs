@@ -18,6 +18,10 @@ namespace AIGames.TexasHoldEm.ACDC
 		{
 			Actor = new Actor(nodes);
 		}
+		public ACDCBot(NodeCollection nodes, MT19937Generator rnd)
+		{
+			Actor = new Actor(nodes, rnd);
+		}
 
 		public Actor Actor { get; set; }
 		public Settings Settings { get; set; }

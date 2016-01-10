@@ -7,19 +7,6 @@ namespace AIGames.TexasHoldEm.ACDC.UnitTests.Analysis
 	public class MatcherTest
 	{
 		[Test]
-		public void SubRound_PreFlopVsNonPreFlop_0()
-		{
-			Assert.AreEqual(0.0, Matcher.SubRound(SubRoundType.Pre, SubRoundType.River), "Pre flop left.");
-			Assert.AreEqual(0.0, Matcher.SubRound(SubRoundType.Turn, SubRoundType.Pre), "Pre flop right");
-		}
-		[Test]
-		public void Match_NonePreFlopVsNonPreFlop_0dot3()
-		{
-			Assert.AreEqual(0.3, Matcher.SubRound(SubRoundType.Turn, SubRoundType.River), 0.001, "Turn vs River.");
-			Assert.AreEqual(0.3, Matcher.SubRound(SubRoundType.Turn, SubRoundType.Flop),0.001, "Turn vs Flop.");
-		}
-
-		[Test]
 		public void Round_8vs12_0dot5()
 		{
 			var act = Matcher.Round(8, 12);

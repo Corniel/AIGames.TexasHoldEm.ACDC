@@ -18,43 +18,62 @@ namespace AIGames.TexasHoldEm.ACDC.Actors
 			}
 		}
 
-		public IEnumerable<ActionOption> GetUncertains()
+		public IEnumerable<ActionOption> GetRaises()
 		{
-			return this.Where(node => node.IsUncertain);
+			return this.Where(node => node.ActionType == GameActionType.raise);
 		}
 
-		public void Sort(Node test, IEnumerable<Node> items)
+		public void Sort(Node test, IEnumerable<Node> nodes)
 		{
 			if (Count == 1) { return; }
 
-			foreach (var item in items)
-			{
-				foreach (var option in GetUncertains())
-				{
-					var type = option.ActionType;
-					if (type == item.Action.ActionType &&
-						item.HasAmountToCall == test.HasAmountToCall)
-					{
-						// To match amounts.
-						test.Action = option.Action;
-						var match = Matcher.Node(test, item);
-						if (match > 0)
-						{
-							if (item.IsNew)
-							{
-								match *= 10;
-							}
-							option.Update(item.Profit, match);
-						}
-					}
-				}
-			}
+			UpdateCallOption(test, nodes);
+			UpdateCheckOptions(test, nodes);
 			Sort();
 		}
-
-		internal object Where(System.Func<ActionOption, int, bool> func)
+		private void UpdateCallOption(Node test, IEnumerable<Node> nodes)
 		{
-			throw new System.NotImplementedException();
+			var option = this.FirstOrDefault(o => o.Action == GameAction.Call);
+			if (option != null)
+			{
+				foreach (var node in nodes.Where(n => n.SubRound == test.SubRound && n.Action == GameAction.Call))
+				{
+					Update(test, node, option);
+				}
+			}
+		}
+
+		private void UpdateCheckOptions(Node test, IEnumerable<Node> nodes)
+		{
+			var options = GetRaises().ToList();
+
+			foreach (var node in nodes.Where(n =>
+				n.SubRound == test.SubRound &&
+				n.HasAmountToCall == test.HasAmountToCall &&
+				n.Action.ActionType == GameActionType.raise))
+			{
+				foreach (var option in options)
+				{
+					Update(test, node, option);
+				}
+			}
+		}
+
+		
+
+		private static void Update(Node test, Node node, ActionOption option)
+		{
+			// To match amounts.
+			test.Action = option.Action;
+			var match = Matcher.Node(test, node);
+			if (match > 0)
+			{
+				if (node.IsNew)
+				{
+					match *= 10;
+				}
+				option.Update(node.Profit, match);
+			}
 		}
 	}
 }

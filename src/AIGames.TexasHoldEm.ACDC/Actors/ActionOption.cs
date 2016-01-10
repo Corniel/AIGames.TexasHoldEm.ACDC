@@ -25,8 +25,6 @@ namespace AIGames.TexasHoldEm.ACDC.Actors
 		public double Weight { get; private set; }
 		public GameActionType ActionType { get { return Action.ActionType; } }
 
-		public bool IsUncertain { get { return Action != GameAction.Check && Action != GameAction.Fold; } }
-
 		public void Update(double profit, double weight)
 		{
 			m_Profit+= profit * weight;

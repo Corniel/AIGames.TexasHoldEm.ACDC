@@ -6,10 +6,7 @@ namespace AIGames.TexasHoldEm.ACDC.Analysis
 	{
 		public static double Node(Node l, Node r)
 		{
-			var match = SubRound(l.SubRound, r.SubRound);
-			if (match == 0) { return 0; }
-
-			match *= AmountToCall(l.AmountToCall, r.AmountToCall);
+			var match = AmountToCall(l.AmountToCall, r.AmountToCall);
 			if (match == 0) { return 0; }
 			
 			match *= Odds(l.Odds, r.Odds);
@@ -24,13 +21,6 @@ namespace AIGames.TexasHoldEm.ACDC.Analysis
 			return match;
 		}
 
-		public static double SubRound(SubRoundType l, SubRoundType r)
-		{
-			if (l == r) { return 1; }
-			if (l == SubRoundType.Pre ^ r == SubRoundType.Pre) { return 0; }
-			// if they differ but are not Pre(Flop).
-			return 0.3;
-		}
 		public static double Round(int l, int r)
 		{
 			if (l == r) { return 1; }

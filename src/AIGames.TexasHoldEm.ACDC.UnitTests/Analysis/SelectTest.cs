@@ -157,7 +157,7 @@ namespace AIGames.TexasHoldEm.ACDC.UnitTests.Analysis
 
 			var odds = NodeStats.Odds.ToDictionary(o => o, o => 0);
 
-			foreach (var rec in Act.Nodes.Where(r => r.Round != 0 /*&& r.SubRound == SubRoundType.Pre*/))
+			foreach (var rec in Act.Nodes)
 			{
 				odds[rec.Odds]++;
 				rounds[rec.Round]++;

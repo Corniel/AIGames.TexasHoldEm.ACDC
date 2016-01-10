@@ -28,7 +28,7 @@ namespace AIGames.TexasHoldEm.ACDC.UnitTests.Deployoment
 			using (var stream = new MemoryStream())
 			{
 				file.OpenRead().CopyTo(stream);
-				bytes = stream.GetBuffer();
+				bytes = stream.ToArray();
 			}
 
 			var csFile = new FileInfo(Path.Combine(Deployer.GetCollectDir().FullName, "Analysis/Nodes.Data.cs"));

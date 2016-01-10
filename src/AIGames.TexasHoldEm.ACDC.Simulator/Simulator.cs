@@ -60,6 +60,8 @@ namespace AIGames.TexasHoldEm.ACDC.Simulator
 
 				var outcome = PlayerName.None;
 
+				var showdown = false;
+
 				foreach (var table in tables)
 				{
 					matches.Current.Table = table;
@@ -68,6 +70,7 @@ namespace AIGames.TexasHoldEm.ACDC.Simulator
 				}
 				if (outcome == PlayerName.None)
 				{
+					showdown = true;
 					outcome = PokerHandEvaluator.GetOutcome(deck1, deck2, tabl5);
 				}
 				if (outcome == PlayerName.None)
@@ -77,10 +80,25 @@ namespace AIGames.TexasHoldEm.ACDC.Simulator
 				}
 				else
 				{
+					var realoutcome = outcome;
+					if (!showdown)
+					{
+						realoutcome = PokerHandEvaluator.GetOutcome(deck1, deck2, tabl5);
+					}
 					matches.Current[outcome].Stack += matches.Current.Pot;
-					var wins = new WinsInstruction(outcome, matches.Current.Pot);
-					bots[PlayerName.player1].Update(wins);
-					bots[PlayerName.player2].Update(wins);
+
+					if (realoutcome == outcome)
+					{
+						var wins = new WinsInstruction(outcome, matches.Current.Pot);
+						bots[PlayerName.player1].Update(wins);
+						bots[PlayerName.player2].Update(wins);
+					}
+					// A bot chickened later, but that should not matter for the bits it played.
+					else
+					{
+						bots[PlayerName.player1].Update(new WinsInstruction(PlayerName.player1, matches.Current.Pot));
+						bots[PlayerName.player2].Update(new WinsInstruction(PlayerName.player2, matches.Current.Pot));
+					}
 				}
 				matches.Current.Player1.Pot = 0;
 				matches.Current.Player2.Pot = 0;

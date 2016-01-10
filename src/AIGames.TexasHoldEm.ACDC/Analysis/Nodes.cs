@@ -41,7 +41,8 @@ namespace AIGames.TexasHoldEm.ACDC.Analysis
 			nodes.Sort();
 
 			var old = nodes
-				.OrderBy(r => Math.Abs(0.5 - r.Odds))
+				.Where(node=> node.Action != GameAction.Check)
+				.OrderBy(node => Math.Abs(0.5 - node.Odds))
 				.ToList();
 
 			var buffer = new List<Node>(nodes.Capacity);

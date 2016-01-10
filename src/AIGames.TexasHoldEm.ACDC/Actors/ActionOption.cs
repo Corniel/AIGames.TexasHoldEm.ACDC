@@ -16,8 +16,7 @@ namespace AIGames.TexasHoldEm.ACDC.Actors
 		public GameAction Action { get; private set; }
 		public double Profit { get { return Weight == 0 ? 0 : m_Profit / Weight; } }
 
-		/// <summary>Profit squared + 1.</summary>
-		public double Profit2 { get { return 1 + Profit * Profit; } }
+		public double WeightedProfit { get { return Action == GameAction.Check ? 16 * (150 + Profit) : 100 + Profit; } }
 
 		/// <summary>Returns true if there is expected profit.</summary>
 		public bool IsProfitable { get { return ActionType != GameActionType.fold && Profit >= 0; } }
@@ -25,6 +24,8 @@ namespace AIGames.TexasHoldEm.ACDC.Actors
 		private double m_Profit;
 		public double Weight { get; private set; }
 		public GameActionType ActionType { get { return Action.ActionType; } }
+
+		public bool IsUncertain { get { return Action != GameAction.Check && Action != GameAction.Fold; } }
 
 		public void Update(double profit, double weight)
 		{

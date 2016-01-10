@@ -1,5 +1,6 @@
 ﻿using AIGames.TexasHoldEm.ACDC.Analysis;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AIGames.TexasHoldEm.ACDC.Actors
 {
@@ -17,13 +18,18 @@ namespace AIGames.TexasHoldEm.ACDC.Actors
 			}
 		}
 
+		public IEnumerable<ActionOption> GetUncertains()
+		{
+			return this.Where(node => node.IsUncertain);
+		}
+
 		public void Sort(Node test, IEnumerable<Node> items)
 		{
 			if (Count == 1) { return; }
 
 			foreach (var item in items)
 			{
-				foreach (var option in this)
+				foreach (var option in GetUncertains())
 				{
 					var type = option.ActionType;
 					if (type == item.Action.ActionType &&

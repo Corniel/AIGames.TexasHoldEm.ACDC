@@ -55,7 +55,6 @@
     <Compile Include="Deployoment\DeployerTest.cs" />
     <Compile Include="FieldConnect4Generator.cs" />
     <Compile Include="HandTest.cs" />
-    <Compile Include="NodeStatsCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

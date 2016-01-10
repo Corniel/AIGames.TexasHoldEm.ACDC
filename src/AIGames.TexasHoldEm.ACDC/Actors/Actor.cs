@@ -40,7 +40,7 @@ namespace AIGames.TexasHoldEm.ACDC.Actors
 
 			if (state.NoAmountToCall)
 			{
-				options.Add(GameAction.Check);
+				options.Add(new ActionOption(GameAction.Check, state.Odds * state.Pot, 1));
 			}
 			else
 			{
@@ -69,10 +69,13 @@ namespace AIGames.TexasHoldEm.ACDC.Actors
 
 			if (best.Action != GameAction.Fold)
 			{
-				test.Profit = (short)state.OwnPot;
-				test.Action = best.Action;
-				test.IsNew = true;
-				Buffer.Add(test);
+				if (best.Action != GameAction.Check)
+				{
+					test.Profit = (short)state.OwnPot;
+					test.Action = best.Action;
+					test.IsNew = true;
+					Buffer.Add(test);
+				}
 			}
 			else if(options.Count > 1)
 			{
@@ -99,8 +102,8 @@ namespace AIGames.TexasHoldEm.ACDC.Actors
 				var sum = 0.0;
 				for (var index = 0; index < weights.Length; index++)
 				{
-					sum += profitable[index].Profit2;
 					weights[index] = sum;
+					sum += profitable[index].WeightedProfit;
 				}
 
 				var pick = Rnd.NextDouble(sum);

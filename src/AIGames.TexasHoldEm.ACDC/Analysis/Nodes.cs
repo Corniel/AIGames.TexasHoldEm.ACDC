@@ -65,7 +65,7 @@ namespace AIGames.TexasHoldEm.ACDC.Analysis
 
 				var m = match == null ? -1 : Matcher.Node(candidate, match);
 
-				if (m > 0.2)
+				if (m > 0)
 				{
 					var merged = Node.Merge(candidate, match);
 					buffer.Add(merged);

@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AIGames.TexasHoldEm.ACDC.Simulator</RootNamespace>
     <AssemblyName>TexasHoldEmSimulator</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -41,15 +42,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Position.cs" />
+    <Compile Include="Positions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Simulator.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AIGames.TexasHoldEm.ACDC\AIGames.TexasHoldEm.ACDC.csproj">
+    <ProjectReference Include="..\..\..\McCulloch.NET\src\McCulloch\McCulloch.csproj">
+      <Project>{6a70d466-878a-48ce-88ae-46dc75a4c2ff}</Project>
+      <Name>McCulloch</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\AIGames.TexasHoldEm.ACDC\AIGames.TexasHoldEm.ACDC.csproj">
       <Project>{c883a5f7-78bc-4137-86d2-6ec1af71c4c0}</Project>
       <Name>AIGames.TexasHoldEm.ACDC</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

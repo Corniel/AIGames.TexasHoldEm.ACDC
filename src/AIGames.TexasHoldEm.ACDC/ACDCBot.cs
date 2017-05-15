@@ -1,8 +1,7 @@
-﻿using AIGames.TexasHoldEm.ACDC.Actors;
-using AIGames.TexasHoldEm.ACDC.Analysis;
+﻿using AIGames.TexasHoldEm.ACDC.Analysis;
 using AIGames.TexasHoldEm.ACDC.Communication;
+using McCulloch.Networks;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
@@ -10,21 +9,22 @@ using Troschuetz.Random.Generators;
 
 namespace AIGames.TexasHoldEm.ACDC
 {
-	[DebuggerDisplay("{DebuggerDisplay}")]
+    [DebuggerDisplay("{DebuggerDisplay}")]
 	public class ACDCBot : IBot
 	{
-		public ACDCBot() : this(Nodes.Get()) { }
-		public ACDCBot(IList<Node> nodes)
+		public ACDCBot() : this(null) { }
+        public ACDCBot(NeuralNetwork<ActionOption> network) : this(network, new MT19937Generator()) { }
+
+		public ACDCBot(NeuralNetwork<ActionOption> network, MT19937Generator rnd)
 		{
-			Actor = new Actor(nodes);
-		}
-		public ACDCBot(NodeCollection nodes, MT19937Generator rnd)
-		{
-			Actor = new Actor(nodes, rnd);
+            Network = network;
+            Rnd = rnd;
 		}
 
-		public Actor Actor { get; set; }
-		public Settings Settings { get; set; }
+        private MT19937Generator Rnd { get; }
+        private NeuralNetwork<ActionOption> Network { get;}
+
+        public Settings Settings { get; set; }
 		public Matches Matches { get; set; }
 		public Match Current { get { return Matches.Current; } }
 
@@ -40,9 +40,7 @@ namespace AIGames.TexasHoldEm.ACDC
 
 		public void Update(WinsInstruction instruction)
 		{
-			var profit = instruction.Value;
-			if (Settings.YourBot != instruction.Name) { profit = -profit; }
-			Actor.ApplyProfit(profit);
+            // Nothing do do.
 		}
 
 		public Cards Table { get { return Current.Table; } }
@@ -64,7 +62,7 @@ namespace AIGames.TexasHoldEm.ACDC
 				Own.Odds = PokerHandEvaluator.GetOdds(Hand, Table);
 			}
 
-			var state = new ActorState()
+			var state = new ActionState()
 			{
 				Round = Current.Round,
 				SubRound = Current.SubRound,
@@ -77,17 +75,19 @@ namespace AIGames.TexasHoldEm.ACDC
 				OtherPot = Other.Pot,
 			};
 
-			var option = Actor.GetOption(state);
+            var options = new ActionOptions(Network, Rnd);
+            var option = options.Select(state);
+            Current.Action = option.Action;
 
 			var response = new BotResponse()
 			{
 				Action = option.Action,
-				Log = GetLog(state, option),
+				Log = GetLog(option),
 			};
 			return response;
 		}
 
-		private string GetLog(ActorState state, ActionOption best)
+		private string GetLog(ActionOption action)
 		{
 			var log = new StringBuilder();
 			
@@ -98,18 +98,18 @@ namespace AIGames.TexasHoldEm.ACDC
 			{
 				log.AppendFormat(", {0}", Table);
 			}
-			
-			log.AppendFormat(", {0:0.0%}", state.Odds)
-				.Append(", ")
-				.Append(best.Action)
-				.Append(" ")
-				.Append(best.Profit > 0 ? "+" : "")
-				.Append(best.Profit.ToString("#,##0.0"));
 
-			return log.ToString();
+            log.AppendFormat(", {0:0.0%}", action.Odds)
+                .Append(", ")
+                .Append(action.Action)
+                .Append(", ")
+                .Append(action.Result[true].ToString("0.00%"));
+
+
+            return log.ToString();
 		}
 
 		[DebuggerBrowsable(DebuggerBrowsableState.Never), ExcludeFromCodeCoverage]
 		private string DebuggerDisplay { get { return "Bot: " + Settings.YourBot.ToString(); } }
-	}
+    }
 }

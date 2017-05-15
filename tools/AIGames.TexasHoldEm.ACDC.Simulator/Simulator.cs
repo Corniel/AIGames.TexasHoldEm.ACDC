@@ -1,5 +1,6 @@
 ﻿using AIGames.TexasHoldEm.ACDC.Analysis;
 using AIGames.TexasHoldEm.ACDC.Communication;
+using McCulloch.Networks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,18 +8,20 @@ using Troschuetz.Random.Generators;
 
 namespace AIGames.TexasHoldEm.ACDC.Simulator
 {
-	public class Simulator
+    public class Simulator
 	{
-		public void Simulate(NodeCollection nodes, MT19937Generator rnd)
+		public Matches Simulate(NeuralNetwork<ActionOption> network, MT19937Generator rnd)
 		{
 			var bots = new Dictionary<PlayerName, ACDCBot>()
 			{
-				{ PlayerName.player1, GetBot(nodes, PlayerName.player1, rnd) },
-				{ PlayerName.player2, GetBot(nodes, PlayerName.player2, rnd) },
+				{ PlayerName.player1, GetBot(network, PlayerName.player1, rnd) },
+				{ PlayerName.player2, GetBot(network, PlayerName.player2, rnd) },
 			};
 
-			var matches = new Matches();
-			matches.Round = 1;
+            var matches = new Matches
+            {
+                Round = 1
+            };
 			var stack1 = 2000;
 			var stack2 = 2000;
 
@@ -60,8 +63,6 @@ namespace AIGames.TexasHoldEm.ACDC.Simulator
 
 				var outcome = PlayerName.None;
 
-				var showdown = false;
-
 				foreach (var table in tables)
 				{
 					matches.Current.Table = table;
@@ -70,7 +71,6 @@ namespace AIGames.TexasHoldEm.ACDC.Simulator
 				}
 				if (outcome == PlayerName.None)
 				{
-					showdown = true;
 					outcome = PokerHandEvaluator.GetOutcome(deck1, deck2, tabl5);
 				}
 				if (outcome == PlayerName.None)
@@ -80,25 +80,7 @@ namespace AIGames.TexasHoldEm.ACDC.Simulator
 				}
 				else
 				{
-					var realoutcome = outcome;
-					if (!showdown)
-					{
-						realoutcome = PokerHandEvaluator.GetOutcome(deck1, deck2, tabl5);
-					}
 					matches.Current[outcome].Stack += matches.Current.Pot;
-
-					if (realoutcome == outcome)
-					{
-						var wins = new WinsInstruction(outcome, matches.Current.Pot);
-						bots[PlayerName.player1].Update(wins);
-						bots[PlayerName.player2].Update(wins);
-					}
-					// A bot chickened later, but that should not matter for the bits it played.
-					else
-					{
-						bots[PlayerName.player1].Update(new WinsInstruction(PlayerName.player1, matches.Current.Pot));
-						bots[PlayerName.player2].Update(new WinsInstruction(PlayerName.player2, matches.Current.Pot));
-					}
 				}
 				matches.Current.Player1.Pot = 0;
 				matches.Current.Player2.Pot = 0;
@@ -111,7 +93,8 @@ namespace AIGames.TexasHoldEm.ACDC.Simulator
 					break;
 				}
 			}
-		}
+            return matches;
+        }
 
 		private void SetPot(Match match, bool mirrored)
 		{
@@ -126,9 +109,9 @@ namespace AIGames.TexasHoldEm.ACDC.Simulator
 			p1.Stack -= match.BigBlind;
 		}
 
-		private static ACDCBot GetBot(NodeCollection nodes, PlayerName name, MT19937Generator rnd)
+		private static ACDCBot GetBot(NeuralNetwork<ActionOption> network, PlayerName name, MT19937Generator rnd)
 		{
-			var bot = new ACDCBot(nodes, rnd)
+			var bot = new ACDCBot(network, rnd)
 			{
 				Settings = new Settings()
 				{
@@ -140,7 +123,7 @@ namespace AIGames.TexasHoldEm.ACDC.Simulator
 
 		private PlayerName SimulateRound(Matches matches, Dictionary<PlayerName, ACDCBot> bots)
 		{
-			var action = GameAction.Invalid;
+            GameAction action;
 
 			var p1 = bots[matches.Current.OnButton.Other()];
 			var p2 = bots[matches.Current.OnButton];

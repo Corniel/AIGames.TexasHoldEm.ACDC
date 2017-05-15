@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AIGames.TexasHoldEm.ACDC.UnitTests</RootNamespace>
     <AssemblyName>AIGames.TexasHoldEm.ACDC.UnitTests</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -40,11 +41,6 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Analysis\HistoryLoading.cs" />
-    <Compile Include="Analysis\MatcherTest.cs" />
-    <Compile Include="Analysis\NodeStats.cs" />
-    <Compile Include="Analysis\NodeTest.cs" />
-    <Compile Include="Analysis\SelectTest.cs" />
     <Compile Include="BitsTest.cs" />
     <Compile Include="Category.cs" />
     <Compile Include="Communication\ConsolePlatformTest.cs" />
@@ -69,7 +65,7 @@
     <EmbeddedResource Include="Communication\input.simple.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AIGames.TexasHoldEm.ACDC\AIGames.TexasHoldEm.ACDC.csproj">
+    <ProjectReference Include="..\..\src\AIGames.TexasHoldEm.ACDC\AIGames.TexasHoldEm.ACDC.csproj">
       <Project>{c883a5f7-78bc-4137-86d2-6ec1af71c4c0}</Project>
       <Name>AIGames.TexasHoldEm.ACDC</Name>
     </ProjectReference>

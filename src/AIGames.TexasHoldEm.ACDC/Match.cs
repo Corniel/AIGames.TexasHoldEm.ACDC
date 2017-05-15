@@ -48,6 +48,8 @@ namespace AIGames.TexasHoldEm.ACDC
 
 		public int Pot { get { return Player1.Pot + Player2.Pot; } }
 
+        public GameAction Action { get; set; }
+
 		public void SetHand(HandInstruction instruction)
 		{
 			this[instruction.Name].Hand = instruction.Value;

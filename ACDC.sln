@@ -1,0 +1,59 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.7
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F1920F40-6720-4345-B333-1F4C74B1AE7C}"
+	ProjectSection(SolutionItems) = preProject
+		..\.gitattributes = ..\.gitattributes
+		..\.gitignore = ..\.gitignore
+		..\backlog.md = ..\backlog.md
+		..\README.md = ..\README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{EC4B7859-D059-4A96-83FD-B9E6BCBF69FB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{45ACE47E-225C-4AF3-82A3-C56238E149BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "McCulloch", "..\McCulloch.NET\src\McCulloch\McCulloch.csproj", "{6A70D466-878A-48CE-88AE-46DC75A4C2FF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{8340522E-1B74-4BDF-9A3D-87DA3DDECB7C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AIGames.TexasHoldEm.ACDC.UnitTests", "tests\AIGames.TexasHoldEm.ACDC.UnitTests\AIGames.TexasHoldEm.ACDC.UnitTests.csproj", "{78D8C22E-50B5-46AE-9211-276286D7BB4B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AIGames.TexasHoldEm.ACDC", "src\AIGames.TexasHoldEm.ACDC\AIGames.TexasHoldEm.ACDC.csproj", "{C883A5F7-78BC-4137-86D2-6EC1AF71C4C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AIGames.TexasHoldEm.ACDC.Simulator", "tools\AIGames.TexasHoldEm.ACDC.Simulator\AIGames.TexasHoldEm.ACDC.Simulator.csproj", "{1C3202FF-225D-4D22-8AFA-538A885D6E78}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6A70D466-878A-48CE-88AE-46DC75A4C2FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A70D466-878A-48CE-88AE-46DC75A4C2FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A70D466-878A-48CE-88AE-46DC75A4C2FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A70D466-878A-48CE-88AE-46DC75A4C2FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78D8C22E-50B5-46AE-9211-276286D7BB4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78D8C22E-50B5-46AE-9211-276286D7BB4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78D8C22E-50B5-46AE-9211-276286D7BB4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78D8C22E-50B5-46AE-9211-276286D7BB4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C883A5F7-78BC-4137-86D2-6EC1AF71C4C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C883A5F7-78BC-4137-86D2-6EC1AF71C4C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C883A5F7-78BC-4137-86D2-6EC1AF71C4C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C883A5F7-78BC-4137-86D2-6EC1AF71C4C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C3202FF-225D-4D22-8AFA-538A885D6E78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C3202FF-225D-4D22-8AFA-538A885D6E78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C3202FF-225D-4D22-8AFA-538A885D6E78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C3202FF-225D-4D22-8AFA-538A885D6E78}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6A70D466-878A-48CE-88AE-46DC75A4C2FF} = {45ACE47E-225C-4AF3-82A3-C56238E149BE}
+		{78D8C22E-50B5-46AE-9211-276286D7BB4B} = {8340522E-1B74-4BDF-9A3D-87DA3DDECB7C}
+		{1C3202FF-225D-4D22-8AFA-538A885D6E78} = {EC4B7859-D059-4A96-83FD-B9E6BCBF69FB}
+	EndGlobalSection
+EndGlobal

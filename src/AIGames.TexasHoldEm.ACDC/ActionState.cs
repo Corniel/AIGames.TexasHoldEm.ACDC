@@ -1,12 +1,11 @@
-﻿using AIGames.TexasHoldEm.ACDC.Analysis;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 
-namespace AIGames.TexasHoldEm.ACDC.Actors
+namespace AIGames.TexasHoldEm.ACDC
 {
-	[DebuggerDisplay("{DebuggerDisplay}")]
-	public class ActorState
+    [DebuggerDisplay("{DebuggerDisplay}")]
+	public class ActionState
 	{
 		public int Round { get; set; }
 		public SubRoundType SubRound { get; set; }
@@ -40,20 +39,6 @@ namespace AIGames.TexasHoldEm.ACDC.Actors
 
 		/// <summary>Returns true if there is no amount to call, otherwise false.</summary>
 		public bool NoAmountToCall { get { return AmountToCall == 0; } }
-
-		public Node ToNode()
-		{
-			return new Node()
-			{
-				Odds = Odds,
-				Round = (byte)Round,
-				SubRound = SubRound,
-				Step = (byte)Step,
-				Gap = (short)Gap,
-				AmountToCall = (short)AmountToCall,
-				Pot = (short)OwnPot,
-			};
-		}
 
 		[DebuggerBrowsable(DebuggerBrowsableState.Never), ExcludeFromCodeCoverage]
 		private string DebuggerDisplay

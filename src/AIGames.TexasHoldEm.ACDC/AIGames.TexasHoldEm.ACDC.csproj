@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AIGames.TexasHoldEm.ACDC</RootNamespace>
     <AssemblyName>AIGames.TexasHoldEm.ACDC</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -37,20 +38,14 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Actors\ActionOption.cs" />
-    <Compile Include="Actors\ActionOptions.cs" />
-    <Compile Include="Actors\ActorState.cs" />
-    <Compile Include="Analysis\NodeCollection.cs" />
-    <Compile Include="Analysis\Nodes.Data.cs" />
-    <Compile Include="Analysis\Hand.Lookups.cs" />
+    <Compile Include="ActionOptions.cs" />
+    <Compile Include="ActionState.cs" />
+    <Compile Include="ActionOption.cs" />
     <Compile Include="Analysis\Hand.Analysis.cs" />
     <Compile Include="Analysis\Hand.Evaluator.cs" />
     <Compile Include="Analysis\Hand.Iterator.cs" />
-    <Compile Include="Analysis\Matcher.cs" />
+    <Compile Include="Analysis\Hand.Lookups.cs" />
     <Compile Include="Analysis\PokerHandEvaluator.cs" />
-    <Compile Include="Actors\Actor.cs" />
-    <Compile Include="Analysis\Node.cs" />
-    <Compile Include="Analysis\Nodes.cs" />
     <Compile Include="Bits.cs" />
     <Compile Include="Communication\BotResponse.cs" />
     <Compile Include="Communication\ConsolePlatform.cs" />
@@ -103,7 +98,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Troschuetz.Random\MT19937Generator.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\McCulloch.NET\src\McCulloch\McCulloch.csproj">
+      <Project>{6a70d466-878a-48ce-88ae-46dc75a4c2ff}</Project>
+      <Name>McCulloch</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
